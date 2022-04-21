@@ -1,0 +1,76 @@
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+ */
+package com.mycompany.covidapp;
+
+import com.mycompany.covidapp.Booking;
+import java.util.ArrayList;
+
+/**
+ *
+ * @author sooyewlim
+ */
+public class OffShoreTestingSite implements Observer{
+    private String id;
+    private String name;
+    private String phoneNumber;
+    private String suburbName;
+    private String typeOfFacility;
+    private ArrayList<Observer> observers;
+    private boolean isOperating ;
+    private boolean allowOnSiteBooking;
+    private boolean allowOnSiteTesting;
+    private ArrayList<Booking> booking;
+    private String waitingTime;
+    private Observable testingSiteDataSource;
+    
+    public OffShoreTestingSite(Observable testingSiteDataSource){
+        this.testingSiteDataSource=testingSiteDataSource;
+        testingSiteDataSource.subscribe(this);
+        
+        
+    }
+
+    public boolean isIsOperating() {
+        return isOperating;
+    }
+
+    public boolean isAllowOnSiteBooking() {
+        return allowOnSiteBooking;
+    }
+
+    public boolean isAllowOnSiteTesting() {
+        return allowOnSiteTesting;
+    }
+
+    public String getWaitingTime() {
+        return waitingTime;
+    }
+    
+    
+    @Override
+    public void update(String id, String name, String phoneNumber, String suburbName, String typeOfFacility, Boolean isOperating, Boolean allowOnSiteBooking, Boolean allowOnSiteTesting,String waitingTime) {
+        this.observers=new ArrayList<Observer>();
+        this.id=id;
+        this.name=name;
+        this.phoneNumber=phoneNumber;
+        this.suburbName=suburbName;
+        this.typeOfFacility=typeOfFacility;
+        this.isOperating=isOperating;
+        this.allowOnSiteBooking=allowOnSiteBooking;
+        this.allowOnSiteTesting=allowOnSiteTesting;
+        this.waitingTime=waitingTime;
+    }
+
+    public String getSuburbName() {
+        return suburbName;
+    }
+
+    public String getTypeOfFacility() {
+        return typeOfFacility;
+    }
+    
+    
+    
+}
