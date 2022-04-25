@@ -17,7 +17,7 @@ public class OffShoreTestingSite implements Observer{
     private String phoneNumber;
     private String suburbName;
     private String typeOfFacility;
-    private ArrayList<Observer> observers;
+    //private ArrayList<Observer> observers;
     private boolean isOperating ;
     private boolean allowOnSiteBooking;
     private boolean allowOnSiteTesting;
@@ -50,8 +50,8 @@ public class OffShoreTestingSite implements Observer{
     
     
     @Override
-    public void update(String id, String name, String phoneNumber, String suburbName, String typeOfFacility, Boolean isOperating, Boolean allowOnSiteBooking, Boolean allowOnSiteTesting,String waitingTime) {
-        this.observers=new ArrayList<Observer>();
+    public void update(String id, String name, String phoneNumber, String suburbName, String typeOfFacility, Boolean isOperating, Boolean allowOnSiteBooking, Boolean allowOnSiteTesting,String waitingTime,ArrayList<Booking> booking) {
+        //this.observers=new ArrayList<Observer>();
         this.id=id;
         this.name=name;
         this.phoneNumber=phoneNumber;
@@ -61,6 +61,7 @@ public class OffShoreTestingSite implements Observer{
         this.allowOnSiteBooking=allowOnSiteBooking;
         this.allowOnSiteTesting=allowOnSiteTesting;
         this.waitingTime=waitingTime;
+        this.booking=booking;
     }
 
     public String getSuburbName() {
@@ -70,7 +71,23 @@ public class OffShoreTestingSite implements Observer{
     public String getTypeOfFacility() {
         return typeOfFacility;
     }
+
+    public String getId() {
+        return id;
+    }
     
+    public Booking searchBooking(String id){
+        for (Booking node:booking){
+            if(node.getId().equals('"'+id+'"')){
+                return node;               
+            }         
+        }
+        return null;
+    }
+
+    public ArrayList<Booking> getBooking() {
+        return booking;
+    }
     
-    
+        
 }

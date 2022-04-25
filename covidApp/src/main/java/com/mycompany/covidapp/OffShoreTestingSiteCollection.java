@@ -53,5 +53,17 @@ public class OffShoreTestingSiteCollection {
         }
         return null;
     }  
+    
+
+    public OffShoreTestingSite searchId(String facilityId) {
+        for (OffShoreTestingSite node:offShoreTesting){
+            if(node.getId().equals('"'+facilityId+'"')){
+                return node;
+            }
+        }
+        return null;
+    }
+
+    
      
 }

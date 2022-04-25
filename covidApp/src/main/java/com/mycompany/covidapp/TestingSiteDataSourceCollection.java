@@ -19,7 +19,7 @@ import java.util.ArrayList;
  * @author sooyewlim
  */
 public class TestingSiteDataSourceCollection {
-    private final String myApiKey = "BnjdRpBkzFWDDmtqFnQLRjqQnqBcnd";
+    private final String myApiKey = "HN9t9JCtwNhcCP6mnWBgg6prpcKrPw";
     private final String rootUrl = "https://fit3077.com/api/v1";
     private ArrayList<OffShoreTestingSiteDataSource> offShoreTestingDataSource;
     

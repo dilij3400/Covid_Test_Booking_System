@@ -47,10 +47,8 @@ public class OffShoreTestingSiteDataSource implements Observable{
     public void notifyObs() {
        
         for(Observer observer:observers){
-            System.out.println("peiqi");
             System.out.println(observer);
-            System.out.println("peiqi2");
-            observer.update(this.id, this.name, this.phoneNumber, this.suburbName, this.typeOfFacility, this.isOperating, this.allowOnSiteBooking, this.allowOnSiteTesting,this.waitingTime);
+            observer.update(this.id, this.name, this.phoneNumber, this.suburbName, this.typeOfFacility, this.isOperating, this.allowOnSiteBooking, this.allowOnSiteTesting,this.waitingTime,this.booking);
         }
     }
 
