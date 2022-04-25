@@ -10,6 +10,7 @@ import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
+import java.util.Base64;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -148,9 +149,10 @@ public class Login extends javax.swing.JFrame {
             else if (response.statusCode() == 200){
                 // Storing JWT Token
                 jsonNodeJWT = new ObjectMapper().readValue(response.body(), ObjectNode.class);
-//                System.out.println(jsonNodeJWT.get("jwt").textValue());
                 if(verifyJwt(jsonNodeJWT)){
                     jwt = jsonNodeJWT.get("jwt").textValue();
+                    
+                    jwtDecoder(jwt);
                 }
 
             }
@@ -227,6 +229,22 @@ public class Login extends javax.swing.JFrame {
         }
         
         return result;
+    }
+    
+    public void jwtDecoder(String jwt) throws Exception{
+        
+        String[] chunks = jwt.split("\\.");
+        
+        Base64.Decoder decoder = Base64.getUrlDecoder();
+
+        String header = new String(decoder.decode(chunks[0]));
+        String payload = new String(decoder.decode(chunks[1]));
+        
+        
+        ObjectNode jsonNode = new ObjectMapper().readValue(payload, ObjectNode.class);
+        
+       
+        System.out.println(jsonNode.get("username"));
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel1;
