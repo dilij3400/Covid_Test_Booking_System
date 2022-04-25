@@ -10,6 +10,7 @@ package com.mycompany.covidapp;
  */
 public class AbstractUser {
     
+    private String userID;
     private String userName;
     private String givenName;
     private String familyName;
@@ -60,10 +61,22 @@ public class AbstractUser {
         identity = newIdentity;
     }
 
+    public String getUserID() {
+        return userID;
+    }
+
+    public void setUserID(String userID) {
+        this.userID = userID;
+    }
+
     @Override
     public String toString() {
-        return "AbstractUser{" + "userName=" + userName + ", givenName=" + givenName + ", familyName=" + familyName + ", phoneNumber=" + phoneNumber + '}';
+        return "AbstractUser{" + "userID=" + userID + ", userName=" + userName + ", givenName=" + givenName + ", familyName=" + familyName + ", phoneNumber=" + phoneNumber + ", identity=" + identity + '}';
     }
+    
+    
+
+    
     
     
 }

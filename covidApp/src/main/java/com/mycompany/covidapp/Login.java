@@ -162,16 +162,20 @@ public class Login extends javax.swing.JFrame {
                     if (userNode.get("isCustomer").asBoolean()){
                         AbstractUser customer = Customer.getInstance();
                         
+                        customer.setUserID(userNode.get("sub").textValue());
                         customer.setUserName(userNode.get("username").textValue());
                         customer.setGivenName(userNode.get("givenName").textValue());
                         customer.setFamilyName(userNode.get("familyName").textValue());
                         customer.setPhoneNumber(userNode.get("phoneNumber").textValue());
+                        
+                        System.out.println(customer.toString());
                         
                     }
                     
                     if(userNode.get("isHealthcareWorker").asBoolean()){
                         AbstractUser admin = Administrator.getInstance();
                         
+                        admin.setUserID(userNode.get("sub").textValue());
                         admin.setUserName(userNode.get("username").textValue());
                         admin.setGivenName(userNode.get("givenName").textValue());
                         admin.setFamilyName(userNode.get("familyName").textValue());
@@ -182,6 +186,7 @@ public class Login extends javax.swing.JFrame {
                     if(userNode.get("isReceptionist").asBoolean()){
                         AbstractUser receptionist = Receptionist.getInstance();
                         
+                        receptionist.setUserID(userNode.get("sub").textValue());
                         receptionist.setUserName(userNode.get("username").textValue());
                         receptionist.setGivenName(userNode.get("givenName").textValue());
                         receptionist.setFamilyName(userNode.get("familyName").textValue());
