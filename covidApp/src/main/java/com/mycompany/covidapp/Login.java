@@ -70,12 +70,11 @@ public class Login extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(0, 183, Short.MAX_VALUE)
-                .addComponent(jLabel1)
-                .addGap(179, 179, 179))
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(234, 234, 234)
+                        .addComponent(login))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(153, 153, 153)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -84,14 +83,17 @@ public class Login extends javax.swing.JFrame {
                         .addGap(30, 30, 30)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(usernameText, javax.swing.GroupLayout.DEFAULT_SIZE, 144, Short.MAX_VALUE)
-                            .addComponent(passwordText)))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(244, 244, 244)
-                        .addComponent(messageLabel))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(234, 234, 234)
-                        .addComponent(login)))
+                            .addComponent(passwordText))))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGap(0, 166, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(jLabel1)
+                        .addGap(179, 179, 179))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(messageLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 233, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(135, 135, 135))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -108,9 +110,9 @@ public class Login extends javax.swing.JFrame {
                     .addComponent(passwordText, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(40, 40, 40)
                 .addComponent(login)
-                .addGap(18, 18, 18)
-                .addComponent(messageLabel)
-                .addContainerGap(37, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(messageLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(21, Short.MAX_VALUE))
         );
 
         pack();
@@ -123,6 +125,8 @@ public class Login extends javax.swing.JFrame {
         messageLabel.setText("");
         
         ObjectNode jsonNodeJWT;
+        
+        ObjectNode userNode;
         
         String jwt;
         
@@ -152,7 +156,38 @@ public class Login extends javax.swing.JFrame {
                 if(verifyJwt(jsonNodeJWT)){
                     jwt = jsonNodeJWT.get("jwt").textValue();
                     
-                    jwtDecoder(jwt);
+                    userNode = jwtDecoder(jwt);
+                    
+                    // Creating user based on user role
+                    if (userNode.get("isCustomer").asBoolean()){
+                        AbstractUser customer = Customer.getInstance();
+                        
+                        customer.setUserName(userNode.get("username").textValue());
+                        customer.setGivenName(userNode.get("givenName").textValue());
+                        customer.setFamilyName(userNode.get("familyName").textValue());
+                        customer.setPhoneNumber(userNode.get("phoneNumber").textValue());
+                        
+                    }
+                    
+                    if(userNode.get("isHealthcareWorker").asBoolean()){
+                        AbstractUser admin = Administrator.getInstance();
+                        
+                        admin.setUserName(userNode.get("username").textValue());
+                        admin.setGivenName(userNode.get("givenName").textValue());
+                        admin.setFamilyName(userNode.get("familyName").textValue());
+                        admin.setPhoneNumber(userNode.get("phoneNumber").textValue());
+                        
+                    }
+                    
+                    if(userNode.get("isReceptionist").asBoolean()){
+                        AbstractUser receptionist = Receptionist.getInstance();
+                        
+                        receptionist.setUserName(userNode.get("username").textValue());
+                        receptionist.setGivenName(userNode.get("givenName").textValue());
+                        receptionist.setFamilyName(userNode.get("familyName").textValue());
+                        receptionist.setPhoneNumber(userNode.get("phoneNumber").textValue());
+                        
+                    }
                 }
 
             }
@@ -231,20 +266,17 @@ public class Login extends javax.swing.JFrame {
         return result;
     }
     
-    public void jwtDecoder(String jwt) throws Exception{
+    public ObjectNode jwtDecoder(String jwt) throws Exception{
         
         String[] chunks = jwt.split("\\.");
         
         Base64.Decoder decoder = Base64.getUrlDecoder();
 
-        String header = new String(decoder.decode(chunks[0]));
         String payload = new String(decoder.decode(chunks[1]));
         
+        ObjectNode decodedJwtNode = new ObjectMapper().readValue(payload, ObjectNode.class);
         
-        ObjectNode jsonNode = new ObjectMapper().readValue(payload, ObjectNode.class);
-        
-       
-        System.out.println(jsonNode.get("username"));
+       return decodedJwtNode;
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel1;
