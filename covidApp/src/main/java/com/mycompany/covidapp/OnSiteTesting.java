@@ -5,6 +5,10 @@
 
 package com.mycompany.covidapp;
 
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 /**
  *
  * @author sooyewlim
@@ -139,11 +143,23 @@ public class OnSiteTesting extends javax.swing.JFrame {
     private void submitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_submitActionPerformed
         if(jCheckBox1.isSelected()|| jCheckBox2.isSelected()|| jCheckBox3.isSelected()|| jCheckBox4.isSelected()){
             textArea1.setText("He should do A PCR test");
-            booking.setTestType(TestType.PCR);
+            try {
+                booking.setTestType(TestType.PCR);
+            } catch (IOException ex) {
+                Logger.getLogger(OnSiteTesting.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (InterruptedException ex) {
+                Logger.getLogger(OnSiteTesting.class.getName()).log(Level.SEVERE, null, ex);
+            }
     }//GEN-LAST:event_submitActionPerformed
         else{
             textArea1.setText("He should do A RAT test");
-            booking.setTestType(TestType.RAT);
+            try {
+                booking.setTestType(TestType.RAT);
+            } catch (IOException ex) {
+                Logger.getLogger(OnSiteTesting.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (InterruptedException ex) {
+                Logger.getLogger(OnSiteTesting.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
     }
     /**
