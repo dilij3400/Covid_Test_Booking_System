@@ -122,6 +122,7 @@ public class Login extends javax.swing.JFrame {
         // TODO add your handling code here:
         
         AdminDashboard adminPage = new AdminDashboard();
+        SearchTestingSite searchPage = new SearchTestingSite();
         
         // reset display message
         messageLabel.setText("");
@@ -170,7 +171,7 @@ public class Login extends javax.swing.JFrame {
                         customer.setFamilyName(userNode.get("familyName").textValue());
                         customer.setPhoneNumber(userNode.get("phoneNumber").textValue());
                         
-                        System.out.println(customer.toString());
+                        searchPage.setVisible(true);
                         
                     }
                     
