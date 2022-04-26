@@ -121,6 +121,8 @@ public class Login extends javax.swing.JFrame {
     private void loginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loginActionPerformed
         // TODO add your handling code here:
         
+        AdminDashboard adminPage = new AdminDashboard();
+        
         // reset display message
         messageLabel.setText("");
         
@@ -192,6 +194,8 @@ public class Login extends javax.swing.JFrame {
                         receptionist.setFamilyName(userNode.get("familyName").textValue());
                         receptionist.setPhoneNumber(userNode.get("phoneNumber").textValue());
                         
+                        adminPage.setVisible(true);
+                        
                     }
                 }
 
@@ -243,7 +247,7 @@ public class Login extends javax.swing.JFrame {
         // reset result
         result = false;
         
-        String jsonString = "{\"jwt\":\"" + jsonNode.get("jwt").textValue() + "d" + "\"}";
+        String jsonString = "{\"jwt\":\"" + jsonNode.get("jwt").textValue() + "\"}";
         
         String usersLoginUrl = usersUrl + "/verify-token";
         HttpClient client = HttpClient.newHttpClient();

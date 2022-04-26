@@ -165,7 +165,7 @@ public class AdminDashboard extends javax.swing.JFrame {
                     break;
                 }   else if(bookingPin != inputPin){
                     output.setText("Booking does not exist");
-                }
+               }
            }
        }
            
