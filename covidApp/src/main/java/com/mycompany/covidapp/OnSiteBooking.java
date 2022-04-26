@@ -53,7 +53,7 @@ public class OnSiteBooking extends javax.swing.JFrame {
         customerIdText = new javax.swing.JTextField();
         facilityIdText = new javax.swing.JTextField();
         jButton1 = new javax.swing.JButton();
-        jLabel5 = new javax.swing.JLabel();
+        messageLabel = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -71,7 +71,7 @@ public class OnSiteBooking extends javax.swing.JFrame {
             }
         });
 
-        jLabel5.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        messageLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -95,9 +95,9 @@ public class OnSiteBooking extends javax.swing.JFrame {
                         .addGap(168, 168, 168)
                         .addComponent(jButton1))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(87, 87, 87)
-                        .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 232, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(177, Short.MAX_VALUE))
+                        .addGap(24, 24, 24)
+                        .addComponent(messageLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 429, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(43, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -115,7 +115,7 @@ public class OnSiteBooking extends javax.swing.JFrame {
                 .addGap(28, 28, 28)
                 .addComponent(jButton1)
                 .addGap(26, 26, 26)
-                .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(messageLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(101, Short.MAX_VALUE))
         );
 
@@ -130,7 +130,7 @@ public class OnSiteBooking extends javax.swing.JFrame {
         
         String usersUrl = rootUrl + "/user";
         
-        int statusCode = 0;
+        HttpResponse response;
         
         OffShoreTestingSite testingSite=offShoreTestingSiteCollection.searchId(facilityId);
         
@@ -144,7 +144,7 @@ public class OnSiteBooking extends javax.swing.JFrame {
                     .build();
             
             try{
-                HttpResponse response = client.send(request, HttpResponse.BodyHandlers.ofString());
+                response = client.send(request, HttpResponse.BodyHandlers.ofString());
                 
                 ObjectNode[] jsonNodes = new ObjectMapper().readValue(response.body().toString(), ObjectNode[].class);
                 
@@ -154,16 +154,17 @@ public class OnSiteBooking extends javax.swing.JFrame {
                     if(result.equals(customerId)){
                         
                         // Make booking
-                        statusCode = makeBooking(customerId, facilityId);
+                        response = makeBooking(customerId, facilityId);
                         
-                        if(statusCode == 201){
-                            System.out.println("Booking created successfully");
+                        if(response.statusCode() == 201){
+                            ObjectNode jsonNode = new ObjectMapper().readValue(response.body().toString(), ObjectNode.class);
+                            messageLabel.setText("Booking created successfully, your PIN number is : " + jsonNode.get("smsPin"));
                         }
-                        else if (statusCode == 404){
-                            System.out.println("A customer and/or testing site with the provided ID was not found.");
+                        else if (response.statusCode() == 404){
+                            messageLabel.setText("A customer and/or testing site with the provided ID was not found.");
                         }
                         else{
-                            System.out.println("Error");
+                            messageLabel.setText("Error");
                         }
                         break;
                     }
@@ -210,9 +211,7 @@ public class OnSiteBooking extends javax.swing.JFrame {
         });
     }
     
-    public int makeBooking (String customerId, String facilityId) throws Exception{
-        
-        int output;
+    public HttpResponse makeBooking (String customerId, String facilityId) throws Exception{
         
         String bookingUrl = rootUrl + "/booking";
         
@@ -228,16 +227,12 @@ public class OnSiteBooking extends javax.swing.JFrame {
         sdf.setTimeZone(TimeZone.getTimeZone("ACT"));
         String text = sdf.format(date);
         
-        System.out.println(text);
-        
         String jsonString = "{" +
                 "\"customerId\":\"" + customerId + "\","+ 
                 "\"testingSiteId\":\"" + facilityId + "\"," + 
                 "\"startTime\":\"" + text + "\"," +
                 "\"notes\":\"" + "none" + "\"," + 
                 "\"additionalInfo\":" + "{}" + "}";
-        
-        System.out.println(jsonString);
         
         HttpClient client = HttpClient.newHttpClient();
         HttpRequest request = HttpRequest
@@ -248,11 +243,8 @@ public class OnSiteBooking extends javax.swing.JFrame {
                 .build();
         
         HttpResponse response = client.send(request, HttpResponse.BodyHandlers.ofString());
-        System.out.println(response.body());
-        System.out.println(response.statusCode());
-        output = response.statusCode();
         
-        return output;
+        return response;
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -262,6 +254,6 @@ public class OnSiteBooking extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel messageLabel;
     // End of variables declaration//GEN-END:variables
 }
