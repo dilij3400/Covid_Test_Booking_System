@@ -79,7 +79,9 @@ public class TestingSiteDataSourceCollection {
             String bookingId=node.get("id").toString();
             String bookingPin = node.get("smsPin").toString();
             String bookingStatus = node.get("status").toString();
-            Booking newBooking= new Booking(bookingId, bookingPin, bookingStatus);
+            String userId=node.get("customer").get("id").toString();
+            userId = userId.replaceAll("^\"|\"$", "");
+            Booking newBooking= new Booking(bookingId, bookingPin, bookingStatus,userId);
             for (OffShoreTestingSiteDataSource testingSite:offShoreTestingDataSource ){
                 if (node.get("testingSite").get("id").toString().equals(testingSite.getId())){
                     testingSite.updateBooking(newBooking);

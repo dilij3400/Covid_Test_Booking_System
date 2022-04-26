@@ -22,53 +22,19 @@ public class Booking  {
     private String pin;
     private TestType testType;
     private String status;
+    private String patientId;
     //private ArrayList<Observer> observers;
-    public Booking(String id, String pin, String status){
+    public Booking(String id, String pin, String status,String patientId){
         this.id = id;
         this.pin = pin;
         this.status = status;
+        this.patientId=patientId;
     }
     
     public void setTestType(TestType testType) throws IOException, InterruptedException{
-        String jsonString="";
-        switch(testType){
-            case PCR:
-                jsonString="{\"additionalInfo\":" + "{\"testType\":\"PCR\"}"+"}";
-                //jsonString=JSON.stringify({additionalInfo:{testType:"PCR"});
-                break;
-            case RAT:
-                jsonString="{\"additionalInfo\":" + "{\"testType\":\"RAT\"}"+"}";
-                break;
-        }
-        this.testType=testType;
         
-        String bookingId=this.id.substring(1, this.id.length()-1);
-        String bookingUrl = rootUrl + "/booking/"+bookingId;
-        HttpClient client = HttpClient.newHttpClient();
-        HttpRequest request = HttpRequest.newBuilder(URI.create(bookingUrl))
-            .method("PATCH", HttpRequest.BodyPublishers.ofString(jsonString))
-            .setHeader("Authorization", myApiKey)
-            .header("Content-Type","application/json")
-            .build();
-        HttpResponse response = client.send(request, HttpResponse.BodyHandlers.ofString());
-        System.out.println(response.statusCode());
-        System.out.println(response.body());
-        System.out.println(bookingUrl);
-        System.out.println(jsonString);
     }
-//    public void setPin(String pin) throws IOException, InterruptedException{
-//        this.pin=pin;
-//        String jsonString="{\"additionalInfo\":" + "{\"pinCode\":"+pin+"}"+"}";
-//        String bookingId=this.id.substring(1, this.id.length()-1);
-//        String bookingUrl = rootUrl + "/booking/"+bookingId;
-//        HttpClient client = HttpClient.newHttpClient();
-//        HttpRequest request = HttpRequest.newBuilder(URI.create(bookingUrl))
-//            .method("PATCH", HttpRequest.BodyPublishers.ofString(jsonString))
-//            .setHeader("Authorization", myApiKey)
-//            .header("Content-Type","application/json")
-//            .build();
-//        HttpResponse response = client.send(request, HttpResponse.BodyHandlers.ofString());
-//    }
+
 
     public String getId() {
         return id;
