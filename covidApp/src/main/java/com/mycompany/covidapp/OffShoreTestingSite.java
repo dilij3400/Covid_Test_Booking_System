@@ -88,6 +88,11 @@ public class OffShoreTestingSite implements Observer{
     public ArrayList<Booking> getBooking() {
         return booking;
     }
+
+    @Override
+    public String toString() {
+        return "OffShoreTestingSite{" + "id=" + id + ", name=" + name + ", phoneNumber=" + phoneNumber + ", suburbName=" + suburbName + ", typeOfFacility=" + typeOfFacility + '}';
+    }
     
         
 }

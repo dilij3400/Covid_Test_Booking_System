@@ -10,7 +10,6 @@ import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.util.ArrayList;
-import org.mortbay.util.ajax.JSON;
 
 /**
  *
@@ -22,9 +21,12 @@ public class Booking  {
     private String id;
     private String pin;
     private TestType testType;
+    private String status;
     //private ArrayList<Observer> observers;
-    public Booking(String id){
-        this.id=id;
+    public Booking(String id, String pin, String status){
+        this.id = id;
+        this.pin = pin;
+        this.status = status;
     }
     
     public void setTestType(TestType testType) throws IOException, InterruptedException{
@@ -54,19 +56,19 @@ public class Booking  {
         System.out.println(bookingUrl);
         System.out.println(jsonString);
     }
-    public void setPin(String pin) throws IOException, InterruptedException{
-        this.pin=pin;
-        String jsonString="{\"additionalInfo\":" + "{\"pinCode\":"+pin+"}"+"}";
-        String bookingId=this.id.substring(1, this.id.length()-1);
-        String bookingUrl = rootUrl + "/booking/"+bookingId;
-        HttpClient client = HttpClient.newHttpClient();
-        HttpRequest request = HttpRequest.newBuilder(URI.create(bookingUrl))
-            .method("PATCH", HttpRequest.BodyPublishers.ofString(jsonString))
-            .setHeader("Authorization", myApiKey)
-            .header("Content-Type","application/json")
-            .build();
-        HttpResponse response = client.send(request, HttpResponse.BodyHandlers.ofString());
-    }
+//    public void setPin(String pin) throws IOException, InterruptedException{
+//        this.pin=pin;
+//        String jsonString="{\"additionalInfo\":" + "{\"pinCode\":"+pin+"}"+"}";
+//        String bookingId=this.id.substring(1, this.id.length()-1);
+//        String bookingUrl = rootUrl + "/booking/"+bookingId;
+//        HttpClient client = HttpClient.newHttpClient();
+//        HttpRequest request = HttpRequest.newBuilder(URI.create(bookingUrl))
+//            .method("PATCH", HttpRequest.BodyPublishers.ofString(jsonString))
+//            .setHeader("Authorization", myApiKey)
+//            .header("Content-Type","application/json")
+//            .build();
+//        HttpResponse response = client.send(request, HttpResponse.BodyHandlers.ofString());
+//    }
 
     public String getId() {
         return id;
@@ -76,6 +78,15 @@ public class Booking  {
         return testType;
     }
 
+    public String getPin() {
+        return pin;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    
     
 
 }

@@ -173,13 +173,13 @@ public class Login extends javax.swing.JFrame {
                     }
                     
                     if(userNode.get("isHealthcareWorker").asBoolean()){
-                        AbstractUser admin = Administrator.getInstance();
+                        AbstractUser healthCareWorker = HealthCareWorker.getInstance();
                         
-                        admin.setUserID(userNode.get("sub").textValue());
-                        admin.setUserName(userNode.get("username").textValue());
-                        admin.setGivenName(userNode.get("givenName").textValue());
-                        admin.setFamilyName(userNode.get("familyName").textValue());
-                        admin.setPhoneNumber(userNode.get("phoneNumber").textValue());
+                        healthCareWorker.setUserID(userNode.get("sub").textValue());
+                        healthCareWorker.setUserName(userNode.get("username").textValue());
+                        healthCareWorker.setGivenName(userNode.get("givenName").textValue());
+                        healthCareWorker.setFamilyName(userNode.get("familyName").textValue());
+                        healthCareWorker.setPhoneNumber(userNode.get("phoneNumber").textValue());
                         
                     }
                     
@@ -243,7 +243,7 @@ public class Login extends javax.swing.JFrame {
         // reset result
         result = false;
         
-        String jsonString = "{\"jwt\":\"" + jsonNode.get("jwt").textValue() + "\"}";
+        String jsonString = "{\"jwt\":\"" + jsonNode.get("jwt").textValue() + "d" + "\"}";
         
         String usersLoginUrl = usersUrl + "/verify-token";
         HttpClient client = HttpClient.newHttpClient();

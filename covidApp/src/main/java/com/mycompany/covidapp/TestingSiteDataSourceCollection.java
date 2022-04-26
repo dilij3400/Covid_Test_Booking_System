@@ -77,7 +77,9 @@ public class TestingSiteDataSourceCollection {
         
         for (ObjectNode node: jsonNodesBooking) {
             String bookingId=node.get("id").toString();
-            Booking newBooking= new Booking(bookingId);
+            String bookingPin = node.get("smsPin").toString();
+            String bookingStatus = node.get("status").toString();
+            Booking newBooking= new Booking(bookingId, bookingPin, bookingStatus);
             for (OffShoreTestingSiteDataSource testingSite:offShoreTestingDataSource ){
                 if (node.get("testingSite").get("id").toString().equals(testingSite.getId())){
                     testingSite.updateBooking(newBooking);

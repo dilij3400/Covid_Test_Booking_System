@@ -8,20 +8,20 @@ package com.mycompany.covidapp;
  *
  * @author ASUS
  */
-public class Administrator extends AbstractUser {
+public class HealthCareWorker extends AbstractUser {
     
-    private static Administrator instance;
+    private static HealthCareWorker instance;
 
-    public Administrator() {
+    public HealthCareWorker() {
         
         super();
         
         identity = new AdminIdentity();
     }
     
-    public static Administrator getInstance(){
+    public static HealthCareWorker getInstance(){
         if(instance == null){
-            instance = new Administrator();
+            instance = new HealthCareWorker();
         }
         
         return instance;
