@@ -4,7 +4,7 @@
  */
 package com.mycompany.covidapp;
 
-import com.mycompany.covidapp.Booking;
+import com.mycompany.covidapp.OnSiteBooking;
 import java.util.ArrayList;
 
 /**
@@ -21,7 +21,7 @@ public class OffShoreTestingSite implements Observer{
     private boolean isOperating ;
     private boolean allowOnSiteBooking;
     private boolean allowOnSiteTesting;
-    private ArrayList<Booking> booking;
+    private ArrayList<OnSiteBooking> booking;
     private String waitingTime;
     private Observable testingSiteDataSource;
     
@@ -50,7 +50,7 @@ public class OffShoreTestingSite implements Observer{
     
     
     @Override
-    public void update(String id, String name, String phoneNumber, String suburbName, String typeOfFacility, Boolean isOperating, Boolean allowOnSiteBooking, Boolean allowOnSiteTesting,String waitingTime,ArrayList<Booking> booking) {
+    public void update(String id, String name, String phoneNumber, String suburbName, String typeOfFacility, Boolean isOperating, Boolean allowOnSiteBooking, Boolean allowOnSiteTesting,String waitingTime,ArrayList<OnSiteBooking> booking) {
         //this.observers=new ArrayList<Observer>();
         this.id=id;
         this.name=name;
@@ -76,8 +76,8 @@ public class OffShoreTestingSite implements Observer{
         return id;
     }
     
-    public Booking searchBooking(String id){
-        for (Booking node:booking){
+    public OnSiteBooking searchBooking(String id){
+        for (OnSiteBooking node:booking){
             if(node.getId().equals('"'+id+'"')){
                 return node;               
             }         
@@ -85,7 +85,7 @@ public class OffShoreTestingSite implements Observer{
         return null;
     }
 
-    public ArrayList<Booking> getBooking() {
+    public ArrayList<OnSiteBooking> getBooking() {
         return booking;
     }
 

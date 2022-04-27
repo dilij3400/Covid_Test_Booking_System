@@ -7,7 +7,7 @@ package com.mycompany.covidapp;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
-import com.mycompany.covidapp.Booking;
+import com.mycompany.covidapp.OnSiteBooking;
 import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
@@ -44,6 +44,8 @@ public class TestingSiteDataSourceCollection {
     public ArrayList<OffShoreTestingSiteDataSource> getOffShoreTestingDataSource() {
         return offShoreTestingDataSource;
     }
+    
+    
 
     public void setOffShoreTestingDataSource() throws Exception{
         String usersUrl = rootUrl + "/testing-site";
@@ -76,12 +78,12 @@ public class TestingSiteDataSourceCollection {
         }
         
         for (ObjectNode node: jsonNodesBooking) {
-            String bookingId=node.get("id").toString();
-            String bookingPin = node.get("smsPin").toString();
-            String bookingStatus = node.get("status").toString();
-            String userId=node.get("customer").get("id").toString();
-            userId = userId.replaceAll("^\"|\"$", "");
-            Booking newBooking= new Booking(bookingId, bookingPin, bookingStatus,userId);
+            String bookingId=node.get("id").toString().replaceAll("^\"|\"$", "");
+            String bookingPin = node.get("smsPin").toString().replaceAll("^\"|\"$", "");
+            HomeBookingRATStatus bookingStatus = HomeBookingRATStatus.valueOf(node.get("status").toString().replaceAll("^\"|\"$", ""));
+            String userId=node.get("customer").get("id").toString().replaceAll("^\"|\"$", "");
+            OnSiteBooking newBooking= new OnSiteBooking(userId,bookingId);
+            newBooking.setPin(bookingPin);
             for (OffShoreTestingSiteDataSource testingSite:offShoreTestingDataSource ){
                 if (node.get("testingSite").get("id").toString().equals(testingSite.getId())){
                     testingSite.updateBooking(newBooking);
@@ -90,6 +92,17 @@ public class TestingSiteDataSourceCollection {
             
         }
     }
+
+    public OffShoreTestingSiteDataSource searchId(String facilityId) {
+        for (OffShoreTestingSiteDataSource node:offShoreTestingDataSource){
+            if(node.getId().equals(facilityId)){
+                return node;
+            }
+        }
+        return null;
+    }
+
+    
     
     
     

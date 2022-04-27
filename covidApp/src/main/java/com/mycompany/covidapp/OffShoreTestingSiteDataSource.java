@@ -4,9 +4,22 @@
  */
 package com.mycompany.covidapp;
 
-import com.mycompany.covidapp.Booking;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ObjectNode;
+import com.mycompany.covidapp.OnSiteBooking;
+import java.io.IOException;
+import java.net.URI;
+import java.net.http.HttpClient;
+import java.net.http.HttpRequest;
+import java.net.http.HttpResponse;
+import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-
+import java.util.Date;
+import java.util.TimeZone;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 
 /**
@@ -14,6 +27,9 @@ import java.util.ArrayList;
  * @author sooyewlim
  */
 public class OffShoreTestingSiteDataSource implements Observable{
+    private static final String myApiKey = "zwH7TgdPHhnFrcKQtWbzqnfMMM9MKr";
+    
+    private static final String rootUrl = "https://fit3077.com/api/v1";
     
     private String id;
     private String name;
@@ -24,13 +40,14 @@ public class OffShoreTestingSiteDataSource implements Observable{
     private boolean isOperating ;
     private boolean allowOnSiteBooking;
     private boolean allowOnSiteTesting;
-    private ArrayList<Booking> booking;
+    private ArrayList<OnSiteBooking> booking;
     private String waitingTime;
     
     public OffShoreTestingSiteDataSource(){
         this.observers=new ArrayList<Observer>();
-        this.booking=new ArrayList<Booking>();
+        this.booking=new ArrayList<OnSiteBooking>();
     }
+    
     @Override
     public void subscribe(Observer observer) {
         this.observers.add(observer);
@@ -88,7 +105,7 @@ public class OffShoreTestingSiteDataSource implements Observable{
         return allowOnSiteTesting;
     }
 
-    public ArrayList<Booking> getBooking() {
+    public ArrayList<OnSiteBooking> getBooking() {
         return booking;
     }
     
@@ -122,9 +139,48 @@ public class OffShoreTestingSiteDataSource implements Observable{
         this.allowOnSiteTesting=allowOnSiteTesting;
         notifyObs();
     }
-    public void updateBooking(Booking booking){
-        this.booking.add(booking);
+    public HttpResponse addBooking(String patientId, String id) throws IOException, InterruptedException{
+        this.booking.add(new OnSiteBooking(patientId,id));
+        
         updateWaitingTime();
         notifyObs();
+        String bookingUrl = rootUrl + "/booking";
+        
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");  
+        LocalDateTime now = LocalDateTime.now(); 
+        
+        // Input
+        Date date = new Date(System.currentTimeMillis());
+
+        // Conversion
+        SimpleDateFormat sdf;
+        sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSXXX");
+        sdf.setTimeZone(TimeZone.getTimeZone("ACT"));
+        String text = sdf.format(date);
+        
+        String jsonString = "{" +
+                "\"customerId\":\"" + patientId + "\","+ 
+                "\"testingSiteId\":\"" + id + "\"," + 
+                "\"startTime\":\"" + text + "\"," +
+                "\"notes\":\"" + "none" + "\"," + 
+                "\"additionalInfo\":" + "{}" + "}";
+        
+        HttpClient client = HttpClient.newHttpClient();
+        HttpRequest request = HttpRequest
+                .newBuilder(URI.create(bookingUrl))
+                .setHeader("Authorization", myApiKey)
+                .header("Content-Type","application/json")
+                .POST(HttpRequest.BodyPublishers.ofString(jsonString))
+                .build();
+        
+        HttpResponse response = client.send(request, HttpResponse.BodyHandlers.ofString());
+        return response;
+        
+    }
+    public void updateBooking(OnSiteBooking newBooking){
+        booking.add(newBooking);
+        this.updateWaitingTime();
+        notifyObs();
+        
     }
 }

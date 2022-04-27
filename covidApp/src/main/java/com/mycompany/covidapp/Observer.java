@@ -12,7 +12,7 @@ import java.util.ArrayList;
  */
 public interface Observer {
    
-    public void update(String id, String name,String phoneNumber,String suburbName,String typeOfFacility,Boolean isOperating ,Boolean allowOnSiteBooking,Boolean allowOnSiteTesting,String waitingTime,ArrayList<Booking> booking);
+    public void update(String id, String name,String phoneNumber,String suburbName,String typeOfFacility,Boolean isOperating ,Boolean allowOnSiteBooking,Boolean allowOnSiteTesting,String waitingTime,ArrayList<OnSiteBooking> booking);
         
     
 }

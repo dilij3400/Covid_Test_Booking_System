@@ -122,7 +122,7 @@ public class OnSiteTestingVeritication extends javax.swing.JFrame {
         String facilityId=facilityIdText.getText().trim();
         String bookingId=bookingText.getText().trim();
         String result;
-        Booking currentUserBooking;
+        OnSiteBooking currentUserBooking;
         OffShoreTestingSite testingSite=offShoreTestingSiteCollection.searchId(facilityId);
         if (testingSite!=null){
             currentUserBooking=testingSite.searchBooking(bookingId);

@@ -149,13 +149,13 @@ public class AdminDashboard extends javax.swing.JFrame {
         String facilityId=facilityIdText.getText().trim();
         String pinNumber=pinNumberText.getText().trim();
        
-        ArrayList<Booking> bookings;
+        ArrayList<OnSiteBooking> bookings;
         OffShoreTestingSite testingSite=offShoreTestingSiteCollection.searchId(facilityId);
         System.out.println("testing site : " + testingSite.toString());
         if (testingSite!=null){
             bookings = testingSite.getBooking();
                       
-            for (Booking items:bookings){
+            for (OnSiteBooking items:bookings){
                 String result = items.getPin().replaceAll("^\"|\"$", "");
                 int bookingPin = Integer.parseInt(result);
                 int inputPin = Integer.parseInt(pinNumber);
@@ -178,7 +178,7 @@ public class AdminDashboard extends javax.swing.JFrame {
     private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
         // TODO add your handling code here:
         
-        new OnSiteBooking().setVisible(true);
+        new OnSiteBookingPage().setVisible(true);
     }//GEN-LAST:event_jMenuItem1ActionPerformed
 
     /**

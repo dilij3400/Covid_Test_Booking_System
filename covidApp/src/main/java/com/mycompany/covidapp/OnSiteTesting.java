@@ -14,7 +14,7 @@ import java.util.logging.Logger;
  * @author sooyewlim
  */
 public class OnSiteTesting extends javax.swing.JFrame {
-    private Booking booking;
+    private OnSiteBooking booking;
     /** Creates new form OnSiteTesting */
     public OnSiteTesting() {
      
@@ -22,7 +22,7 @@ public class OnSiteTesting extends javax.swing.JFrame {
 
     }
 
-    public void setBooking(Booking booking) {
+    public void setBooking(OnSiteBooking booking) {
         this.booking = booking;
     }
     
