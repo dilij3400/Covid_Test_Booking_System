@@ -10,14 +10,14 @@ import java.util.ArrayList;
  *
  * @author sooyewlim
  */
-public class OnSiteTestingVeritication extends javax.swing.JFrame {
+public class OnSiteTestingVerification extends javax.swing.JFrame {
     
     OffShoreTestingSiteCollection offShoreTestingSiteCollection=OffShoreTestingSiteCollection.getInstance();
 
     /**
      * Creates new form OnSiteTestingVeritication
      */
-    public OnSiteTestingVeritication() {
+    public OnSiteTestingVerification() {
         initComponents();
     }
 
@@ -161,20 +161,21 @@ public class OnSiteTestingVeritication extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(OnSiteTestingVeritication.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(OnSiteTestingVerification.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(OnSiteTestingVeritication.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(OnSiteTestingVerification.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(OnSiteTestingVeritication.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(OnSiteTestingVerification.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(OnSiteTestingVeritication.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(OnSiteTestingVerification.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new OnSiteTestingVeritication().setVisible(true);
+                new OnSiteTestingVerification().setVisible(true);
             }
         });
     }

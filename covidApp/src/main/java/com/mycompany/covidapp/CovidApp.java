@@ -13,6 +13,6 @@ public class CovidApp {
 
     public static void main(String[] args) {
         System.out.println("Hello World this is Jaya!");
-        new OnSiteTestingVeritication().setVisible(true);
+        new Login().setVisible(true);
     }
 }

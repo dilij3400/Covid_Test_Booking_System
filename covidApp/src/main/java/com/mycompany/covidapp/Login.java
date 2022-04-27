@@ -121,9 +121,9 @@ public class Login extends javax.swing.JFrame {
     private void loginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loginActionPerformed
         // TODO add your handling code here:
         
-        AdminDashboard adminPage = new AdminDashboard();
-        SearchTestingSite searchPage = new SearchTestingSite();
-        
+        AdminOption adminPage = new AdminOption();
+        HealthCareWorkerOption healthCarePage=new HealthCareWorkerOption();
+        UserOption userOption=new UserOption();
         // reset display message
         messageLabel.setText("");
         
@@ -171,7 +171,7 @@ public class Login extends javax.swing.JFrame {
                         customer.setFamilyName(userNode.get("familyName").textValue());
                         customer.setPhoneNumber(userNode.get("phoneNumber").textValue());
                         
-                        searchPage.setVisible(true);
+                        userOption.setVisible(true);
                         
                     }
                     
@@ -183,6 +183,7 @@ public class Login extends javax.swing.JFrame {
                         healthCareWorker.setGivenName(userNode.get("givenName").textValue());
                         healthCareWorker.setFamilyName(userNode.get("familyName").textValue());
                         healthCareWorker.setPhoneNumber(userNode.get("phoneNumber").textValue());
+                        healthCarePage.setVisible(true);
                         
                     }
                     
@@ -194,7 +195,6 @@ public class Login extends javax.swing.JFrame {
                         receptionist.setGivenName(userNode.get("givenName").textValue());
                         receptionist.setFamilyName(userNode.get("familyName").textValue());
                         receptionist.setPhoneNumber(userNode.get("phoneNumber").textValue());
-                        
                         adminPage.setVisible(true);
                         
                     }
