@@ -98,7 +98,7 @@ public class UserOption extends javax.swing.JFrame {
     }//GEN-LAST:event_bookHomeTestingOnlineActionPerformed
 
     private void verifyBookingStatusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_verifyBookingStatusActionPerformed
-        new VerifyBookingStatus().setVisible(true);
+        new VerifyBookingStatusUser().setVisible(true);
     }//GEN-LAST:event_verifyBookingStatusActionPerformed
    
     /**

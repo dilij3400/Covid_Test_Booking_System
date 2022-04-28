@@ -71,7 +71,7 @@ public class VerifyBookingStatus extends javax.swing.JFrame {
         output.setRows(5);
         jScrollPane1.setViewportView(output);
 
-        jButton1.setText("Submit");
+        jButton1.setText("Check");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1ActionPerformed(evt);
