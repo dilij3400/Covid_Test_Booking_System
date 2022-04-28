@@ -84,6 +84,21 @@ public class OffShoreTestingSite implements Observer{
         }
         return null;
     }
+    
+    public OnSiteBooking searchBookingPin(String pinCode){
+        OnSiteBooking bookingNode=null;
+        for (OnSiteBooking node:booking){
+            int bookingPin = Integer.parseInt(node.getPin());
+            int inputPin = Integer.parseInt(pinCode);
+            if(bookingPin == inputPin){
+                
+                return node;               
+            }
+            
+            }
+        return bookingNode;
+        
+    }
 
     public ArrayList<OnSiteBooking> getBooking() {
         return booking;
