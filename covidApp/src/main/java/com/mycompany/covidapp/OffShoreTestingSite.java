@@ -78,7 +78,7 @@ public class OffShoreTestingSite implements Observer{
     
     public OnSiteBooking searchBooking(String id){
         for (OnSiteBooking node:booking){
-            if(node.getId().equals('"'+id+'"')){
+            if(node.getId().equals(id)){
                 return node;               
             }         
         }
