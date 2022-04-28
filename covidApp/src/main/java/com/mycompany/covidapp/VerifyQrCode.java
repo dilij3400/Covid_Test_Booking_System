@@ -39,7 +39,8 @@ public class VerifyQrCode extends javax.swing.JFrame {
 
         jLabel1.setText("Please enter the Qr code");
 
-        jButton1.setLabel("Verity");
+        jButton1.setText("Verify");
+        jButton1.setActionCommand("Verify");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1ActionPerformed(evt);

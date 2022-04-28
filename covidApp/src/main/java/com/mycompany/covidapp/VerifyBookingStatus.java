@@ -52,8 +52,6 @@ public class VerifyBookingStatus extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         facilityIdText = new javax.swing.JTextField();
         jMenuBar1 = new javax.swing.JMenuBar();
-        jMenu1 = new javax.swing.JMenu();
-        jMenuItem1 = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -79,19 +77,6 @@ public class VerifyBookingStatus extends javax.swing.JFrame {
         });
 
         jLabel1.setText("Facility Id");
-
-        jMenu1.setText("Add");
-
-        jMenuItem1.setText("Book Test");
-        jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem1ActionPerformed(evt);
-            }
-        });
-        jMenu1.add(jMenuItem1);
-
-        jMenuBar1.add(jMenu1);
-
         setJMenuBar(jMenuBar1);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -137,7 +122,7 @@ public class VerifyBookingStatus extends javax.swing.JFrame {
                         .addComponent(jButton1)))
                 .addGap(35, 35, 35)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(38, Short.MAX_VALUE))
+                .addContainerGap(60, Short.MAX_VALUE))
         );
 
         pack();
@@ -179,12 +164,6 @@ public class VerifyBookingStatus extends javax.swing.JFrame {
     private void pinNumberTextActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_pinNumberTextActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_pinNumberTextActionPerformed
-
-    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
-        // TODO add your handling code here:
-        
-        new OnSiteBookingPage().setVisible(true);
-    }//GEN-LAST:event_jMenuItem1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -228,9 +207,7 @@ public class VerifyBookingStatus extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JMenu jMenu1;
     private javax.swing.JMenuBar jMenuBar1;
-    private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel nameLabel;
     private javax.swing.JTextArea output;

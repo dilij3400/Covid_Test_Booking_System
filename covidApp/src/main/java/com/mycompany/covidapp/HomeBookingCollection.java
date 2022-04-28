@@ -61,10 +61,10 @@ public class HomeBookingCollection {
                 } catch (InterruptedException ex) {
                     Logger.getLogger(HomeBookingCollection.class.getName()).log(Level.SEVERE, null, ex);
                 }
-                return "QrCode is Valid, you can proceed to get your textkit";
+                return "Qr Code is Valid, you can proceed to get your testkit";
             }
         }
-        return "qr code is invalid";
+        return "Qr code is invalid";
     }
     
     public String[] addHomeBooking(String customerId,HomeBookingRatStatus bookingStatus) throws IOException, InterruptedException{
