@@ -119,6 +119,7 @@ public class OnSiteTestingVerification extends javax.swing.JFrame {
     }//GEN-LAST:event_bookingTextActionPerformed
 
     private void button1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button1ActionPerformed
+        OffShoreTestingSiteCollection.getInstance();
         String facilityId=facilityIdText.getText().trim();
         String bookingId=bookingText.getText().trim();
         String result;
