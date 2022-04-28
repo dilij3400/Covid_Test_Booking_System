@@ -94,6 +94,9 @@
       </Properties>
     </Component>
     <Component class="java.awt.TextField" name="bookingText">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="8e5c5047-cc18-462b-a0a4-901aa1caffbc"/>
+      </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="bookingTextActionPerformed"/>
       </Events>
@@ -104,6 +107,12 @@
       </Properties>
     </Component>
     <Component class="java.awt.TextField" name="facilityIdText">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="ccad0b5b-0786-42d2-802d-3497c5eda14e"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="facilityIdTextActionPerformed"/>
+      </Events>
     </Component>
     <Component class="java.awt.Button" name="button1">
       <Properties>
