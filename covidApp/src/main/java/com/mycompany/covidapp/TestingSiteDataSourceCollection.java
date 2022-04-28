@@ -72,7 +72,7 @@ public class TestingSiteDataSourceCollection {
         for (ObjectNode node: jsonNodesTestingSite) {
             OffShoreTestingSiteDataSource offShoreTestingSiteDataSource=new OffShoreTestingSiteDataSource();
             
-            offShoreTestingSiteDataSource.updateEverything(node.get("id").toString(), node.get("name").toString(),node.get("phoneNumber").toString(),node.get("address").get("suburb").toString(),node.get("additionalInfo").get("typeOfFacility").toString(),Boolean.parseBoolean(node.get("additionalInfo").get("isOperating").toString()) ,Boolean.parseBoolean(node.get("additionalInfo").get("allowOnSiteBooking").toString()),Boolean.parseBoolean(node.get("additionalInfo").get("allowOnSiteTesting").toString()));
+            offShoreTestingSiteDataSource.updateEverything(node.get("id").toString().replaceAll("^\"|\"$", ""), node.get("name").toString().replaceAll("^\"|\"$", ""),node.get("phoneNumber").toString().replaceAll("^\"|\"$", ""),node.get("address").get("suburb").toString().replaceAll("^\"|\"$", ""),node.get("additionalInfo").get("typeOfFacility").toString().replaceAll("^\"|\"$", ""),Boolean.parseBoolean(node.get("additionalInfo").get("isOperating").toString()) ,Boolean.parseBoolean(node.get("additionalInfo").get("allowOnSiteBooking").toString()),Boolean.parseBoolean(node.get("additionalInfo").get("allowOnSiteTesting").toString()));
             System.out.println("search2");
             offShoreTestingDataSource.add(offShoreTestingSiteDataSource);
         }

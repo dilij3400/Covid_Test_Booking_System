@@ -47,7 +47,7 @@ public class OffShoreTestingSiteCollection {
         for (OffShoreTestingSite node:offShoreTesting){
             System.out.println(node.getSuburbName());
             System.out.println(node.getTypeOfFacility());
-            if(node.getSuburbName().equals('"'+suburbName+'"') && node.getTypeOfFacility().equals('"'+typeOfFacility+'"')){
+            if(node.getSuburbName().equals(suburbName) && node.getTypeOfFacility().equals(typeOfFacility)){
                 return node;
             }
         }
@@ -57,7 +57,7 @@ public class OffShoreTestingSiteCollection {
 
     public OffShoreTestingSite searchId(String facilityId) {
         for (OffShoreTestingSite node:offShoreTesting){
-            if(node.getId().equals('"'+facilityId+'"')){
+            if(node.getId().equals(facilityId)){
                 return node;
             }
         }

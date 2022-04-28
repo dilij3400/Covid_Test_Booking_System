@@ -153,8 +153,8 @@ public class VerifyBookingStatus extends javax.swing.JFrame {
        
         ArrayList<OnSiteBooking> bookings;
         OffShoreTestingSite testingSite=offShoreTestingSiteCollection.searchId(facilityId);
-        System.out.println("testing site : " + testingSite.toString());
-        if (testingSite!=null){
+      
+        if (testingSite != null){
             bookings = testingSite.getBooking();
                       
             for (OnSiteBooking items:bookings){
@@ -170,6 +170,9 @@ public class VerifyBookingStatus extends javax.swing.JFrame {
                }
            }
        }
+        else{
+            output.setText("Facility does not exist");
+        }
            
     }//GEN-LAST:event_jButton1ActionPerformed
 

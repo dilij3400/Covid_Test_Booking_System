@@ -134,8 +134,12 @@ public class OnSiteBookingPage extends javax.swing.JFrame {
         
         OffShoreTestingSite testingSite=offShoreTestingSiteCollection.searchId(facilityId);
         
-        
-        if (testingSite!=null){
+        // Check if facility exists
+        if (testingSite == null){
+            messageLabel.setText("Facility does not exist");
+        }
+        else{
+            if (testingSite!=null){
             
             HttpClient client = HttpClient.newHttpClient();
             HttpRequest request = HttpRequest
@@ -152,14 +156,18 @@ public class OnSiteBookingPage extends javax.swing.JFrame {
                 for (ObjectNode node: jsonNodes) {
                     String id = node.get("id").toString();
                     String result = id.replaceAll("^\"|\"$", "");
-                    if(result.equals(customerId)){
+                    if(!result.equals(customerId)){
                         
+                        messageLabel.setText("Customer does not exist");
+                    }
+                    else{
                         TestingSiteDataSourceCollection testingSiteDataSourceCollection=TestingSiteDataSourceCollection.getInstance();
                         OffShoreTestingSiteDataSource offShoreTestingSiteDataSource=testingSiteDataSourceCollection.searchId(facilityId);
                         
                         // Make booking
                         
                         response = offShoreTestingSiteDataSource.addBooking(customerId,facilityId);
+                        
                         
                         if(response.statusCode() == 201){
                             ObjectNode jsonNode = new ObjectMapper().readValue(response.body().toString(), ObjectNode.class);
@@ -178,6 +186,7 @@ public class OnSiteBookingPage extends javax.swing.JFrame {
             catch (Exception e){
                 Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, e);
             }
+        }
         }
     }//GEN-LAST:event_jButton1ActionPerformed
 
