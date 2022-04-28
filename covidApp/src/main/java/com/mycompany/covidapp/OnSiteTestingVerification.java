@@ -43,6 +43,7 @@ public class OnSiteTestingVerification extends javax.swing.JFrame {
 
         label1.setText("Please enter resident's Booking ID or PIN code");
 
+        bookingText.setText("8e5c5047-cc18-462b-a0a4-901aa1caffbc");
         bookingText.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 bookingTextActionPerformed(evt);
@@ -50,6 +51,13 @@ public class OnSiteTestingVerification extends javax.swing.JFrame {
         });
 
         label2.setText("Enter the facility ID");
+
+        facilityIdText.setText("ccad0b5b-0786-42d2-802d-3497c5eda14e");
+        facilityIdText.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                facilityIdTextActionPerformed(evt);
+            }
+        });
 
         button1.setLabel(" Verify");
         button1.addActionListener(new java.awt.event.ActionListener() {
@@ -144,6 +152,10 @@ public class OnSiteTestingVerification extends javax.swing.JFrame {
 
 
     }//GEN-LAST:event_button1ActionPerformed
+
+    private void facilityIdTextActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_facilityIdTextActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_facilityIdTextActionPerformed
 
     /**
      * @param args the command line arguments

@@ -86,7 +86,7 @@ public class TestingSiteDataSourceCollection {
             newBooking.setPin(bookingPin);
             for (OffShoreTestingSiteDataSource testingSite:offShoreTestingDataSource ){
                 if (node.get("testingSite").toString().equals("null")==false){
-                if (node.get("testingSite").get("id").toString().equals(testingSite.getId())){
+                if (node.get("testingSite").get("id").toString().replaceAll("^\"|\"$", "").equals(testingSite.getId())){
                     newBooking.setStatus(bookingStatus);
                     testingSite.updateBooking(newBooking);
                 }
