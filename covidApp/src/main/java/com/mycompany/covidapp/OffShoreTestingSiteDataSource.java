@@ -140,7 +140,7 @@ public class OffShoreTestingSiteDataSource implements Observable{
         notifyObs();
     }
     public HttpResponse addBooking(String patientId, String id) throws IOException, InterruptedException{
-        this.booking.add(new OnSiteBooking(patientId,id));
+        this.updateBooking(new OnSiteBooking(patientId,id));
         
         updateWaitingTime();
         notifyObs();

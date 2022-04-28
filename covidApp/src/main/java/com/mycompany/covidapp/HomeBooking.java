@@ -16,14 +16,16 @@ import java.net.http.HttpResponse;
  */
 public class HomeBooking extends Booking{
     private String qrCode;
-    private HomeBookingRATStatus status;
+    private HomeBookingRatStatus status;
     private static final String myApiKey = "zwH7TgdPHhnFrcKQtWbzqnfMMM9MKr";
     private static final String rootUrl = "https://fit3077.com/api/v1";
+    private String videoUrl;
     
-    public HomeBooking(String patientId,  String id, HomeBookingRATStatus status,String qrCode){
+    public HomeBooking(String patientId,  String id, HomeBookingRatStatus status,String qrCode,String videoUrl){
         super(patientId,id);
         this.qrCode=qrCode;
         this.status=status;
+        this.videoUrl=videoUrl;
         
     }
 
@@ -31,11 +33,11 @@ public class HomeBooking extends Booking{
         return qrCode;
     }
 
-    public HomeBookingRATStatus getStatus() {
+    public HomeBookingRatStatus getStatus() {
         return status;
     }
 
-    public void setStatus(HomeBookingRATStatus status) throws IOException, InterruptedException {
+    public void setStatus(HomeBookingRatStatus status) throws IOException, InterruptedException {
         this.status = status;
         String bookingUrl = rootUrl + "/booking"+this.getId();
         String jsonString = "{" +"\"additionalInfo\":" + "{"+"\"ratStatus\":"+"\""+getStatus()+"\""+"}" + "}";

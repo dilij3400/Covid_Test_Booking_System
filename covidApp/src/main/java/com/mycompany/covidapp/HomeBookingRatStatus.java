@@ -8,8 +8,8 @@ package com.mycompany.covidapp;
  *
  * @author sooyewlim
  */
-public enum HomeBookingRATStatus {
+public enum HomeBookingRatStatus {
     RATNEEDED,
-    WITHRAT,
+    WITHRAT;
     
 }

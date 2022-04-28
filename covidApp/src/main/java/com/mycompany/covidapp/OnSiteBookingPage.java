@@ -92,12 +92,12 @@ public class OnSiteBookingPage extends javax.swing.JFrame {
                                 .addComponent(customerIdText, javax.swing.GroupLayout.PREFERRED_SIZE, 164, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(168, 168, 168)
+                        .addGap(153, 153, 153)
                         .addComponent(jButton1))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(24, 24, 24)
                         .addComponent(messageLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 429, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(43, Short.MAX_VALUE))
+                .addContainerGap(312, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -112,11 +112,11 @@ public class OnSiteBookingPage extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(facilityIdText, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(28, 28, 28)
-                .addComponent(jButton1)
-                .addGap(26, 26, 26)
+                .addGap(38, 38, 38)
                 .addComponent(messageLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(101, Short.MAX_VALUE))
+                .addGap(45, 45, 45)
+                .addComponent(jButton1)
+                .addContainerGap(72, Short.MAX_VALUE))
         );
 
         pack();
@@ -217,41 +217,7 @@ public class OnSiteBookingPage extends javax.swing.JFrame {
         });
     }
     
-    public HttpResponse makeBooking (String customerId, String facilityId) throws Exception{
-        
-        String bookingUrl = rootUrl + "/booking";
-        
-        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");  
-        LocalDateTime now = LocalDateTime.now(); 
-        
-        // Input
-        Date date = new Date(System.currentTimeMillis());
-
-        // Conversion
-        SimpleDateFormat sdf;
-        sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSXXX");
-        sdf.setTimeZone(TimeZone.getTimeZone("ACT"));
-        String text = sdf.format(date);
-        
-        String jsonString = "{" +
-                "\"customerId\":\"" + customerId + "\","+ 
-                "\"testingSiteId\":\"" + facilityId + "\"," + 
-                "\"startTime\":\"" + text + "\"," +
-                "\"notes\":\"" + "none" + "\"," + 
-                "\"additionalInfo\":" + "{}" + "}";
-        
-        HttpClient client = HttpClient.newHttpClient();
-        HttpRequest request = HttpRequest
-                .newBuilder(URI.create(bookingUrl))
-                .setHeader("Authorization", myApiKey)
-                .header("Content-Type","application/json")
-                .POST(HttpRequest.BodyPublishers.ofString(jsonString))
-                .build();
-        
-        HttpResponse response = client.send(request, HttpResponse.BodyHandlers.ofString());
-        
-        return response;
-    }
+    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextField customerIdText;

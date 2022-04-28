@@ -111,12 +111,12 @@ public class BookingTestingOnlinePage extends javax.swing.JFrame {
     private void button1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button1ActionPerformed
         String customerId =textField1.getText().toString().trim();
         String ratNeeded=jComboBox1.getSelectedItem().toString();
-        HomeBookingRATStatus ratStatus;
+        HomeBookingRatStatus ratStatus;
         if(ratNeeded.equals("Yes")){
-            ratStatus=HomeBookingRATStatus.RATNEEDED;
+            ratStatus=HomeBookingRatStatus.RATNEEDED;
         }
         else{
-            ratStatus=HomeBookingRATStatus.WITHRAT;
+            ratStatus=HomeBookingRatStatus.WITHRAT;
         }
         HomeBookingCollection homeBookingCollection=null;
         try {
@@ -128,9 +128,11 @@ public class BookingTestingOnlinePage extends javax.swing.JFrame {
         }
         System.out.println("hi booking testing online page");
         try {
-            String qrcode =homeBookingCollection.addHomeBooking(customerId,ratStatus);
+            String [] qrCodeAndUrl =homeBookingCollection.addHomeBooking(customerId,ratStatus);
+            String qrCode=qrCodeAndUrl[0];
+            String videoUrl=qrCodeAndUrl[1];
             if(ratNeeded.equals("Yes")){
-            textArea1.setText(customerId+"'s Home Booking has been book and this is your Qrcode:"+qrcode);
+            textArea1.setText(customerId+"'s Home Booking has been book and this is your Qrcode:"+qrCode+"\n and here is your video conferencing link: "+videoUrl);
             }
             else{
             textArea1.setText(customerId+"'s Home Booking has been book");

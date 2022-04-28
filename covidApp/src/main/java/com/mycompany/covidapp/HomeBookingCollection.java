@@ -31,6 +31,8 @@ public class HomeBookingCollection {
     private ArrayList<HomeBooking> homeBooking;
     private static HomeBookingCollection instance;
     private static int qrCode;
+    private final String urlBookingVideoConferencing="www.booking/videoconferencing";
+    
 
     public HomeBookingCollection() {
         this.homeBooking = new ArrayList<HomeBooking>();
@@ -53,7 +55,7 @@ public class HomeBookingCollection {
             System.out.println(qrCode);
             if(node.getQrCode().toString().equals(qrCode)){
                 try {
-                    node.setStatus(HomeBookingRATStatus.WITHRAT);
+                    node.setStatus(HomeBookingRatStatus.WITHRAT);
                 } catch (IOException ex) {
                     Logger.getLogger(HomeBookingCollection.class.getName()).log(Level.SEVERE, null, ex);
                 } catch (InterruptedException ex) {
@@ -65,11 +67,12 @@ public class HomeBookingCollection {
         return "qr code is invalid";
     }
     
-    public String addHomeBooking(String customerId,HomeBookingRATStatus bookingStatus) throws IOException, InterruptedException{
+    public String[] addHomeBooking(String customerId,HomeBookingRatStatus bookingStatus) throws IOException, InterruptedException{
         String bookingUrl = rootUrl + "/booking";
         String qrCode=this.generateQrCode();
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");  
         LocalDateTime now = LocalDateTime.now(); 
+        String urlVideoConferecing=urlBookingVideoConferencing+"/"+customerId;
         
         // Input
         Date date = new Date(System.currentTimeMillis());
@@ -84,8 +87,8 @@ public class HomeBookingCollection {
                 "\"customerId\":\"" + customerId + "\","+ 
                 "\"startTime\":\"" + text + "\"," +
                 "\"notes\":\"" + "none" + "\"," + 
-                "\"additionalInfo\":" + "{\"qrCode\":"+"\""+qrCode+"\",\"ratStatus\":"+"\""+bookingStatus+"\""+"}" + "}";
-        
+                "\"additionalInfo\":" + "{\"qrCode\":"+"\""+qrCode+"\",\"ratStatus\":"+"\""+bookingStatus+"\",\"videoUrl\":"+"\""+urlVideoConferecing+"\""+"}" + "}";
+        System.out.println(jsonString);
         HttpClient client = HttpClient.newHttpClient();
         HttpRequest request = HttpRequest
                 .newBuilder(URI.create(bookingUrl))
@@ -97,7 +100,8 @@ public class HomeBookingCollection {
         HttpResponse response = client.send(request, HttpResponse.BodyHandlers.ofString());
         System.out.println("hi home booking collection");
         System.out.println(response.body());
-        return qrCode;
+        getHomeBookingFromWebService();
+        return new String[] {qrCode,urlVideoConferecing};
         
     }
     public String generateQrCode(){
@@ -106,6 +110,7 @@ public class HomeBookingCollection {
     }
     
     public void getHomeBookingFromWebService() throws IOException, InterruptedException{
+        this.homeBooking = new ArrayList<HomeBooking>();
         String bookingUrl = rootUrl + "/booking";
         HttpClient client = HttpClient.newHttpClient();
         HttpRequest request = HttpRequest
@@ -119,16 +124,16 @@ public class HomeBookingCollection {
         mapper.enable(DeserializationFeature.ACCEPT_SINGLE_VALUE_AS_ARRAY);
         ObjectNode[] jsonNodesBooking = mapper.readValue(response.body(), ObjectNode[].class);
         for (ObjectNode node: jsonNodesBooking){
-            System.out.println(node.get("testingSite").toString().equals("null"));
-            System.out.println(node);
+            
             if (node.get("testingSite").toString().equals("null")){
-                System.out.println(node.get("customer").get("id").toString());
+                
                 
                 String customerId=node.get("customer").get("id").toString().replaceAll("^\"|\"$", "");
                 String bookingId=node.get("id").toString().replaceAll("^\"|\"$", "");
-                HomeBookingRATStatus bookingStatus=HomeBookingRATStatus.valueOf(node.get("additionalInfo").get("ratStatus").toString().replaceAll("^\"|\"$", ""));
+                HomeBookingRatStatus bookingStatus=HomeBookingRatStatus.valueOf(node.get("additionalInfo").get("ratStatus").toString().replaceAll("^\"|\"$", ""));
                 String qrCode=node.get("additionalInfo").get("qrCode").toString().replaceAll("^\"|\"$", "");
-                homeBooking.add(new HomeBooking(customerId,bookingId,bookingStatus,qrCode));
+                String videoUrl=node.get("additionalInfo").get("videoUrl").toString().replaceAll("^\"|\"$", "");
+                homeBooking.add(new HomeBooking(customerId,bookingId,bookingStatus,qrCode,videoUrl));
             }
         }
         
