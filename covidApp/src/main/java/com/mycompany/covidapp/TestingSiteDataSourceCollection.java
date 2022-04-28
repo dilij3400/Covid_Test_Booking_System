@@ -80,13 +80,16 @@ public class TestingSiteDataSourceCollection {
         for (ObjectNode node: jsonNodesBooking) {
             String bookingId=node.get("id").toString().replaceAll("^\"|\"$", "");
             String bookingPin = node.get("smsPin").toString().replaceAll("^\"|\"$", "");
-            HomeBookingRatStatus bookingStatus = HomeBookingRatStatus.valueOf(node.get("status").toString().replaceAll("^\"|\"$", ""));
+            String bookingStatus = node.get("status").toString().replaceAll("^\"|\"$", "");
             String userId=node.get("customer").get("id").toString().replaceAll("^\"|\"$", "");
             OnSiteBooking newBooking= new OnSiteBooking(userId,bookingId);
             newBooking.setPin(bookingPin);
             for (OffShoreTestingSiteDataSource testingSite:offShoreTestingDataSource ){
+                if (node.get("testingSite").toString().equals("null")==false){
                 if (node.get("testingSite").get("id").toString().equals(testingSite.getId())){
+                    newBooking.setStatus(bookingStatus);
                     testingSite.updateBooking(newBooking);
+                }
                 }
             }
             

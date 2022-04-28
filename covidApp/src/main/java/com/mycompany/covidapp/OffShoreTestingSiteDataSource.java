@@ -43,6 +43,7 @@ public class OffShoreTestingSiteDataSource implements Observable{
     private ArrayList<OnSiteBooking> booking;
     private String waitingTime;
     
+    
     public OffShoreTestingSiteDataSource(){
         this.observers=new ArrayList<Observer>();
         this.booking=new ArrayList<OnSiteBooking>();
@@ -183,4 +184,7 @@ public class OffShoreTestingSiteDataSource implements Observable{
         notifyObs();
         
     }
+
+    
+    
 }
