@@ -9,6 +9,8 @@ package com.mycompany.covidapp;
  * @author sooyewlim
  */
 public class UserOption extends javax.swing.JFrame {
+    
+    Customer customer;
 
     /**
      * Creates new form userOption
@@ -16,6 +18,7 @@ public class UserOption extends javax.swing.JFrame {
     public UserOption() {
         initComponents();
     }
+    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -33,7 +36,7 @@ public class UserOption extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        searchButton.setLabel("Serach Testing Site ");
+        searchButton.setText("Search Testing Site ");
         searchButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 searchButtonActionPerformed(evt);
@@ -61,24 +64,25 @@ public class UserOption extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(72, 72, 72)
-                .addComponent(searchButton)
-                .addGap(18, 18, 18)
-                .addComponent(bookHomeTestingOnline)
-                .addGap(18, 18, 18)
-                .addComponent(verifyBookingStatus)
-                .addContainerGap(30, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jLabel1)
-                .addGap(266, 266, 266))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(40, 40, 40)
+                        .addComponent(searchButton)
+                        .addGap(30, 30, 30)
+                        .addComponent(bookHomeTestingOnline)
+                        .addGap(30, 30, 30)
+                        .addComponent(verifyBookingStatus))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(235, 235, 235)
+                        .addComponent(jLabel1)))
+                .addContainerGap(38, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(38, 38, 38)
+                .addGap(35, 35, 35)
                 .addComponent(jLabel1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 85, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 88, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(searchButton)
                     .addComponent(bookHomeTestingOnline)
@@ -94,13 +98,21 @@ public class UserOption extends javax.swing.JFrame {
     }//GEN-LAST:event_searchButtonActionPerformed
 
     private void bookHomeTestingOnlineActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bookHomeTestingOnlineActionPerformed
-        new BookingTestingOnlinePage().setVisible(true);
+        
+        BookingTestingOnlinePage bookingOnlinePage = new BookingTestingOnlinePage();
+        bookingOnlinePage.setCustomer(customer);
+        bookingOnlinePage.setVisible(true);
     }//GEN-LAST:event_bookHomeTestingOnlineActionPerformed
 
     private void verifyBookingStatusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_verifyBookingStatusActionPerformed
         new VerifyBookingStatusUser().setVisible(true);
     }//GEN-LAST:event_verifyBookingStatusActionPerformed
-   
+
+    public void setCustomer(Customer customer) {
+        this.customer = customer;
+    }
+    
+    
     /**
      * @param args the command line arguments
      */
@@ -132,6 +144,7 @@ public class UserOption extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
+                
                 new UserOption().setVisible(true);
             }
         });

@@ -13,8 +13,6 @@ public class Receptionist extends AbstractUser {
     /**
      * Class for Receptionist
      */
-
-    private static Receptionist instance;
     
     public Receptionist() {
         
@@ -24,11 +22,4 @@ public class Receptionist extends AbstractUser {
         identity = new ReceptionistIdentity();
     }
     
-    public static Receptionist getInstance(){
-        if(instance == null){
-            instance = new Receptionist();
-        }
-        
-        return instance;
-    }
 }

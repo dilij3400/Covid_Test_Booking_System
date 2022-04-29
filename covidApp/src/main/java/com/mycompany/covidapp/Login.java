@@ -168,7 +168,7 @@ public class Login extends javax.swing.JFrame {
                     
                     // Creating user based on user role
                     if (userNode.get("isCustomer").asBoolean()){
-                        AbstractUser customer = Customer.getInstance();
+                        Customer customer = new Customer();
                         
                         customer.setUserID(userNode.get("sub").textValue());
                         customer.setUserName(userNode.get("username").textValue());
@@ -177,12 +177,13 @@ public class Login extends javax.swing.JFrame {
                         customer.setPhoneNumber(userNode.get("phoneNumber").textValue());
                         
                         // directs user to customer dashboard
+                        userOption.setCustomer(customer);
                         userOption.setVisible(true);
                         
                     }
                     
                     if(userNode.get("isHealthcareWorker").asBoolean()){
-                        AbstractUser healthCareWorker = HealthCareWorker.getInstance();
+                        AbstractUser healthCareWorker = new HealthCareWorker();
                         
                         healthCareWorker.setUserID(userNode.get("sub").textValue());
                         healthCareWorker.setUserName(userNode.get("username").textValue());
@@ -196,7 +197,7 @@ public class Login extends javax.swing.JFrame {
                     }
                     
                     if(userNode.get("isReceptionist").asBoolean()){
-                        AbstractUser receptionist = Receptionist.getInstance();
+                        AbstractUser receptionist = new Receptionist();
                         
                         receptionist.setUserID(userNode.get("sub").textValue());
                         receptionist.setUserName(userNode.get("username").textValue());

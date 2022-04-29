@@ -13,8 +13,7 @@ public class Customer extends AbstractUser{
     /**
      * Class for customer
      */
-    
-    private static Customer instance;
+
     
     public Customer() {
         
@@ -23,14 +22,5 @@ public class Customer extends AbstractUser{
         // sets user type to customer.
         identity = new CustomerIdentity();
     }
-    
-    public static Customer getInstance(){
-        if(instance == null){
-            instance = new Customer();
-        }
-        
-        return instance;
-    }
-    
     
 }

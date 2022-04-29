@@ -14,8 +14,6 @@ public class HealthCareWorker extends AbstractUser {
      * Class for HealthCareWorker
      */
     
-    private static HealthCareWorker instance;
-
     public HealthCareWorker() {
         
         super();
@@ -24,11 +22,4 @@ public class HealthCareWorker extends AbstractUser {
         identity = new AdminIdentity();
     }
     
-    public static HealthCareWorker getInstance(){
-        if(instance == null){
-            instance = new HealthCareWorker();
-        }
-        
-        return instance;
-    }
 }
