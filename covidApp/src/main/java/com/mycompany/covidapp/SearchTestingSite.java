@@ -126,20 +126,22 @@ public class SearchTestingSite extends javax.swing.JFrame {
             Logger.getLogger(SearchTestingSite.class.getName()).log(Level.SEVERE, null, ex);
         }
         
-        OffShoreTestingSite searchTestingSite=OffShoreTestingSiteCollection.getInstance().search(suburb, facility);
-        if (searchTestingSite==null){
+        ArrayList<OffShoreTestingSite> searchTestingSiteResult=OffShoreTestingSiteCollection.getInstance().search(suburb, facility);
+        if (searchTestingSiteResult.size()==0){
             searchResult.setText("No Facility");
          
         }
         else{
             // Checking if waiting time returns null
-            String waitingTime = searchTestingSite.getWaitingTime();
-            
-            if (waitingTime == null){
-                waitingTime = "No Waiting time available";
+            String output="";
+            int i=1;
+            for (OffShoreTestingSite node:searchTestingSiteResult){
+                output+=Integer.toString(i)+" "+node+"\n";
+                i+=1;
             }
-            searchResult.setText("Suburb Name: "+searchTestingSite.getSuburbName()+"\n"+"On Site Testing: "+ searchTestingSite.isAllowOnSiteTesting()+"\n"+"On Site Booking: "+searchTestingSite.isAllowOnSiteBooking()+"\n"+"Waiting Time: "+ waitingTime +"Minutes"+"\n"+"Open Now: "+searchTestingSite.isIsOperating());
-        }
+            searchResult.setText(output);
+            }
+            
         
     }//GEN-LAST:event_jButton1ActionPerformed
 

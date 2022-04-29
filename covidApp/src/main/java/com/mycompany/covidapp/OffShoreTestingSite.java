@@ -106,7 +106,7 @@ public class OffShoreTestingSite implements Observer{
 
     @Override
     public String toString() {
-        return "OffShoreTestingSite{" + "id=" + id + ", name=" + name + ", phoneNumber=" + phoneNumber + ", suburbName=" + suburbName + ", typeOfFacility=" + typeOfFacility + '}';
+        return " OffShoreTestingSite{" + "id=" + id + ", name = " + name + ", phoneNumber = " + phoneNumber + ", suburbName = " + suburbName + ", typeOfFacility = " + typeOfFacility +"On Site Booking : "+isAllowOnSiteBooking()+waitingTime +" Minutes "+"Open Now : "+isIsOperating()+" On Site Testing : "+ isAllowOnSiteTesting()+ '}';
     }
     
         

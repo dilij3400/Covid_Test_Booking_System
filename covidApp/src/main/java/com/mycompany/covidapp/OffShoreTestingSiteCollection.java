@@ -40,18 +40,16 @@ public class OffShoreTestingSiteCollection {
         }
         
     }
-    public OffShoreTestingSite search(String suburbName,String typeOfFacility){
-        System.out.println(suburbName);
-        System.out.println(typeOfFacility);
-        System.out.println(offShoreTesting.size());
+    public ArrayList<OffShoreTestingSite> search(String suburbName,String typeOfFacility){
+        ArrayList<OffShoreTestingSite> offShoreTestingSiteList=new ArrayList<OffShoreTestingSite>();
         for (OffShoreTestingSite node:offShoreTesting){
             System.out.println(node.getSuburbName());
             System.out.println(node.getTypeOfFacility());
-            if(node.getSuburbName().equals(suburbName) && node.getTypeOfFacility().equals(typeOfFacility)){
-                return node;
+            if(node.getSuburbName().equals(suburbName) || node.getTypeOfFacility().equals(typeOfFacility)){
+                offShoreTestingSiteList.add(node);
             }
         }
-        return null;
+        return offShoreTestingSiteList;
     }  
     
 
