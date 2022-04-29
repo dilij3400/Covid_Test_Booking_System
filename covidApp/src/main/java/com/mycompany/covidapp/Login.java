@@ -127,6 +127,7 @@ public class Login extends javax.swing.JFrame {
         // reset display message
         messageLabel.setText("");
         
+        // Performing POST request for login authentication
         ObjectNode jsonNodeJWT;
         
         ObjectNode userNode;
@@ -171,6 +172,7 @@ public class Login extends javax.swing.JFrame {
                         customer.setFamilyName(userNode.get("familyName").textValue());
                         customer.setPhoneNumber(userNode.get("phoneNumber").textValue());
                         
+                        // directs user to customer dashboard
                         userOption.setVisible(true);
                         
                     }
@@ -183,6 +185,8 @@ public class Login extends javax.swing.JFrame {
                         healthCareWorker.setGivenName(userNode.get("givenName").textValue());
                         healthCareWorker.setFamilyName(userNode.get("familyName").textValue());
                         healthCareWorker.setPhoneNumber(userNode.get("phoneNumber").textValue());
+                        
+                        // directs user to healthcare worker dashboard
                         healthCarePage.setVisible(true);
                         
                     }
@@ -195,6 +199,8 @@ public class Login extends javax.swing.JFrame {
                         receptionist.setGivenName(userNode.get("givenName").textValue());
                         receptionist.setFamilyName(userNode.get("familyName").textValue());
                         receptionist.setPhoneNumber(userNode.get("phoneNumber").textValue());
+                        
+                        // directs user to receptionist/admin dashboard
                         adminPage.setVisible(true);
                         
                     }
@@ -245,11 +251,12 @@ public class Login extends javax.swing.JFrame {
     
     public boolean verifyJwt (ObjectNode jsonNode){
         
-        // reset result
+        // reset boolean output
         result = false;
         
         String jsonString = "{\"jwt\":\"" + jsonNode.get("jwt").textValue() + "\"}";
         
+        // Performing POST request for jwt token verfication
         String usersLoginUrl = usersUrl + "/verify-token";
         HttpClient client = HttpClient.newHttpClient();
         HttpRequest request = HttpRequest.newBuilder(URI.create(usersLoginUrl + "?jwt=true")) 
@@ -276,6 +283,7 @@ public class Login extends javax.swing.JFrame {
         return result;
     }
     
+    // Decodes a given jwt token into an object to extract the information.
     public ObjectNode jwtDecoder(String jwt) throws Exception{
         
         String[] chunks = jwt.split("\\.");

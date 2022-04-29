@@ -12,9 +12,6 @@ package com.mycompany.covidapp;
 public class CovidApp {
 
     public static void main(String[] args) {
-        System.out.println("Hello World this is Jaya!");
         new Login().setVisible(true);
-        
-        
     }
 }

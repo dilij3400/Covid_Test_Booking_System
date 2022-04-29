@@ -137,11 +137,14 @@ public class VerifyBookingStatus extends javax.swing.JFrame {
         String pinNumber=pinNumberText.getText().trim();
        
         ArrayList<OnSiteBooking> bookings;
+        // Get facility by facility id.
         OffShoreTestingSite testingSite=offShoreTestingSiteCollection.searchId(facilityId);
       
         if (testingSite != null){
+            // retrieve all bookings under the given facility.
             bookings = testingSite.getBooking();
                       
+            // check if smsPin in all bookings have a match with input pin
             for (OnSiteBooking items:bookings){
                 String result = items.getPin().replaceAll("^\"|\"$", "");
                 int bookingPin = Integer.parseInt(result);

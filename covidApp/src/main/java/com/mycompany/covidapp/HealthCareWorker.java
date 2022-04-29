@@ -16,6 +16,7 @@ public class HealthCareWorker extends AbstractUser {
         
         super();
         
+        // sers user type to Healthcare Worker
         identity = new AdminIdentity();
     }
     

@@ -23,8 +23,9 @@ import java.util.logging.Logger;
  * @author user
  */
 public class OnSiteBookingPage extends javax.swing.JFrame {
-
-    OffShoreTestingSiteCollection offShoreTestingSiteCollection=OffShoreTestingSiteCollection.getInstance();
+    
+    // retrieves collection of all testing sites.
+    OffShoreTestingSiteCollection offShoreTestingSiteCollection = OffShoreTestingSiteCollection.getInstance();
     
     private static final String myApiKey = "zwH7TgdPHhnFrcKQtWbzqnfMMM9MKr";
     
@@ -64,6 +65,12 @@ public class OnSiteBookingPage extends javax.swing.JFrame {
 
         jLabel3.setText("Facility ID");
 
+        customerIdText.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                customerIdTextActionPerformed(evt);
+            }
+        });
+
         jButton1.setText("Add");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -77,54 +84,56 @@ public class OnSiteBookingPage extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(202, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(facilityIdText, javax.swing.GroupLayout.PREFERRED_SIZE, 164, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(customerIdText, javax.swing.GroupLayout.PREFERRED_SIZE, 164, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(36, 36, 36)))
+                .addGap(299, 299, 299))
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(32, 32, 32)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(facilityIdText))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(customerIdText, javax.swing.GroupLayout.PREFERRED_SIZE, 164, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(153, 153, 153)
+                        .addGap(324, 324, 324)
                         .addComponent(jButton1))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(24, 24, 24)
+                        .addGap(132, 132, 132)
                         .addComponent(messageLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 429, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(312, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(20, 20, 20)
+                .addGap(34, 34, 34)
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(32, 32, 32)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(customerIdText, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
+                .addGap(33, 33, 33)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(facilityIdText, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(38, 38, 38)
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(customerIdText, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(30, 30, 30)
                 .addComponent(messageLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(45, 45, 45)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jButton1)
-                .addContainerGap(72, Short.MAX_VALUE))
+                .addContainerGap(104, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
-        
+
         String facilityId=facilityIdText.getText().trim();
         String customerId=customerIdText.getText().trim();
         
@@ -132,7 +141,8 @@ public class OnSiteBookingPage extends javax.swing.JFrame {
         
         HttpResponse response;
         
-        OffShoreTestingSite testingSite=offShoreTestingSiteCollection.searchId(facilityId);
+        // searching for a specific facility given facility id.
+        OffShoreTestingSite testingSite = offShoreTestingSiteCollection.searchId(facilityId);
         
         // Check if facility exists
         if (testingSite == null){
@@ -141,54 +151,61 @@ public class OnSiteBookingPage extends javax.swing.JFrame {
         else{
             if (testingSite!=null){
             
-            HttpClient client = HttpClient.newHttpClient();
-            HttpRequest request = HttpRequest
-                    .newBuilder(URI.create(usersUrl))
-                    .setHeader("Authorization", myApiKey)
-                    .GET()
-                    .build();
+                // perform GET request of all customers.
+                HttpClient client = HttpClient.newHttpClient();
+                HttpRequest request = HttpRequest
+                        .newBuilder(URI.create(usersUrl))
+                        .setHeader("Authorization", myApiKey)
+                        .GET()
+                        .build();
             
-            try{
-                response = client.send(request, HttpResponse.BodyHandlers.ofString());
+                try{
+                    response = client.send(request, HttpResponse.BodyHandlers.ofString());
                 
-                ObjectNode[] jsonNodes = new ObjectMapper().readValue(response.body().toString(), ObjectNode[].class);
-                
-                for (ObjectNode node: jsonNodes) {
-                    String id = node.get("id").toString();
-                    String result = id.replaceAll("^\"|\"$", "");
-                    if(!result.equals(customerId)){
+                    ObjectNode[] jsonNodes = new ObjectMapper().readValue(response.body().toString(), ObjectNode[].class);
+                    
+                    // Iterate through each customer and cross check if customer id is equal to input id.
+                    for (ObjectNode node: jsonNodes) {
+                        String id = node.get("id").toString();
+                        String result = id.replaceAll("^\"|\"$", "");
+                        if(!result.equals(customerId)){
                         
-                        messageLabel.setText("Customer does not exist");
-                    }
-                    else{
-                        TestingSiteDataSourceCollection testingSiteDataSourceCollection=TestingSiteDataSourceCollection.getInstance();
-                        OffShoreTestingSiteDataSource offShoreTestingSiteDataSource=testingSiteDataSourceCollection.searchId(facilityId);
-                        
-                        // Make booking
-                        
-                        response = offShoreTestingSiteDataSource.addBooking(customerId,facilityId);
-                        
-                        
-                        if(response.statusCode() == 201){
-                            ObjectNode jsonNode = new ObjectMapper().readValue(response.body().toString(), ObjectNode.class);
-                            messageLabel.setText("Booking created successfully, your PIN number is : " + jsonNode.get("smsPin"));
-                        }
-                        else if (response.statusCode() == 404){
-                            messageLabel.setText("A customer and/or testing site with the provided ID was not found.");
+                            messageLabel.setText("Customer does not exist");
                         }
                         else{
-                            messageLabel.setText("Error");
+                            
+                            TestingSiteDataSourceCollection testingSiteDataSourceCollection = TestingSiteDataSourceCollection.getInstance();
+                            OffShoreTestingSiteDataSource offShoreTestingSiteDataSource = testingSiteDataSourceCollection.searchId(facilityId);
+                        
+                            // Make booking
+                        
+                            response = offShoreTestingSiteDataSource.addBooking(customerId,facilityId);
+                        
+                        
+                            if(response.statusCode() == 201){
+                                ObjectNode jsonNode = new ObjectMapper().readValue(response.body().toString(), ObjectNode.class);
+                                messageLabel.setText("Booking created successfully, your PIN number is : " + jsonNode.get("smsPin"));
+                            }
+                            else if (response.statusCode() == 404){
+                                messageLabel.setText("A customer and/or testing site with the provided ID was not found.");
+                            }
+                            else{
+                                messageLabel.setText("Error");
+                            }
+                            break;
                         }
-                        break;
                     }
                 }
+                catch (Exception e){
+                    Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, e);
+                }
             }
-            catch (Exception e){
-                Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, e);
-            }
-        }
         }
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void customerIdTextActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_customerIdTextActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_customerIdTextActionPerformed
 
     /**
      * @param args the command line arguments

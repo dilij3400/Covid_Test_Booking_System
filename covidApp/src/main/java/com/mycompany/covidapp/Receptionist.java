@@ -16,6 +16,7 @@ public class Receptionist extends AbstractUser {
         
         super();
         
+        // sets user type to receptionist/admin.
         identity = new ReceptionistIdentity();
     }
     

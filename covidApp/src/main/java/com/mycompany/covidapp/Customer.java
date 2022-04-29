@@ -9,13 +9,14 @@ package com.mycompany.covidapp;
  * @author ASUS
  */
 public class Customer extends AbstractUser{
-
+    
     private static Customer instance;
     
     public Customer() {
         
         super();
         
+        // sets user type to customer.
         identity = new CustomerIdentity();
     }
     
