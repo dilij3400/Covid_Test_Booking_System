@@ -57,14 +57,11 @@ public class OnSiteBookingPage extends javax.swing.JFrame {
 
         jLabel3.setText("Facility ID");
 
-        customerIdText.setText("c5efd1f8-a8b5-4c42-b315-11a3bf73f312");
         customerIdText.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 customerIdTextActionPerformed(evt);
             }
         });
-
-        facilityIdText.setText("ccad0b5b-0786-42d2-802d-3497c5eda14e");
 
         jButton1.setText("Add");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
