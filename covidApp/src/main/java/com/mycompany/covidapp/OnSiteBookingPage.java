@@ -23,15 +23,7 @@ import java.util.logging.Logger;
  * @author user
  */
 public class OnSiteBookingPage extends javax.swing.JFrame {
-    
-    // retrieves collection of all testing sites.
-    OffShoreTestingSiteCollection offShoreTestingSiteCollection = OffShoreTestingSiteCollection.getInstance();
-    
-    private static final String myApiKey = "zwH7TgdPHhnFrcKQtWbzqnfMMM9MKr";
-    
-    private static final String rootUrl = "https://fit3077.com/api/v1";
-    
-    
+       
     /**
      * Creates new form OnSiteBooking
      */
@@ -65,11 +57,14 @@ public class OnSiteBookingPage extends javax.swing.JFrame {
 
         jLabel3.setText("Facility ID");
 
+        customerIdText.setText("c5efd1f8-a8b5-4c42-b315-11a3bf73f312");
         customerIdText.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 customerIdTextActionPerformed(evt);
             }
         });
+
+        facilityIdText.setText("ccad0b5b-0786-42d2-802d-3497c5eda14e");
 
         jButton1.setText("Add");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -136,71 +131,16 @@ public class OnSiteBookingPage extends javax.swing.JFrame {
 
         String facilityId=facilityIdText.getText().trim();
         String customerId=customerIdText.getText().trim();
-        
-        String usersUrl = rootUrl + "/user";
-        
-        HttpResponse response;
-        
-        // searching for a specific facility given facility id.
-        OffShoreTestingSite testingSite = offShoreTestingSiteCollection.searchId(facilityId);
-        
-        // Check if facility exists
-        if (testingSite == null){
-            messageLabel.setText("Facility does not exist");
-        }
-        else{
-            if (testingSite!=null){
+        OnSiteBookingSubSystem onSiteBookingSubSystem;
+        try {
+            onSiteBookingSubSystem = new OnSiteBookingSubSystem();
+            String bookingResult=onSiteBookingSubSystem.bookOnSiteBooking(facilityId, customerId);
+            messageLabel.setText(bookingResult);
             
-                // perform GET request of all customers.
-                HttpClient client = HttpClient.newHttpClient();
-                HttpRequest request = HttpRequest
-                        .newBuilder(URI.create(usersUrl))
-                        .setHeader("Authorization", myApiKey)
-                        .GET()
-                        .build();
-            
-                try{
-                    response = client.send(request, HttpResponse.BodyHandlers.ofString());
-                
-                    ObjectNode[] jsonNodes = new ObjectMapper().readValue(response.body().toString(), ObjectNode[].class);
-                    
-                    // Iterate through each customer and cross check if customer id is equal to input id.
-                    for (ObjectNode node: jsonNodes) {
-                        String id = node.get("id").toString();
-                        String result = id.replaceAll("^\"|\"$", "");
-                        if(!result.equals(customerId)){
-                        
-                            messageLabel.setText("Customer does not exist");
-                        }
-                        else{
-                            
-                            TestingSiteDataSourceCollection testingSiteDataSourceCollection = TestingSiteDataSourceCollection.getInstance();
-                            OffShoreTestingSiteDataSource offShoreTestingSiteDataSource = testingSiteDataSourceCollection.searchId(facilityId);
-                        
-                            // Make booking
-                        
-                            response = offShoreTestingSiteDataSource.addBooking(customerId,facilityId);
-                        
-                        
-                            if(response.statusCode() == 201){
-                                ObjectNode jsonNode = new ObjectMapper().readValue(response.body().toString(), ObjectNode.class);
-                                messageLabel.setText("Booking created successfully, your PIN number is : " + jsonNode.get("smsPin"));
-                            }
-                            else if (response.statusCode() == 404){
-                                messageLabel.setText("A customer and/or testing site with the provided ID was not found.");
-                            }
-                            else{
-                                messageLabel.setText("Error");
-                            }
-                            break;
-                        }
-                    }
-                }
-                catch (Exception e){
-                    Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, e);
-                }
-            }
+        } catch (Exception ex) {
+            Logger.getLogger(OnSiteBookingPage.class.getName()).log(Level.SEVERE, null, ex);
         }
+        
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void customerIdTextActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_customerIdTextActionPerformed
