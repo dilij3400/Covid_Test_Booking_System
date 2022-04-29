@@ -34,7 +34,7 @@ public class VerifyBookingStatusUser extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         outputLabel = new javax.swing.JLabel();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         jButton1.setText("Check");
         jButton1.addActionListener(new java.awt.event.ActionListener() {

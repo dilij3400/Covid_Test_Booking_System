@@ -39,7 +39,7 @@ public class OnSiteTestingVerification extends javax.swing.JFrame {
         resultText = new java.awt.TextArea();
         button2 = new java.awt.Button();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         label1.setText("Please enter resident's Booking ID or PIN code");
 

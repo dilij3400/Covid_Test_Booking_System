@@ -178,7 +178,8 @@ public class Login extends javax.swing.JFrame {
                         
                         // directs user to customer dashboard
                         userOption.setCustomer(customer);
-                        userOption.setVisible(true);
+                        setVisible(false);
+                        userOption.setVisible(true);                                                                                        
                         
                     }
                     
@@ -192,6 +193,7 @@ public class Login extends javax.swing.JFrame {
                         healthCareWorker.setPhoneNumber(userNode.get("phoneNumber").textValue());
                         
                         // directs user to healthcare worker dashboard
+                        setVisible(false);
                         healthCarePage.setVisible(true);
                         
                     }
@@ -206,6 +208,7 @@ public class Login extends javax.swing.JFrame {
                         receptionist.setPhoneNumber(userNode.get("phoneNumber").textValue());
                         
                         // directs user to receptionist/admin dashboard
+                        setVisible(false);
                         adminPage.setVisible(true);
                         
                     }

@@ -47,7 +47,7 @@ public class OnSiteTesting extends javax.swing.JFrame {
         submit = new java.awt.Button();
         textArea1 = new java.awt.TextArea();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         jCheckBox1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {

@@ -38,7 +38,7 @@ public class BookingTestingOnlinePage extends javax.swing.JFrame {
         label3 = new java.awt.Label();
         jComboBox1 = new javax.swing.JComboBox<>();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         label2.setAlignment(java.awt.Label.CENTER);
         label2.setText("Home Booking");
