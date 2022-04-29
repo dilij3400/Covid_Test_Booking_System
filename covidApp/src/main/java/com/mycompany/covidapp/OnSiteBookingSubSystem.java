@@ -86,7 +86,7 @@ public class OnSiteBookingSubSystem {
                     }
                 }
                 catch (Exception e){
-                    Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, e);
+                    Logger.getLogger(OnSiteBookingSubSystem.class.getName()).log(Level.SEVERE, null, e);
                 }
             }
         return bookingResult;
