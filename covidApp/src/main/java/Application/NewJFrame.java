@@ -5,6 +5,7 @@
 package Application;
 
 import Login.LoginPage;
+import TestingSite.OffShoreTestingSiteCollection;
 
 /**
  *
@@ -78,6 +79,7 @@ public class NewJFrame extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         apiKey=textField1.getText();
+        OffShoreTestingSiteCollection.getInstance();
         new LoginPage().setVisible(true);
     }//GEN-LAST:event_jButton1ActionPerformed
 
