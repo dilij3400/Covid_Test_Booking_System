@@ -10,6 +10,10 @@ package com.mycompany.covidapp;
  */
 public class AbstractUser {
     
+    /**
+     * This abstract class is a blueprint for different types of users.
+     */
+    
     private String userID;
     private String userName;
     private String givenName;
@@ -18,6 +22,7 @@ public class AbstractUser {
     
     public UserIdentity identity;
 
+    // Default setter and getter methods
     public String getUserName() {
         return userName;
     }

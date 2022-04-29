@@ -10,6 +10,10 @@ package com.mycompany.covidapp;
  */
 public class Customer extends AbstractUser{
     
+    /**
+     * Class for customer
+     */
+    
     private static Customer instance;
     
     public Customer() {

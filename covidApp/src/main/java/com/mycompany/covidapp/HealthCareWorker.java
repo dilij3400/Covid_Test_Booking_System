@@ -10,6 +10,10 @@ package com.mycompany.covidapp;
  */
 public class HealthCareWorker extends AbstractUser {
     
+    /**
+     * Class for HealthCareWorker
+     */
+    
     private static HealthCareWorker instance;
 
     public HealthCareWorker() {

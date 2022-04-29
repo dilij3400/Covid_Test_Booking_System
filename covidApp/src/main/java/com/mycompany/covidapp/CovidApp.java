@@ -12,6 +12,7 @@ package com.mycompany.covidapp;
 public class CovidApp {
 
     public static void main(String[] args) {
+        // Directs to login screen.
         new Login().setVisible(true);
     }
 }

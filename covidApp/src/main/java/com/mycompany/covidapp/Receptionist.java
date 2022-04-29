@@ -9,6 +9,10 @@ package com.mycompany.covidapp;
  * @author ASUS
  */
 public class Receptionist extends AbstractUser {
+    
+    /**
+     * Class for Receptionist
+     */
 
     private static Receptionist instance;
     

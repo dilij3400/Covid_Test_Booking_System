@@ -118,6 +118,10 @@ public class Login extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    /**
+     * Checks for user input (username and password) an authenticates login.
+     * @param evt event action
+     */
     private void loginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loginActionPerformed
         // TODO add your handling code here:
         
@@ -249,6 +253,11 @@ public class Login extends javax.swing.JFrame {
         });
     }
     
+    /**
+     * Verifies a given jwtToken for authenticity.
+     * @param jsonNode returned JSON object from login.
+     * @return if jwt is authentic, returns true, else false.
+     */
     public boolean verifyJwt (ObjectNode jsonNode){
         
         // reset boolean output
@@ -283,7 +292,11 @@ public class Login extends javax.swing.JFrame {
         return result;
     }
     
-    // Decodes a given jwt token into an object to extract the information.
+    /**
+     * Decodes the jwt token and parses its information into a JSON object.
+     * @param jwt
+     * @return JSON Object
+     */
     public ObjectNode jwtDecoder(String jwt) throws Exception{
         
         String[] chunks = jwt.split("\\.");
