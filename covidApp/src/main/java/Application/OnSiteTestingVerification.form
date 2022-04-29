@@ -40,7 +40,7 @@
                   <Group type="102" alignment="0" attributes="0">
                       <EmptySpace min="-2" pref="184" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                          <Component id="facilityIdText" pref="109" max="32767" attributes="0"/>
+                          <Component id="facilityIdText" max="32767" attributes="0"/>
                           <Component id="label2" max="32767" attributes="0"/>
                       </Group>
                   </Group>
@@ -91,7 +91,7 @@
   <SubComponents>
     <Component class="java.awt.Label" name="label1">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Please enter resident&apos;s Booking ID or PIN code"/>
+        <Property name="text" type="java.lang.String" value="Please enter resident&apos;s Booking ID"/>
       </Properties>
     </Component>
     <Component class="java.awt.TextField" name="bookingText">
