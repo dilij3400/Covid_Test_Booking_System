@@ -136,27 +136,19 @@ public class VerifyBookingStatus extends javax.swing.JFrame {
         String facilityId=facilityIdText.getText().trim();
         String pinNumber=pinNumberText.getText().trim();
        
-        ArrayList<OnSiteBooking> bookings;
         // Get facility by facility id.
         OffShoreTestingSite testingSite=offShoreTestingSiteCollection.searchId(facilityId);
       
         if (testingSite != null){
-            // retrieve all bookings under the given facility.
-            bookings = testingSite.getBooking();
-                      
-            // check if smsPin in all bookings have a match with input pin
-            for (OnSiteBooking items:bookings){
-                String result = items.getPin().replaceAll("^\"|\"$", "");
-                int bookingPin = Integer.parseInt(result);
-                int inputPin = Integer.parseInt(pinNumber);
-               
-                if(bookingPin == inputPin){
-                    output.setText("Valid User Booking" + "\n" + "Booking status : " + items.getStatus());
-                    break;
-                }   else if(bookingPin != inputPin){
-                    output.setText("Booking does not exist");
-               }
-           }
+            OnSiteBooking bookingOnSite = testingSite.searchBookingPin(pinNumber);
+            
+            if(bookingOnSite==null){
+                output.setText("Booking does not exist");
+            }
+            else{
+                output.setText("Booking Status: " + bookingOnSite.getStatus());
+            }
+            
        }
         else{
             output.setText("Facility does not exist");
