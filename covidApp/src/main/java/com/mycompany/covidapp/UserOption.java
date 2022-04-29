@@ -4,6 +4,8 @@
  */
 package com.mycompany.covidapp;
 
+import Login.Customer;
+
 /**
  *
  * @author sooyewlim

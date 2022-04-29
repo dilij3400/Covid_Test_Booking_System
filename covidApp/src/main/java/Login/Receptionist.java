@@ -2,7 +2,10 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package com.mycompany.covidapp;
+package Login;
+
+import Login.AbstractUser;
+import com.mycompany.covidapp.AdminOption;
 
 /**
  *
@@ -18,8 +21,7 @@ public class Receptionist extends AbstractUser {
         
         super();
         
-        // sets user type to receptionist/admin.
-        identity = new ReceptionistIdentity();
+       
     }
     @Override
     public void display() {

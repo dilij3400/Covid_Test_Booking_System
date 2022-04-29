@@ -2,7 +2,8 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package com.mycompany.covidapp;
+package Login;
+
 
 /**
  *
@@ -20,7 +21,6 @@ public abstract class AbstractUser {
     private String familyName;
     private String phoneNumber;
     
-    public UserIdentity identity;
 
     // Default setter and getter methods
     public String getUserName() {
@@ -55,17 +55,6 @@ public abstract class AbstractUser {
         this.phoneNumber = phoneNumber;
     }
     
-    public String getIdentity(){
-        
-        return identity.setIdentity();
-        
-    }
-    
-    public void setNewIdentity(UserIdentity newIdentity){
-        
-        identity = newIdentity;
-    }
-
     public String getUserID() {
         return userID;
     }
@@ -76,7 +65,7 @@ public abstract class AbstractUser {
 
     @Override
     public String toString() {
-        return "AbstractUser{" + "userID=" + userID + ", userName=" + userName + ", givenName=" + givenName + ", familyName=" + familyName + ", phoneNumber=" + phoneNumber + ", identity=" + identity + '}';
+        return "AbstractUser{" + "userID=" + userID + ", userName=" + userName + ", givenName=" + givenName + ", familyName=" + familyName + ", phoneNumber=" + phoneNumber + '}';
     }
     
     public abstract void display();

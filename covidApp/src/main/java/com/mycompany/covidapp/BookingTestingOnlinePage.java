@@ -4,6 +4,7 @@
  */
 package com.mycompany.covidapp;
 
+import Login.Customer;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;

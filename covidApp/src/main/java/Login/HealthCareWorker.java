@@ -2,7 +2,12 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package com.mycompany.covidapp;
+package Login;
+
+import Login.AbstractUser;
+import com.mycompany.covidapp.HealthCareWorkerOption;
+import com.mycompany.covidapp.HealthCareWorkerOption;
+import com.mycompany.covidapp.HealthCareWorkerOption;
 
 /**
  *
@@ -18,8 +23,7 @@ public class HealthCareWorker extends AbstractUser {
         
         super();
         
-        // sers user type to Healthcare Worker
-        identity = new AdminIdentity();
+       
     }
     @Override
     public void display() {

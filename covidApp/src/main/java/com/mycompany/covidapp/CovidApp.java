@@ -5,6 +5,8 @@
 
 package com.mycompany.covidapp;
 
+import Login.LoginPage;
+
 /**
  *
  * @author sooyewlim

@@ -1,8 +1,10 @@
+package Login;
+
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
-package com.mycompany.covidapp;
+
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
@@ -13,6 +15,7 @@ import java.net.http.HttpResponse;
 import java.util.Base64;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import com.mycompany.covidapp.TokenStatus;
 
 /**
  *
