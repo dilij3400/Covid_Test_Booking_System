@@ -8,7 +8,7 @@ package com.mycompany.covidapp;
  *
  * @author ASUS
  */
-public class AbstractUser {
+public abstract class AbstractUser {
     
     /**
      * This abstract class is a blueprint for different types of users.
@@ -79,6 +79,7 @@ public class AbstractUser {
         return "AbstractUser{" + "userID=" + userID + ", userName=" + userName + ", givenName=" + givenName + ", familyName=" + familyName + ", phoneNumber=" + phoneNumber + ", identity=" + identity + '}';
     }
     
+    public abstract void display();
     
 
     

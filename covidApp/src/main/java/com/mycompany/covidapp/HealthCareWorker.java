@@ -21,5 +21,10 @@ public class HealthCareWorker extends AbstractUser {
         // sers user type to Healthcare Worker
         identity = new AdminIdentity();
     }
+    @Override
+    public void display() {
+        HealthCareWorkerOption healthCarePage=new HealthCareWorkerOption();
+        healthCarePage.setVisible(true);
+    }
     
 }

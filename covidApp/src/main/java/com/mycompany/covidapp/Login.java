@@ -125,9 +125,7 @@ public class Login extends javax.swing.JFrame {
     private void loginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loginActionPerformed
         // TODO add your handling code here:
         
-        AdminOption adminPage = new AdminOption();
-        HealthCareWorkerOption healthCarePage=new HealthCareWorkerOption();
-        UserOption userOption=new UserOption();
+        
         // reset display message
         messageLabel.setText("");
         
@@ -177,9 +175,7 @@ public class Login extends javax.swing.JFrame {
                         customer.setPhoneNumber(userNode.get("phoneNumber").textValue());
                         
                         // directs user to customer dashboard
-                        userOption.setCustomer(customer);
-                        setVisible(false);
-                        userOption.setVisible(true);                                                                                        
+                        customer.display();
                         
                     }
                     
@@ -194,7 +190,7 @@ public class Login extends javax.swing.JFrame {
                         
                         // directs user to healthcare worker dashboard
                         setVisible(false);
-                        healthCarePage.setVisible(true);
+                        healthCareWorker.display();
                         
                     }
                     
@@ -209,7 +205,7 @@ public class Login extends javax.swing.JFrame {
                         
                         // directs user to receptionist/admin dashboard
                         setVisible(false);
-                        adminPage.setVisible(true);
+                        receptionist.display();
                         
                     }
                 }

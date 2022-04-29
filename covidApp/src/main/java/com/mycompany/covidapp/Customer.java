@@ -22,5 +22,11 @@ public class Customer extends AbstractUser{
         // sets user type to customer.
         identity = new CustomerIdentity();
     }
+    @Override
+    public void display() {
+        UserOption userOption=new UserOption();
+        userOption.setCustomer(this);
+        userOption.setVisible(true);
+    }
     
 }

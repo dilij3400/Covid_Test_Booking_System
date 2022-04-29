@@ -21,5 +21,10 @@ public class Receptionist extends AbstractUser {
         // sets user type to receptionist/admin.
         identity = new ReceptionistIdentity();
     }
+    @Override
+    public void display() {
+        AdminOption adminPage = new AdminOption();
+        adminPage.setVisible(true);
+    }
     
 }
