@@ -23,6 +23,7 @@ public class CovidTest {
     private final String myApiKey = "HN9t9JCtwNhcCP6mnWBgg6prpcKrPw";
     private final String rootUrl = "https://fit3077.com/api/v1";
 
+    //when this contructor is called, means that a new covid test is created and it will send a get request to update the web service
     public CovidTest(TestType testType, String patientId, String bookingId) throws IOException, InterruptedException {
         this.testType = testType;
         this.patientId = patientId;

@@ -8,6 +8,8 @@ package com.mycompany.covidapp;
  *
  * @author sooyewlim
  */
+
+//this is a observable/subject interface class 
 public interface Observable {
     
     public void subscribe(Observer observer);

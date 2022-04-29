@@ -25,6 +25,8 @@ import java.util.logging.Logger;
  *
  * @author sooyewlim
  */
+
+//this class is a "database" for homeBooking in this class , we apply lazy singleton design principle so that we make sure only one instance will be created through the whole life cycle 
 public class HomeBookingCollection {
     private static final String myApiKey = "zwH7TgdPHhnFrcKQtWbzqnfMMM9MKr";
     private static final String rootUrl = "https://fit3077.com/api/v1";
@@ -38,6 +40,8 @@ public class HomeBookingCollection {
         this.homeBooking = new ArrayList<HomeBooking>();
         qrCode=01200;
     }
+    
+    //lazy singleton is applied
     public static HomeBookingCollection getInstance() throws IOException, InterruptedException{
         if(instance ==null){
             instance=new HomeBookingCollection();
@@ -47,12 +51,12 @@ public class HomeBookingCollection {
         }
         return instance;
     }
+    
+    //this function will return a text that indicate whether the provided qrCode is valid 
     public String verifyQrCode(String qrCode){
-        System.out.println(qrCode);
-        System.out.println(homeBooking.size());
+        
         for(HomeBooking node:homeBooking){
-            System.out.println(node.getQrCode().toString());
-            System.out.println(qrCode);
+            
             if(node.getQrCode().toString().equals(qrCode)){
                 try {
                     node.setStatus(HomeBookingRatStatus.WITHRAT);
@@ -67,6 +71,7 @@ public class HomeBookingCollection {
         return "Qr code is invalid";
     }
     
+    //this function will allow us to add a new homeBooking to the system by providing customerID and bookingStatus (whether the user need a Rat or without)
     public String[] addHomeBooking(String customerId,HomeBookingRatStatus bookingStatus) throws IOException, InterruptedException{
         String bookingUrl = rootUrl + "/booking";
         String qrCode=this.generateQrCode();
@@ -104,11 +109,14 @@ public class HomeBookingCollection {
         return new String[] {qrCode,urlVideoConferecing};
         
     }
+    
+    //generate a new qr code
     public String generateQrCode(){
         this.qrCode+=1;
         return this.qrCode+"";
     }
     
+    //this function is to sync the data from the web service with our local database, this function will only be called automamically when a new booking is added 
     public void getHomeBookingFromWebService() throws IOException, InterruptedException{
         this.homeBooking = new ArrayList<HomeBooking>();
         String bookingUrl = rootUrl + "/booking";

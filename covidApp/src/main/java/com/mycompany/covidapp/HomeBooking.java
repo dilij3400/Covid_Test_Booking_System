@@ -14,6 +14,8 @@ import java.net.http.HttpResponse;
  *
  * @author sooyewlim
  */
+
+//this is a child class of Booking 
 public class HomeBooking extends Booking{
     private String qrCode;
     private HomeBookingRatStatus status;
@@ -37,6 +39,7 @@ public class HomeBooking extends Booking{
         return status;
     }
 
+    //when the status of the booking changed, it will send a patch request to changed the data in the web service as well
     public void setStatus(HomeBookingRatStatus status) throws IOException, InterruptedException {
         this.status = status;
         String bookingUrl = rootUrl + "/booking"+this.getId();

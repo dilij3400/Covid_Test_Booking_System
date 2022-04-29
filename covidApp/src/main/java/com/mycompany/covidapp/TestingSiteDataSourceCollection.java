@@ -18,6 +18,8 @@ import java.util.ArrayList;
  *
  * @author sooyewlim
  */
+
+//this class is a "database" for homeBooking in this class , we apply lazy singleton design principle so that we make sure only one instance will be created through the whole life cycle 
 public class TestingSiteDataSourceCollection {
     private final String myApiKey = "HN9t9JCtwNhcCP6mnWBgg6prpcKrPw";
     private final String rootUrl = "https://fit3077.com/api/v1";
@@ -30,6 +32,7 @@ public class TestingSiteDataSourceCollection {
         this.offShoreTestingDataSource=new ArrayList<OffShoreTestingSiteDataSource>();    
         
     }
+    //lazy singleton is applied
     public static TestingSiteDataSourceCollection getInstance() throws Exception{
         
         if(instance ==null){
@@ -46,8 +49,9 @@ public class TestingSiteDataSourceCollection {
     }
     
     
-
+    //this function is to sync the data from the web service with our local database, this function will only be called automamically when a new testingSite is added however as the assignment spec mentioned nothing about adding a new testing site, so adding a new testing site is not implemented 
     public void setOffShoreTestingDataSource() throws Exception{
+        offShoreTestingDataSource=new ArrayList<OffShoreTestingSiteDataSource>();
         String usersUrl = rootUrl + "/testing-site";
         HttpClient client = HttpClient.newHttpClient();
         HttpRequest request = HttpRequest
@@ -96,6 +100,7 @@ public class TestingSiteDataSourceCollection {
         }
     }
 
+    //this function is to get a offShoreTestingSiteDataSource (observable) by providing a facility
     public OffShoreTestingSiteDataSource searchId(String facilityId) {
         for (OffShoreTestingSiteDataSource node:offShoreTestingDataSource){
             if(node.getId().equals(facilityId)){

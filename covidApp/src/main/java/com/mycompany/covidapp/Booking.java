@@ -31,10 +31,13 @@ public abstract class Booking {
         return testType;
     }
     
+    //this function will create a covid test instance by providing the testType (RAT/PCR)
     public void setTestType(TestType testType) throws IOException, InterruptedException{
         this.testType = testType;
         covidTest=new CovidTest(testType,patientId,bookingId);
     }
+    
+    
     
     
 }

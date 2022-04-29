@@ -135,7 +135,7 @@ public class BookingTestingOnlinePage extends javax.swing.JFrame {
         } catch (InterruptedException ex) {
             Logger.getLogger(BookingTestingOnlinePage.class.getName()).log(Level.SEVERE, null, ex);
         }
-        System.out.println("hi booking testing online page");
+        
         try {
             String [] qrCodeAndUrl =homeBookingCollection.addHomeBooking(customerId,ratStatus);
             String qrCode=qrCodeAndUrl[0];

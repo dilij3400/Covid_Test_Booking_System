@@ -26,6 +26,7 @@ import java.util.logging.Logger;
  *
  * @author sooyewlim
  */
+//this class is an observable/subject (observer design pattern)
 public class OffShoreTestingSiteDataSource implements Observable{
     private static final String myApiKey = "zwH7TgdPHhnFrcKQtWbzqnfMMM9MKr";
     
@@ -60,7 +61,8 @@ public class OffShoreTestingSiteDataSource implements Observable{
         observers.remove(observerIndex);
         
     }
-
+    
+    //this method will be called when the attribute of this instance is updated
     @Override
     public void notifyObs() {
        
@@ -140,6 +142,8 @@ public class OffShoreTestingSiteDataSource implements Observable{
         this.allowOnSiteTesting=allowOnSiteTesting;
         notifyObs();
     }
+    
+    //this function is to add a new booking by providing patientId and string id and it will send a post request to web service 
     public HttpResponse addBooking(String patientId, String id) throws IOException, InterruptedException{
         this.updateBooking(new OnSiteBooking(patientId,id));
         
@@ -178,6 +182,7 @@ public class OffShoreTestingSiteDataSource implements Observable{
         return response;
         
     }
+    //this function is to update local database 
     public void updateBooking(OnSiteBooking newBooking){
         booking.add(newBooking);
         this.updateWaitingTime();
