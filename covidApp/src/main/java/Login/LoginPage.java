@@ -6,6 +6,7 @@ package Login;
  */
 
 
+import Application.NewJFrame;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import java.net.URI;
@@ -15,7 +16,7 @@ import java.net.http.HttpResponse;
 import java.util.Base64;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import com.mycompany.covidapp.TokenStatus;
+import SupportingClass.TokenStatus;
 
 /**
  *
@@ -24,7 +25,7 @@ import com.mycompany.covidapp.TokenStatus;
 
 public class LoginPage extends javax.swing.JFrame {
     
-    private static final String myApiKey = "zwH7TgdPHhnFrcKQtWbzqnfMMM9MKr";
+    private static final String myApiKey = NewJFrame.apiKey;
     private static final String rootUrl = "https://fit3077.com/api/v1";
     String usersUrl = rootUrl + "/user";
 

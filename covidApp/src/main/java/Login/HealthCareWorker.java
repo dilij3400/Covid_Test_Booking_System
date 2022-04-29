@@ -5,9 +5,9 @@
 package Login;
 
 import Login.AbstractUser;
-import com.mycompany.covidapp.HealthCareWorkerOption;
-import com.mycompany.covidapp.HealthCareWorkerOption;
-import com.mycompany.covidapp.HealthCareWorkerOption;
+import Application.HealthCareWorkerOption;
+import Application.HealthCareWorkerOption;
+import Application.HealthCareWorkerOption;
 
 /**
  *

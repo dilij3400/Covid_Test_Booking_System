@@ -4,10 +4,11 @@
  */
 package Login;
 
+import Application.NewJFrame;
 import Login.LoginPage;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
-import com.mycompany.covidapp.TokenStatus;
+import SupportingClass.TokenStatus;
 import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
@@ -24,7 +25,7 @@ import java.util.logging.Logger;
 public class JwtToken {
     
     ObjectNode token;
-    private static final String myApiKey = "zwH7TgdPHhnFrcKQtWbzqnfMMM9MKr";
+    private static final String myApiKey = NewJFrame.apiKey;
     private static final String rootUrl = "https://fit3077.com/api/v1";
     String usersUrl = rootUrl + "/user";
     String jwtString;

@@ -5,7 +5,6 @@
 package Login;
 
 import Login.AbstractUser;
-import com.mycompany.covidapp.UserOption;
 
 /**
  *
