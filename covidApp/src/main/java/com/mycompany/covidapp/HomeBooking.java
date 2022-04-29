@@ -16,15 +16,21 @@ import java.net.http.HttpResponse;
  */
 
 //this is a child class of Booking 
-public class HomeBooking extends Booking{
+public class HomeBooking implements Booking{
     private String qrCode;
     private HomeBookingRatStatus status;
     private static final String myApiKey = "zwH7TgdPHhnFrcKQtWbzqnfMMM9MKr";
     private static final String rootUrl = "https://fit3077.com/api/v1";
     private String videoUrl;
+    private String patientId;
+    private TestType testType;
+    private String bookingId;
+    private CovidTest covidTest;
     
     public HomeBooking(String patientId,  String id, HomeBookingRatStatus status,String qrCode,String videoUrl){
-        super(patientId,id);
+        
+        this.patientId = patientId;
+        this.bookingId = id;
         this.qrCode=qrCode;
         this.status=status;
         this.videoUrl=videoUrl;
@@ -53,6 +59,19 @@ public class HomeBooking extends Booking{
                 .build();
         
         HttpResponse response = client.send(request, HttpResponse.BodyHandlers.ofString());
+    }
+    public String getId() {
+        return bookingId;
+    }
+    
+    public TestType getTestType() {
+        return testType;
+    }
+    
+    //this function will create a covid test instance by providing the testType (RAT/PCR)
+    public void setTestType(TestType testType) throws IOException, InterruptedException{
+        this.testType = testType;
+        covidTest=new CovidTest(testType,patientId,bookingId);
     }
     
     

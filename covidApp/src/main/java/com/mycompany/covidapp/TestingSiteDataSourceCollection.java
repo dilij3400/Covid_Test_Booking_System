@@ -77,7 +77,7 @@ public class TestingSiteDataSourceCollection {
             OffShoreTestingSiteDataSource offShoreTestingSiteDataSource=new OffShoreTestingSiteDataSource();
             
             offShoreTestingSiteDataSource.updateEverything(node.get("id").toString().replaceAll("^\"|\"$", ""), node.get("name").toString().replaceAll("^\"|\"$", ""),node.get("phoneNumber").toString().replaceAll("^\"|\"$", ""),node.get("address").get("suburb").toString().replaceAll("^\"|\"$", ""),node.get("additionalInfo").get("typeOfFacility").toString().replaceAll("^\"|\"$", ""),Boolean.parseBoolean(node.get("additionalInfo").get("isOperating").toString()) ,Boolean.parseBoolean(node.get("additionalInfo").get("allowOnSiteBooking").toString()),Boolean.parseBoolean(node.get("additionalInfo").get("allowOnSiteTesting").toString()));
-            System.out.println("search2");
+            
             offShoreTestingDataSource.add(offShoreTestingSiteDataSource);
         }
         

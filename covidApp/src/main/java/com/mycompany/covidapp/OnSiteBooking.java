@@ -15,11 +15,17 @@ import java.util.ArrayList;
  *
  * @author sooyewlim
  */
-public class OnSiteBooking extends Booking{
+public class OnSiteBooking implements Booking{
     private String pin;
     private String status;
+    private String patientId;
+    private TestType testType;
+    private String bookingId;
+    private CovidTest covidTest;
     public OnSiteBooking(String patientId, String bookingId){
-        super(patientId,bookingId);
+        
+        this.patientId = patientId;
+        this.bookingId = bookingId;
         
       
     }
@@ -38,6 +44,20 @@ public class OnSiteBooking extends Booking{
 
     public void setStatus(String status) {
         this.status = status;
+    }
+    
+    public String getId() {
+        return bookingId;
+    }
+    
+    public TestType getTestType() {
+        return testType;
+    }
+    
+    //this function will create a covid test instance by providing the testType (RAT/PCR)
+    public void setTestType(TestType testType) throws IOException, InterruptedException{
+        this.testType = testType;
+        covidTest=new CovidTest(testType,patientId,bookingId);
     }
     
     
