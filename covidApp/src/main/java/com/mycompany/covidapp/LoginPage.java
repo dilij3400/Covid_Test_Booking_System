@@ -19,18 +19,16 @@ import java.util.logging.Logger;
  * @author ASUS
  */
 
-public class Login extends javax.swing.JFrame {
+public class LoginPage extends javax.swing.JFrame {
     
     private static final String myApiKey = "zwH7TgdPHhnFrcKQtWbzqnfMMM9MKr";
     private static final String rootUrl = "https://fit3077.com/api/v1";
     String usersUrl = rootUrl + "/user";
-    
-    private boolean result = false;
 
     /**
      * Creates new form Login
      */
-    public Login() {
+    public LoginPage() {
         initComponents();
     }
 
@@ -134,7 +132,7 @@ public class Login extends javax.swing.JFrame {
         
         ObjectNode userNode;
         
-        String jwt;
+//        String jwt;
         
         String jsonString = "{" +
       "\"userName\":\"" + usernameText.getText().trim() + "\"," +
@@ -157,12 +155,14 @@ public class Login extends javax.swing.JFrame {
                 messageLabel.setText("Incorrect username or password");
             }
             else if (response.statusCode() == 200){
-                // Storing JWT Token
+                // Validating jwtToken and decoding it.
                 jsonNodeJWT = new ObjectMapper().readValue(response.body(), ObjectNode.class);
-                if(verifyJwt(jsonNodeJWT)){
-                    jwt = jsonNodeJWT.get("jwt").textValue();
-                    
-                    userNode = jwtDecoder(jwt);
+                JwtToken token = new JwtToken(jsonNodeJWT);
+                token.setJwtString();
+                TokenStatus result = token.verifyJwt();
+                
+                if(result == TokenStatus.VALID){
+                    userNode = token.jwtDecoder();
                     
                     // Creating user based on user role
                     if (userNode.get("isCustomer").asBoolean()){
@@ -175,6 +175,7 @@ public class Login extends javax.swing.JFrame {
                         customer.setPhoneNumber(userNode.get("phoneNumber").textValue());
                         
                         // directs user to customer dashboard
+                        setVisible(false);
                         customer.display();
                         
                     }
@@ -208,12 +209,15 @@ public class Login extends javax.swing.JFrame {
                         receptionist.display();
                         
                     }
+                
                 }
-
+                else if(result == TokenStatus.INVALID){
+                    messageLabel.setText("Unauthorized user, invalid or expired token");
+                }
             }
         } 
         catch (Exception e){
-            Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, e);
+            Logger.getLogger(LoginPage.class.getName()).log(Level.SEVERE, null, e);
         }
         
     }//GEN-LAST:event_loginActionPerformed
@@ -235,80 +239,25 @@ public class Login extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(Login.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(LoginPage.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(Login.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(LoginPage.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(Login.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(LoginPage.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(Login.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(LoginPage.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new Login().setVisible(true);
+                new LoginPage().setVisible(true);
             }
         });
     }
-    
-    /**
-     * Verifies a given jwtToken for authenticity.
-     * @param jsonNode returned JSON object from login.
-     * @return if jwt is authentic, returns true, else false.
-     */
-    public boolean verifyJwt (ObjectNode jsonNode){
-        
-        // reset boolean output
-        result = false;
-        
-        String jsonString = "{\"jwt\":\"" + jsonNode.get("jwt").textValue() + "\"}";
-        
-        // Performing POST request for jwt token verfication
-        String usersLoginUrl = usersUrl + "/verify-token";
-        HttpClient client = HttpClient.newHttpClient();
-        HttpRequest request = HttpRequest.newBuilder(URI.create(usersLoginUrl + "?jwt=true")) 
-            .setHeader("Authorization", myApiKey)
-            .header("Content-Type","application/json") 
-            .POST(HttpRequest.BodyPublishers.ofString(jsonString))
-            .build();
-        
-        try{
-            HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
-                   
-            // Handling forged or tampered JWT token
-            if(response.statusCode() == 403 ){
-                messageLabel.setText("Unauthorized user, invalid or expired token");
-            }
-            else if (response.statusCode() == 200){
-               result = true;
-            }
-        } 
-        catch (Exception e){
-            Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, e);
-        }
-        
-        return result;
-    }
-    
-    /**
-     * Decodes the jwt token and parses its information into a JSON object.
-     * @param jwt
-     * @return JSON Object
-     */
-    public ObjectNode jwtDecoder(String jwt) throws Exception{
-        
-        String[] chunks = jwt.split("\\.");
-        
-        Base64.Decoder decoder = Base64.getUrlDecoder();
-
-        String payload = new String(decoder.decode(chunks[1]));
-        
-        ObjectNode decodedJwtNode = new ObjectMapper().readValue(payload, ObjectNode.class);
-        
-       return decodedJwtNode;
-    }
+  
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;

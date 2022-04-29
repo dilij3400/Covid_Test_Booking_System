@@ -13,6 +13,6 @@ public class CovidApp {
 
     public static void main(String[] args) {
         // Directs to login screen.
-        new Login().setVisible(true);
+        new LoginPage().setVisible(true);
     }
 }
