@@ -4,9 +4,10 @@
  */
 package Application;
 
-import TestingSite.OnSiteBookingSubSystem;
+import TestingSite.FacilityFacade;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
+import java.awt.event.ActionListener;
 import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
@@ -126,21 +127,21 @@ public class OnSiteBookingPage extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-
-        String facilityId=facilityIdText.getText().trim();
-        String customerId=customerIdText.getText().trim();
-        OnSiteBookingSubSystem onSiteBookingSubSystem;
-        try {
-            onSiteBookingSubSystem = new OnSiteBookingSubSystem();
-            String bookingResult=onSiteBookingSubSystem.bookOnSiteBooking(facilityId, customerId);
-            messageLabel.setText(bookingResult);
-            
-        } catch (Exception ex) {
-            Logger.getLogger(OnSiteBookingPage.class.getName()).log(Level.SEVERE, null, ex);
-        }
         
     }//GEN-LAST:event_jButton1ActionPerformed
+    public void updateView(String bookingResult){
+        messageLabel.setText(bookingResult);
+    }
+    public void addBookListener(ActionListener listenForBookButton){
+        jButton1.addActionListener(listenForBookButton);
+    }
 
+    
+    public String getCustomerId(){
+        String customerId=customerIdText.getText().trim();
+        return customerId;
+    }
+    
     private void customerIdTextActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_customerIdTextActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_customerIdTextActionPerformed
@@ -192,4 +193,11 @@ public class OnSiteBookingPage extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel messageLabel;
     // End of variables declaration//GEN-END:variables
+
+    public String getFacilityId() {
+        String facilityId=facilityIdText.getText().trim();
+        return facilityId;
+    }
+
+   
 }

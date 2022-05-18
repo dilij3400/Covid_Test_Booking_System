@@ -29,9 +29,9 @@ import java.util.logging.Logger;
  */
 //this class is an observable/subject (observer design pattern)
 public class OffShoreTestingSiteDataSource implements Observable{
-    private static final String myApiKey = NewJFrame.apiKey;
-    
-    private static final String rootUrl = "https://fit3077.com/api/v1";
+    //private static final String myApiKey = NewJFrame.apiKey;
+    private static final String myApiKey="nMTd7jFGPtbhJ6gpkMtRGHRQfwbj86";
+    private static final String rootUrl = "https://fit3077.com/api/v2";
     
     private String id;
     private String name;
@@ -68,6 +68,7 @@ public class OffShoreTestingSiteDataSource implements Observable{
     public void notifyObs() {
        
         for(Observer observer:observers){
+            System.out.println("datasource update");
             System.out.println(observer);
             observer.update(this.id, this.name, this.phoneNumber, this.suburbName, this.typeOfFacility, this.isOperating, this.allowOnSiteBooking, this.allowOnSiteTesting,this.waitingTime,this.booking);
         }
@@ -145,10 +146,9 @@ public class OffShoreTestingSiteDataSource implements Observable{
     }
     
     //this function is to add a new booking by providing patientId and string id and it will send a post request to web service 
-    public HttpResponse addBooking(String patientId, String id) throws IOException, InterruptedException{
-        this.updateBooking(new OnSiteBooking(patientId,id));
+    public HttpResponse addBooking(OnSiteBooking onSiteBooking,String patientId,String id) throws IOException, InterruptedException{
         
-        updateWaitingTime();
+      
         notifyObs();
         String bookingUrl = rootUrl + "/booking";
         
@@ -180,6 +180,7 @@ public class OffShoreTestingSiteDataSource implements Observable{
                 .build();
         
         HttpResponse response = client.send(request, HttpResponse.BodyHandlers.ofString());
+        this.updateBooking(onSiteBooking);
         return response;
         
     }

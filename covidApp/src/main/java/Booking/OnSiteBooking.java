@@ -19,7 +19,7 @@ import java.util.ArrayList;
  */
 public class OnSiteBooking implements Booking{
     private String pin;
-    private String status;
+    private String status="INITIATED";
     private String patientId;
     private TestType testType;
     private String bookingId;

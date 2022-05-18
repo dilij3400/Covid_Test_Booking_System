@@ -6,7 +6,7 @@ package Login;
 
 import Application.OnSiteBookingPage;
 import Application.VerifyBookingStatus;
-import Application.VerifyQrCode;
+import Application.VerifyQrCodePage;
 
 /**
  *
@@ -103,7 +103,7 @@ public class AdminOption extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        new VerifyQrCode().setVisible(true);
+        new VerifyQrCodePage().setVisible(true);
     }//GEN-LAST:event_jButton3ActionPerformed
 
     /**

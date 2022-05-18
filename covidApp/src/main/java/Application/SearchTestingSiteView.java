@@ -4,6 +4,7 @@
  */
 package Application;
 
+import TestingSite.FacilityFacade;
 import TestingSite.OffShoreTestingSite;
 import TestingSite.OffShoreTestingSiteCollection;
 import TestingSite.TestingSiteDataSourceCollection;
@@ -14,6 +15,7 @@ import java.net.http.HttpResponse;
 import java.util.ArrayList;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
+import java.awt.event.ActionListener;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -21,12 +23,12 @@ import java.util.logging.Logger;
  *
  * @author sooyewlim
  */
-public class SearchTestingSite extends javax.swing.JFrame {
+public class SearchTestingSiteView extends javax.swing.JFrame {
     
     /**
      * Creates new form SearchTestingSite
      */
-    public SearchTestingSite() {
+    public SearchTestingSiteView() {
         initComponents();
         
     }
@@ -119,33 +121,23 @@ public class SearchTestingSite extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_suburbNameActionPerformed
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-
+    public void addSearchListener(ActionListener listenForSearchButton){
+        jButton1.addActionListener(listenForSearchButton);
+    }
+    
+    public String getSuburbName(){
         String suburb=suburbName.getText().trim();
-        String facility=typeOfFacility.getSelectedItem().toString();
-        try { 
-            TestingSiteDataSourceCollection.getInstance();
-        } catch (Exception ex) {
-            Logger.getLogger(SearchTestingSite.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        
-        ArrayList<OffShoreTestingSite> searchTestingSiteResult=OffShoreTestingSiteCollection.getInstance().search(suburb, facility);
-        if (searchTestingSiteResult.size()==0){
-            searchResult.setText("No Facility");
-         
-        }
-        else{
-            // Checking if waiting time returns null
-            String output="";
-            int i=1;
-            for (OffShoreTestingSite node:searchTestingSiteResult){
-                output+=Integer.toString(i)+" "+node+"\n";
-                i+=1;
-            }
-            searchResult.setText(output);
-            }
-            
-        
+        return suburb;
+    }
+    
+    public String getFacilityType(){
+        String facilityType=typeOfFacility.getSelectedItem().toString();
+        return facilityType;
+    }
+    
+
+    
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void typeOfFacilityActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_typeOfFacilityActionPerformed
@@ -169,21 +161,22 @@ public class SearchTestingSite extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(SearchTestingSite.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(SearchTestingSiteView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(SearchTestingSite.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(SearchTestingSiteView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(SearchTestingSite.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(SearchTestingSiteView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(SearchTestingSite.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(SearchTestingSiteView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
         //</editor-fold>
         
         
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new SearchTestingSite().setVisible(true);
+                new SearchTestingSiteView().setVisible(true);
             }
         });
     }
@@ -197,4 +190,21 @@ public class SearchTestingSite extends javax.swing.JFrame {
     private javax.swing.JTextField suburbName;
     private javax.swing.JComboBox<String> typeOfFacility;
     // End of variables declaration//GEN-END:variables
+
+    public void updateView(ArrayList<OffShoreTestingSite> searchTestingSiteResult) {
+        if (searchTestingSiteResult.size()==0){
+            searchResult.setText("No Facility");
+         
+        }
+        else{
+            // Check if waiting time returns null
+            String output="";
+            int i=1;
+            for (OffShoreTestingSite node:searchTestingSiteResult){
+                output+=Integer.toString(i)+" "+node+"\n";
+                i+=1;
+            }
+            searchResult.setText(output);
+            }
+    }
 }

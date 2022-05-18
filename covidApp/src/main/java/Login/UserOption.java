@@ -6,7 +6,7 @@ package Login;
 
 import Login.Customer;
 import Application.BookingTestingOnlinePage;
-import Application.SearchTestingSite;
+import Application.SearchTestingSiteView;
 import Application.VerifyBookingStatusUser;
 
 /**
@@ -99,7 +99,7 @@ public class UserOption extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void searchButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchButtonActionPerformed
-        new SearchTestingSite().setVisible(true);
+        new SearchTestingSiteView().setVisible(true);
     }//GEN-LAST:event_searchButtonActionPerformed
 
     private void bookHomeTestingOnlineActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bookHomeTestingOnlineActionPerformed

@@ -4,7 +4,9 @@
  */
 package Application;
 
+import Booking.BookingFacade;
 import Booking.HomeBookingCollection;
+import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -13,12 +15,12 @@ import java.util.logging.Logger;
  *
  * @author sooyewlim
  */
-public class VerifyQrCode extends javax.swing.JFrame {
+public class VerifyQrCodePage extends javax.swing.JFrame {
 
     /**
      * Creates new form VerifyQrCode
      */
-    public VerifyQrCode() {
+    public VerifyQrCodePage() {
         initComponents();
     }
 
@@ -86,16 +88,29 @@ public class VerifyQrCode extends javax.swing.JFrame {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         String qrCode=textField1.getText().toString();
         try {
-            HomeBookingCollection homeBookingCollection=HomeBookingCollection.getInstance();
-            String result=homeBookingCollection.verifyQrCode(qrCode);
+            BookingFacade accessBooking=new BookingFacade();
+            String result=accessBooking.verifyQrCode(qrCode);
             textArea1.setText(result);
         } catch (IOException ex) {
-            Logger.getLogger(VerifyQrCode.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(VerifyQrCodePage.class.getName()).log(Level.SEVERE, null, ex);
         } catch (InterruptedException ex) {
-            Logger.getLogger(VerifyQrCode.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(VerifyQrCodePage.class.getName()).log(Level.SEVERE, null, ex);
         }
+        
     }//GEN-LAST:event_jButton1ActionPerformed
-
+    
+    public void addVerifyListener(ActionListener listenForVerifyButton){
+        jButton1.addActionListener(listenForVerifyButton);
+    }
+    
+    public String getQrCode(){
+        String qrCode=textField1.getText().toString();
+        return qrCode;
+    }
+    
+    public void updateView(String result){
+        textArea1.setText(result);
+    }
     /**
      * @param args the command line arguments
      */
@@ -113,20 +128,21 @@ public class VerifyQrCode extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(VerifyQrCode.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(VerifyQrCodePage.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(VerifyQrCode.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(VerifyQrCodePage.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(VerifyQrCode.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(VerifyQrCodePage.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(VerifyQrCode.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(VerifyQrCodePage.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new VerifyQrCode().setVisible(true);
+                new VerifyQrCodePage().setVisible(true);
             }
         });
     }

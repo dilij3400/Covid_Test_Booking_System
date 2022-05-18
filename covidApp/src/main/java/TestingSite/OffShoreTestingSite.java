@@ -90,15 +90,18 @@ public class OffShoreTestingSite implements Observer{
     //this will perform a search on all the bookings under this facility by pin code 
     public OnSiteBooking searchBookingPin(String pinCode){
         OnSiteBooking bookingNode=null;
+        
         for (OnSiteBooking node:booking){
-            int bookingPin = Integer.parseInt(node.getPin());
-            int inputPin = Integer.parseInt(pinCode);
-            if(bookingPin == inputPin){
-                
+            
+            if(node!=null){
+                int bookingPin = Integer.parseInt(node.getPin());
+                int inputPin = Integer.parseInt(pinCode);
+                if(bookingPin == inputPin){   
                 return node;               
+                }
             }
             
-            }
+        }
         return bookingNode;
         
     }
@@ -109,7 +112,7 @@ public class OffShoreTestingSite implements Observer{
 
     @Override
     public String toString() {
-        return " OffShoreTestingSite{" + "id=" + id + ", name = " + name + ", phoneNumber = " + phoneNumber + ", suburbName = " + suburbName + ", typeOfFacility = " + typeOfFacility +"On Site Booking : "+isAllowOnSiteBooking()+waitingTime +" Minutes "+"Open Now : "+isIsOperating()+" On Site Testing : "+ isAllowOnSiteTesting()+ '}';
+        return " OffShoreTestingSite" + "id=" + id + ", name = " + name + ", phoneNumber = " + phoneNumber + ", suburbName = " + suburbName + ", typeOfFacility = " + typeOfFacility +"On Site Booking : "+isAllowOnSiteBooking()+waitingTime +" Minutes "+"Open Now : "+isIsOperating()+" On Site Testing : "+ isAllowOnSiteTesting();
     }
     
         

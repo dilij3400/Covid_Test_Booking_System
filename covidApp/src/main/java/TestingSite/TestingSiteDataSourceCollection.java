@@ -22,8 +22,9 @@ import java.util.ArrayList;
 
 //this class is a "database" for homeBooking in this class , we apply lazy singleton design principle so that we make sure only one instance will be created through the whole life cycle 
 public class TestingSiteDataSourceCollection {
-    private final String myApiKey = NewJFrame.apiKey;
-    private final String rootUrl = "https://fit3077.com/api/v1";
+    //private final String myApiKey = NewJFrame.apiKey;
+    private static final String myApiKey="nMTd7jFGPtbhJ6gpkMtRGHRQfwbj86";
+    private final String rootUrl = "https://fit3077.com/api/v2";
     private ArrayList<OffShoreTestingSiteDataSource> offShoreTestingDataSource;
     
     private static TestingSiteDataSourceCollection instance;

@@ -4,9 +4,11 @@
  */
 package Application;
 
+import Booking.BookingFacade;
 import Booking.HomeBookingCollection;
 import Login.Customer;
 import SupportingClass.HomeBookingRatStatus;
+import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -25,7 +27,15 @@ public class BookingTestingOnlinePage extends javax.swing.JFrame {
     public BookingTestingOnlinePage() {
         initComponents();
     }
-
+    
+    public void addBookListener(ActionListener listenForBookButton){
+        button1.addActionListener(listenForBookButton);
+    }
+    
+    public void updateView(String [] qrCodeAndUrl,Boolean ratNeeded){
+        String qrCode=qrCodeAndUrl[0];
+        String videoUrl=qrCodeAndUrl[1];
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -114,31 +124,24 @@ public class BookingTestingOnlinePage extends javax.swing.JFrame {
         else{
             ratStatus=HomeBookingRatStatus.RATNEEDED;
         }
-        HomeBookingCollection homeBookingCollection=null;
         try {
-            homeBookingCollection = HomeBookingCollection.getInstance();
-        } catch (IOException ex) {
-            Logger.getLogger(BookingTestingOnlinePage.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (InterruptedException ex) {
-            Logger.getLogger(BookingTestingOnlinePage.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        
-        try {
-            String [] qrCodeAndUrl =homeBookingCollection.addHomeBooking(customerId,ratStatus);
+            BookingFacade accessBooking=new BookingFacade();
+            String [] qrCodeAndUrl =accessBooking.bookHomeBooking(customerId, ratStatus);
             String qrCode=qrCodeAndUrl[0];
             String videoUrl=qrCodeAndUrl[1];
             if(ratNeeded.equals("Yes")){
-            textArea1.setText("Your Home Booking has been booked and this is your Qrcode:"+qrCode+"\nHere is your video conferencing link: "+videoUrl);
+                textArea1.setText("Your Home Booking has been booked and this is your Qrcode:"+qrCode+"\nHere is your video conferencing link: "+videoUrl);
             }
             else{
-            textArea1.setText("Home Booking has been booked");
-        }
+                textArea1.setText("Home Booking has been booked");
+            }
             
         } catch (IOException ex) {
             Logger.getLogger(BookingTestingOnlinePage.class.getName()).log(Level.SEVERE, null, ex);
         } catch (InterruptedException ex) {
             Logger.getLogger(BookingTestingOnlinePage.class.getName()).log(Level.SEVERE, null, ex);
         }
+       
         
     }//GEN-LAST:event_button1ActionPerformed
 

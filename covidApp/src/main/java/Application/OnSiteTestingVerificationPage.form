@@ -124,6 +124,9 @@
       <Properties>
         <Property name="label" type="java.lang.String" value="next"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="button2ActionPerformed"/>
+      </Events>
     </Component>
   </SubComponents>
 </Form>

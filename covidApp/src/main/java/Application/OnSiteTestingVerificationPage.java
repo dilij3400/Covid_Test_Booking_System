@@ -5,22 +5,26 @@
 package Application;
 
 import Booking.OnSiteBooking;
+import TestingSite.FacilityFacade;
 import TestingSite.OffShoreTestingSite;
 import TestingSite.OffShoreTestingSiteCollection;
+import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
  * @author sooyewlim
  */
-public class OnSiteTestingVerification extends javax.swing.JFrame {
+public class OnSiteTestingVerificationPage extends javax.swing.JFrame {
     
     OffShoreTestingSiteCollection offShoreTestingSiteCollection=OffShoreTestingSiteCollection.getInstance();
 
     /**
      * Creates new form OnSiteTestingVeritication
      */
-    public OnSiteTestingVerification() {
+    public OnSiteTestingVerificationPage() {
         initComponents();
     }
 
@@ -69,6 +73,11 @@ public class OnSiteTestingVerification extends javax.swing.JFrame {
         });
 
         button2.setLabel("next");
+        button2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                button2ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -133,12 +142,11 @@ public class OnSiteTestingVerification extends javax.swing.JFrame {
         String facilityId=facilityIdText.getText().trim();
         String bookingId=bookingText.getText().trim();
         String result;
-        OnSiteBooking currentUserBooking;
-        OffShoreTestingSite testingSite=offShoreTestingSiteCollection.searchId(facilityId);
-        if (testingSite!=null){
-            currentUserBooking=testingSite.searchBooking(bookingId);
+        try {
+            FacilityFacade accessFacility=new FacilityFacade();
+            OnSiteBooking currentUserBooking=accessFacility.verifyOnSiteBooking(facilityId, bookingId);
             if (currentUserBooking!=null){
-                result="This user has a valid Booking, Please click the next button";
+                result="This user has a valid Booking";
                 OnSiteTesting obj=new OnSiteTesting();
                 obj.setBooking(currentUserBooking);
                 obj.setVisible(true);
@@ -146,18 +154,38 @@ public class OnSiteTestingVerification extends javax.swing.JFrame {
             else{
                 result="User cant be found";
             }
+            resultText.setText(result);
+            
+        } catch (Exception ex) {
+            Logger.getLogger(OnSiteTestingVerificationPage.class.getName()).log(Level.SEVERE, null, ex);
         }
-        else{
-            result="Please enter the correct facility Id";
-        }
-        resultText.setText(result);
-
-
     }//GEN-LAST:event_button1ActionPerformed
-
+    public void addVerifyListener(ActionListener listenForVerifyButton){
+        button1.addActionListener(listenForVerifyButton);
+    }
+    
+    public void updateView(String verificationResult){    
+        resultText.setText(verificationResult);
+    }
+    
+    
+    public String getFacilityId(){
+        String facilityId=facilityIdText.getText().trim();
+        return facilityId;
+    }
+    
+    public String getBookingId(){
+        String bookingId=bookingText.getText().trim();
+        return bookingId;
+    }
+    
     private void facilityIdTextActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_facilityIdTextActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_facilityIdTextActionPerformed
+
+    private void button2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button2ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_button2ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -176,21 +204,23 @@ public class OnSiteTestingVerification extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(OnSiteTestingVerification.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(OnSiteTestingVerificationPage.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(OnSiteTestingVerification.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(OnSiteTestingVerificationPage.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(OnSiteTestingVerification.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(OnSiteTestingVerificationPage.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(OnSiteTestingVerification.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(OnSiteTestingVerificationPage.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+        //</editor-fold>
         //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new OnSiteTestingVerification().setVisible(true);
+                new OnSiteTestingVerificationPage().setVisible(true);
             }
         });
     }
