@@ -185,6 +185,11 @@ public class FacilityFacade {
         return searchTestingSiteResult;
     }
     
+    public OnSiteBooking searchOnSiteBooking(String bookingId){
+        OnSiteBooking booking=offShoreTestingSiteCollection.searchBooking(bookingId);
+        return booking;
+    }
+    
     public OnSiteBooking verifyOnSiteBooking(String facilityId,String bookingId){
         OffShoreTestingSite testingSite=offShoreTestingSiteCollection.searchId(facilityId);
         OnSiteBooking currentUserBooking=null;

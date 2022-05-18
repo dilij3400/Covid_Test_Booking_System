@@ -4,6 +4,7 @@
  */
 package TestingSite;
 
+import Booking.OnSiteBooking;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -45,10 +46,22 @@ public class OffShoreTestingSiteCollection {
         
     }
     
+    public OnSiteBooking searchBooking(String bookingID){
+        OnSiteBooking onSiteBooking=null;
+        for (OffShoreTestingSite testingSite:offShoreTesting){
+            onSiteBooking=testingSite.searchBooking(bookingID);
+            if(onSiteBooking !=null){
+                return onSiteBooking;
+            }
+        }
+        return onSiteBooking;
+    }
+        
     // this function is mainly for task2 , provide a suburbName or typeOfFacility it will return a list of offShoreTestingSite 
     public ArrayList<OffShoreTestingSite> search(String suburbName,String typeOfFacility){
         ArrayList<OffShoreTestingSite> offShoreTestingSiteList=new ArrayList<OffShoreTestingSite>();
         for (OffShoreTestingSite node:offShoreTesting){
+            System.out.println("Search function in offSHorecollection");
             System.out.println(node.getSuburbName());
             System.out.println(node.getTypeOfFacility());
             if(node.getSuburbName().equals(suburbName) || node.getTypeOfFacility().equals(typeOfFacility)){
