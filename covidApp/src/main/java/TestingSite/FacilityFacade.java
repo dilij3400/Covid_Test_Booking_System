@@ -8,6 +8,7 @@ import Application.NewJFrame;
 import Application.OnSiteBookingPage;
 import Application.OnSiteTesting;
 import Application.OnSiteTestingVerificationPage;
+import Application.OnlineOnSiteTestingBooking;
 import Application.SearchTestingSiteView;
 import Booking.OnSiteBooking;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -30,6 +31,7 @@ public class FacilityFacade {
     private SearchTestingSiteView theSearchView;
     private OnSiteBookingPage theBookView;
     private OnSiteTestingVerificationPage theVerifyView;
+    private OnlineOnSiteTestingBooking theOnlineBookingView;
     //private static final String myApiKey = NewJFrame.apiKey;
     private static final String myApiKey="nMTd7jFGPtbhJ6gpkMtRGHRQfwbj86";
     private static final String rootUrl = "https://fit3077.com/api/v2";
@@ -41,10 +43,12 @@ public class FacilityFacade {
         this.testingSiteDataSourceCollection = TestingSiteDataSourceCollection.getInstance();
         this.theSearchView=new SearchTestingSiteView();
         this.theBookView=new OnSiteBookingPage();
+        this.theOnlineBookingView=new OnlineOnSiteTestingBooking();
         this.theVerifyView=new OnSiteTestingVerificationPage();
         this.theSearchView.addSearchListener(new SearchListener());
         this.theBookView.addBookListener(new OnSiteBookingListener());
         this.theVerifyView.addVerifyListener(new OnSiteVerifyListener());
+        this.theOnlineBookingView.addBookListener(new OnlineOnSiteBookingListener());
         
         
     }
@@ -55,6 +59,15 @@ public class FacilityFacade {
             String facilityType=theSearchView.getFacilityType();
             ArrayList<OffShoreTestingSite> searchTestingSiteResult=searchTestingSite(suburbName,facilityType);
             theSearchView.updateView(searchTestingSiteResult);
+        }
+    }
+    
+    class OnlineOnSiteBookingListener implements ActionListener{
+        public void actionPerformed(ActionEvent arg0){
+            String facilityId=theOnlineBookingView.getFacilityId();
+            String customerId=theOnlineBookingView.getCustomerId();
+            String bookingResult=bookOnSiteBooking(facilityId,customerId);
+            theOnlineBookingView.updateView(bookingResult);
         }
     }
     
