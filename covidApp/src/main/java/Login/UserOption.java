@@ -8,6 +8,7 @@ import Login.Customer;
 import Application.BookingTestingOnlinePage;
 import Application.SearchTestingSiteView;
 import Application.VerifyBookingStatusUser;
+import Application.OnlineOnSiteTestingBooking;
 
 /**
  *
@@ -38,6 +39,7 @@ public class UserOption extends javax.swing.JFrame {
         bookHomeTestingOnline = new javax.swing.JButton();
         verifyBookingStatus = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
+        onSiteBookingButton = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -64,6 +66,13 @@ public class UserOption extends javax.swing.JFrame {
 
         jLabel1.setText("Login As User");
 
+        onSiteBookingButton.setText("Book Onsite Testing");
+        onSiteBookingButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                onSiteBookingButtonActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -71,16 +80,18 @@ public class UserOption extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
+                        .addGap(235, 235, 235)
+                        .addComponent(jLabel1))
+                    .addGroup(layout.createSequentialGroup()
                         .addGap(40, 40, 40)
                         .addComponent(searchButton)
                         .addGap(30, 30, 30)
-                        .addComponent(bookHomeTestingOnline)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(onSiteBookingButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(bookHomeTestingOnline, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addGap(30, 30, 30)
-                        .addComponent(verifyBookingStatus))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(235, 235, 235)
-                        .addComponent(jLabel1)))
-                .addContainerGap(38, Short.MAX_VALUE))
+                        .addComponent(verifyBookingStatus)))
+                .addContainerGap(36, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -92,7 +103,9 @@ public class UserOption extends javax.swing.JFrame {
                     .addComponent(searchButton)
                     .addComponent(bookHomeTestingOnline)
                     .addComponent(verifyBookingStatus))
-                .addGap(121, 121, 121))
+                .addGap(36, 36, 36)
+                .addComponent(onSiteBookingButton)
+                .addGap(57, 57, 57))
         );
 
         pack();
@@ -112,6 +125,10 @@ public class UserOption extends javax.swing.JFrame {
     private void verifyBookingStatusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_verifyBookingStatusActionPerformed
         new VerifyBookingStatusUser().setVisible(true);
     }//GEN-LAST:event_verifyBookingStatusActionPerformed
+
+    private void onSiteBookingButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_onSiteBookingButtonActionPerformed
+        new OnlineOnSiteTestingBooking().setVisible(true);
+    }//GEN-LAST:event_onSiteBookingButtonActionPerformed
 
     public void setCustomer(Customer customer) {
         this.customer = customer;
@@ -158,6 +175,7 @@ public class UserOption extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton bookHomeTestingOnline;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JButton onSiteBookingButton;
     private javax.swing.JButton searchButton;
     private javax.swing.JButton verifyBookingStatus;
     // End of variables declaration//GEN-END:variables

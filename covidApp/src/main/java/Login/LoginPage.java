@@ -25,8 +25,9 @@ import SupportingClass.TokenStatus;
 
 public class LoginPage extends javax.swing.JFrame {
     
-    private static final String myApiKey = NewJFrame.apiKey;
-    private static final String rootUrl = "https://fit3077.com/api/v1";
+//    private static final String myApiKey = NewJFrame.apiKey;
+    private static final String myApiKey = "7jQBGHHKgGwpmhdFwJPKzgQDqmtBg8";
+    private static final String rootUrl = "https://fit3077.com/api/v2";
     String usersUrl = rootUrl + "/user";
 
     /**
