@@ -184,6 +184,45 @@ public class OffShoreTestingSiteDataSource implements Observable{
         return response;
         
     }
+    
+    // This function modifies an existing booking
+    public HttpResponse modifyBooking(String customerId,String bookingId,String facilityId, String bookingDate, String bookingTime) throws IOException, InterruptedException{
+        
+        String bookingUrl = rootUrl + "/booking/" + bookingId;
+        
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");  
+        LocalDateTime now = LocalDateTime.now();
+        
+        // Input
+        Date date = new Date(System.currentTimeMillis());
+
+        // Conversion
+        SimpleDateFormat sdf;
+        sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSXXX");
+        sdf.setTimeZone(TimeZone.getTimeZone("ACT"));
+        String text = sdf.format(date);
+        
+        String jsonString = "{" +
+                "\"customerId\":\"" + customerId + "\","+ 
+                "\"testingSiteId\":\"" + facilityId + "\"," + 
+                "\"startTime\":\"" + text + "\"," +
+                "\"notes\":\"" + "none" + "\"," + 
+                "\"additionalInfo\":" + "{\"bookingDate\":\"" + bookingDate + "\", \"bookingTime\":\"" + bookingTime +"\""+"}" + "}";
+        
+        //send a https request
+        HttpClient client = HttpClient.newHttpClient();
+        HttpRequest request = HttpRequest
+                .newBuilder(URI.create(bookingUrl))
+                .setHeader("Authorization", myApiKey)
+                .header("Content-Type","application/json")
+                .method("PATCH",HttpRequest.BodyPublishers.ofString(jsonString))
+                .build();
+        
+        HttpResponse response = client.send(request, HttpResponse.BodyHandlers.ofString());
+
+        return response;
+    }
+    
     //this function is to update local database 
     public void updateBooking(OnSiteBooking newBooking){
         booking.add(newBooking);

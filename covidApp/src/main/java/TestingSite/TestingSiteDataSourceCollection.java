@@ -84,15 +84,13 @@ public class TestingSiteDataSourceCollection {
         }
         
         for (ObjectNode node: jsonNodesBooking) {
-            String bookingDate="Not Set";
-            String bookingTime="Not Set";
+            String bookingDate="Not Set"; // to bypass other bookings that don't have this additional information added
+            String bookingTime="Not Set"; // to bypass other bookings that don't have this additional information added
             String bookingId=node.get("id").toString().replaceAll("^\"|\"$", "");
             String bookingPin = node.get("smsPin").toString().replaceAll("^\"|\"$", "");
             String bookingStatus = node.get("status").toString().replaceAll("^\"|\"$", "");
             String userId=node.get("customer").get("id").toString().replaceAll("^\"|\"$", "");
             if (node.get("additionalInfo").toString().equals("{}")==false) {
-//                bookingDate="Not Set";
-//                bookingTime="Not Set";
                 if (node.get("additionalInfo").has("bookingDate")) {
                     bookingDate=node.get("additionalInfo").get("bookingDate").toString().replaceAll("^\"|\"$", "");
                 }

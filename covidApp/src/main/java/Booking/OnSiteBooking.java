@@ -75,6 +75,12 @@ public class OnSiteBooking implements Booking{
     public void setBookingTime(String bookingTime) {
         this.bookingTime = bookingTime;
     }
+
+    public String getPatientId() {
+        return patientId;
+    }
+    
+    
     
     
     //this function will create a covid test instance by providing the testType (RAT/PCR)

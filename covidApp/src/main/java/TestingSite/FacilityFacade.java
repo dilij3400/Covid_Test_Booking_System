@@ -10,6 +10,7 @@ import Application.OnSiteTesting;
 import Application.OnSiteTestingVerificationPage;
 import Application.OnlineOnSiteTestingBooking;
 import Application.SearchTestingSiteView;
+import Application.BookingModificationPage;
 import Booking.OnSiteBooking;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
@@ -31,6 +32,7 @@ public class FacilityFacade {
     private SearchTestingSiteView theSearchView;
     private OnSiteBookingPage theBookView;
     private OnSiteTestingVerificationPage theVerifyView;
+    private BookingModificationPage theModifyBookingView;
     private OnlineOnSiteTestingBooking theOnlineBookingView;
     //private static final String myApiKey = NewJFrame.apiKey;
     private static final String myApiKey="nMTd7jFGPtbhJ6gpkMtRGHRQfwbj86";
@@ -45,12 +47,12 @@ public class FacilityFacade {
         this.theBookView=new OnSiteBookingPage();
         this.theOnlineBookingView=new OnlineOnSiteTestingBooking();
         this.theVerifyView=new OnSiteTestingVerificationPage();
+        this.theModifyBookingView = new BookingModificationPage();
         this.theSearchView.addSearchListener(new SearchListener());
         this.theBookView.addBookListener(new OnSiteBookingListener());
         this.theVerifyView.addVerifyListener(new OnSiteVerifyListener());
         this.theOnlineBookingView.addBookListener(new OnlineOnSiteBookingListener());
-        
-        
+        this.theModifyBookingView.addModifyBookingListener(new ModifyBookingListener());
     }
     
     class SearchListener implements ActionListener{
@@ -102,6 +104,18 @@ public class FacilityFacade {
             theVerifyView.updateView(verifyResult);
         }
     }
+    
+    class ModifyBookingListener implements ActionListener{
+        public void actionPerformed(ActionEvent arg0){
+            String customerId=theModifyBookingView.getCustomerId();
+            String bookingId=theModifyBookingView.getBookingId();
+            String facilityId=theModifyBookingView.getFacilityId();
+            String bookingDate=theModifyBookingView.getBookingDate();
+            String bookingTime=theModifyBookingView.getBookingTime();
+            String modifyResult=modifyOnSiteBooking(customerId,bookingId,facilityId,bookingDate,bookingTime);
+            theModifyBookingView.updateView(modifyResult);
+        }
+    }
 
     public SearchTestingSiteView getTheSearchView() {
         return theSearchView;
@@ -110,8 +124,13 @@ public class FacilityFacade {
     public OnSiteBookingPage getTheBookView() {
         return theBookView;
     }
+    
     public OnSiteTestingVerificationPage getOnSiteTestingVerificationPage(){
         return theVerifyView;
+    }
+    
+    public BookingModificationPage getBookingModificationPage(){
+        return theModifyBookingView;
     }
     
     //this method is to add the on site book by providing faility id and customer id and it will be pushed to the web service
@@ -181,6 +200,30 @@ public class FacilityFacade {
                 }
             }
         return bookingResult;
+    }
+    
+    public String modifyOnSiteBooking(String customerId,String bookingId,String facilityId, String bookingDate, String bookingTime){
+        String result = "";
+        try{
+            OnSiteBooking onSiteBooking=new OnSiteBooking(customerId,facilityId,bookingDate,bookingTime);        
+            OffShoreTestingSiteDataSource offShoreTestingSiteDataSource = testingSiteDataSourceCollection.searchId(facilityId);
+            HttpResponse response = offShoreTestingSiteDataSource.modifyBooking(customerId, bookingId, facilityId, bookingDate, bookingTime);
+            
+            if(response.statusCode() == 200){
+                result = "Booking has been successfully updated";
+            }
+            else if(response.statusCode() == 404){
+                result = "Incorrect booking Id, customer Id, or facility Id";
+            }
+            else if(response.statusCode() == 400){
+                result = "parsing error";
+            }
+        }
+        catch (Exception e){
+            Logger.getLogger(FacilityFacade.class.getName()).log(Level.SEVERE, null, e);
+        }
+        
+        return result;
     }
     
     //done
