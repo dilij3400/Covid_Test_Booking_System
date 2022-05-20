@@ -66,7 +66,9 @@ public class FacilityFacade {
         public void actionPerformed(ActionEvent arg0){
             String facilityId=theOnlineBookingView.getFacilityId();
             String customerId=theOnlineBookingView.getCustomerId();
-            String bookingResult=bookOnSiteBooking(facilityId,customerId);
+            String bookingDate=theOnlineBookingView.getBookingDate();
+            String bookingTime=theOnlineBookingView.getBookingTime();
+            String bookingResult=bookOnSiteBooking(facilityId,customerId,bookingDate,bookingTime);
             theOnlineBookingView.updateView(bookingResult);
         }
     }
@@ -75,7 +77,9 @@ public class FacilityFacade {
         public void actionPerformed(ActionEvent arg0){
             String facilityId=theBookView.getFacilityId();
             String customerId=theBookView.getCustomerId();
-            String bookingResult=bookOnSiteBooking(facilityId,customerId);
+            String bookingDate=theBookView.getBookingDate();
+            String bookingTime=theBookView.getBookingTime();
+            String bookingResult=bookOnSiteBooking(facilityId,customerId,bookingDate,bookingTime);
             theBookView.updateView(bookingResult);
         }
     }
@@ -111,7 +115,7 @@ public class FacilityFacade {
     }
     
     //this method is to add the on site book by providing faility id and customer id and it will be pushed to the web service
-    public String bookOnSiteBooking(String facilityId,String customerId){
+    public String bookOnSiteBooking(String facilityId,String customerId, String bookingDate, String bookingTime){
         String bookingResult="";
         String usersUrl = rootUrl + "/user";
         HttpResponse response;
@@ -151,7 +155,7 @@ public class FacilityFacade {
                             OffShoreTestingSiteDataSource offShoreTestingSiteDataSource = testingSiteDataSourceCollection.searchId(facilityId);
                         
                             // Make booking
-                            OnSiteBooking onSiteBooking=new OnSiteBooking(customerId,facilityId);
+                            OnSiteBooking onSiteBooking=new OnSiteBooking(customerId,facilityId,bookingDate,bookingTime);
                             
                             response = offShoreTestingSiteDataSource.addBooking(onSiteBooking,customerId,facilityId);
                         

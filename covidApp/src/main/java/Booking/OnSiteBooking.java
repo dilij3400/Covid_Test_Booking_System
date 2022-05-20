@@ -24,10 +24,14 @@ public class OnSiteBooking implements Booking{
     private TestType testType;
     private String bookingId;
     private CovidTest covidTest;
-    public OnSiteBooking(String patientId, String bookingId){
+    private String bookingDate;
+    private String bookingTime;
+    public OnSiteBooking(String patientId, String bookingId, String bookingDate, String bookingTime){
         
         this.patientId = patientId;
         this.bookingId = bookingId;
+        this.bookingDate = bookingDate;
+        this.bookingTime = bookingTime;
         
       
     }
@@ -55,6 +59,23 @@ public class OnSiteBooking implements Booking{
     public TestType getTestType() {
         return testType;
     }
+
+    public String getBookingDate() {
+        return bookingDate;
+    }
+
+    public void setBookingDate(String bookingDate) {
+        this.bookingDate = bookingDate;
+    }
+
+    public String getBookingTime() {
+        return bookingTime;
+    }
+
+    public void setBookingTime(String bookingTime) {
+        this.bookingTime = bookingTime;
+    }
+    
     
     //this function will create a covid test instance by providing the testType (RAT/PCR)
     public void setTestType(TestType testType) throws IOException, InterruptedException{

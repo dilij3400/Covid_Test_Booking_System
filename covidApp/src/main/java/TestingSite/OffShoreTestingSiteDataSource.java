@@ -169,7 +169,7 @@ public class OffShoreTestingSiteDataSource implements Observable{
                 "\"testingSiteId\":\"" + id + "\"," + 
                 "\"startTime\":\"" + text + "\"," +
                 "\"notes\":\"" + "none" + "\"," + 
-                "\"additionalInfo\":" + "{}" + "}";
+                "\"additionalInfo\":" + "{\"bookingDate\":\"" + onSiteBooking.getBookingDate() + "\", \"bookingTime\":\"" + onSiteBooking.getBookingTime() +"\""+"}" + "}";
         //send a https request 
         HttpClient client = HttpClient.newHttpClient();
         HttpRequest request = HttpRequest

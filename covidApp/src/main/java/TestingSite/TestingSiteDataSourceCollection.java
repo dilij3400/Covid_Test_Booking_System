@@ -84,11 +84,25 @@ public class TestingSiteDataSourceCollection {
         }
         
         for (ObjectNode node: jsonNodesBooking) {
+            String bookingDate="Not Set";
+            String bookingTime="Not Set";
             String bookingId=node.get("id").toString().replaceAll("^\"|\"$", "");
             String bookingPin = node.get("smsPin").toString().replaceAll("^\"|\"$", "");
             String bookingStatus = node.get("status").toString().replaceAll("^\"|\"$", "");
             String userId=node.get("customer").get("id").toString().replaceAll("^\"|\"$", "");
-            OnSiteBooking newBooking= new OnSiteBooking(userId,bookingId);
+            if (node.get("additionalInfo").toString().equals("{}")==false) {
+//                bookingDate="Not Set";
+//                bookingTime="Not Set";
+                if (node.get("additionalInfo").has("bookingDate")) {
+                    bookingDate=node.get("additionalInfo").get("bookingDate").toString().replaceAll("^\"|\"$", "");
+                }
+                
+                if (node.get("additionalInfo").has("bookingTime")) {
+                    bookingTime=node.get("additionalInfo").get("bookingDate").toString().replaceAll("^\"|\"$", "");
+                }
+            } 
+            
+            OnSiteBooking newBooking= new OnSiteBooking(userId,bookingId,bookingDate,bookingTime);
             newBooking.setPin(bookingPin);
             for (OffShoreTestingSiteDataSource testingSite:offShoreTestingDataSource ){
                 if (node.get("testingSite").toString().equals("null")==false){

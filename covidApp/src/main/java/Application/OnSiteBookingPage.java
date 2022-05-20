@@ -19,6 +19,7 @@ import java.util.Date;
 import java.util.TimeZone;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JTextField;
 
 /**
  *
@@ -86,7 +87,7 @@ public class OnSiteBookingPage extends javax.swing.JFrame {
 
         jLabel6.setText("Select Time : ");
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "2:00", "2:30", "3:00", "3:30", "4:00" }));
+        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "2:00pm", "2:30pm", "3:00pm", "3:30pm", "4:00pm" }));
         jComboBox1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jComboBox1ActionPerformed(evt);
@@ -94,6 +95,7 @@ public class OnSiteBookingPage extends javax.swing.JFrame {
         });
 
         jDateChooser2.setToolTipText("");
+        jDateChooser2.setDateFormatString("dd-MM-yyyy");
         jDateChooser2.setOpaque(false);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -115,8 +117,8 @@ public class OnSiteBookingPage extends javax.swing.JFrame {
                         .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(customerIdText, javax.swing.GroupLayout.DEFAULT_SIZE, 164, Short.MAX_VALUE)
-                            .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jDateChooser2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                            .addComponent(jDateChooser2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addGap(299, 299, 299))
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -127,7 +129,7 @@ public class OnSiteBookingPage extends javax.swing.JFrame {
                         .addGap(156, 156, 156)
                         .addComponent(messageLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 429, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(348, 348, 348)
+                        .addGap(347, 347, 347)
                         .addComponent(jButton1)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
@@ -156,10 +158,10 @@ public class OnSiteBookingPage extends javax.swing.JFrame {
                     .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(29, 29, 29)
-                .addComponent(messageLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 48, Short.MAX_VALUE)
-                .addGap(18, 18, 18)
+                .addComponent(messageLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 86, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jButton1)
-                .addGap(32, 32, 32))
+                .addContainerGap())
         );
 
         pack();
@@ -173,12 +175,28 @@ public class OnSiteBookingPage extends javax.swing.JFrame {
     }
     public void addBookListener(ActionListener listenForBookButton){
         jButton1.addActionListener(listenForBookButton);
+        
     }
 
     
     public String getCustomerId(){
         String customerId=customerIdText.getText().trim();
         return customerId;
+    }
+    
+    public String getFacilityId() {
+        String facilityId=facilityIdText.getText().trim();
+        return facilityId;
+    }
+    
+    public String getBookingDate() {
+        String bookingDate=((JTextField)jDateChooser2.getDateEditor().getUiComponent()).getText();
+        return bookingDate;
+    }
+    
+    public String getBookingTime() {
+        String bookingTime=jComboBox1.getSelectedItem().toString();
+        return bookingTime;
     }
     
     private void customerIdTextActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_customerIdTextActionPerformed
@@ -242,10 +260,7 @@ public class OnSiteBookingPage extends javax.swing.JFrame {
     private javax.swing.JLabel messageLabel;
     // End of variables declaration//GEN-END:variables
 
-    public String getFacilityId() {
-        String facilityId=facilityIdText.getText().trim();
-        return facilityId;
-    }
+    
 
    
 }
