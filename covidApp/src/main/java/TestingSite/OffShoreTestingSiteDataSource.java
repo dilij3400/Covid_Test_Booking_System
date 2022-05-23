@@ -306,6 +306,7 @@ public class OffShoreTestingSiteDataSource implements Observable{
             if(node.getId().equals(bookingId)){
                 node.setBookingDate(bookingDate);
                 node.setBookingTime(bookingTime);
+                break;
             }
                              
             }         

@@ -56,7 +56,7 @@ public class BookingModificationPage extends javax.swing.JFrame {
 
         jLabel4.setText("Date: ");
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "2:00pm", "2:30pm", "3:00pm", "3:30pm", "4:00pm" }));
+        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "-", "2:00pm", "2:30pm", "3:00pm", "3:30pm", "4:00pm" }));
 
         facilityIdText.setText("7fbd25ee-5b64-4720-b1f6-4f6d4731260e");
         facilityIdText.addActionListener(new java.awt.event.ActionListener() {
