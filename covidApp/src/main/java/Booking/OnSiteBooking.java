@@ -11,7 +11,14 @@ import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.LinkedList;
+import java.util.Queue;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -24,14 +31,23 @@ public class OnSiteBooking implements Booking{
     private TestType testType;
     private String bookingId;
     private CovidTest covidTest;
-    private String bookingDate;
+    private Date bookingDate;
     private String bookingTime;
-    public OnSiteBooking(String patientId, String bookingId, String bookingDate, String bookingTime){
-        
+    private Date modifyBookingDateTime;
+    private String facilityId;
+    private Queue<OnSiteBooking> threeLatestBooking=new LinkedList<>();
+    
+    public OnSiteBooking(String patientId, String bookingId, String bookingDate, String bookingTime,String facilityId){
+        SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd");
         this.patientId = patientId;
         this.bookingId = bookingId;
-        this.bookingDate = bookingDate;
+        try {
+            this.bookingDate = sdf.parse(bookingDate);
+        } catch (ParseException ex) {
+            Logger.getLogger(OnSiteBooking.class.getName()).log(Level.SEVERE, null, ex);
+        }
         this.bookingTime = bookingTime;
+        this.facilityId=facilityId;
         
       
     }
@@ -60,12 +76,17 @@ public class OnSiteBooking implements Booking{
         return testType;
     }
 
-    public String getBookingDate() {
+    public Date getBookingDate() {
         return bookingDate;
     }
 
     public void setBookingDate(String bookingDate) {
-        this.bookingDate = bookingDate;
+        SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd");
+        try {
+            this.bookingDate = sdf.parse(bookingDate);
+        } catch (ParseException ex) {
+            Logger.getLogger(OnSiteBooking.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     public String getBookingTime() {
@@ -80,16 +101,22 @@ public class OnSiteBooking implements Booking{
         return patientId;
     }
     
-    
-    
-    
     //this function will create a covid test instance by providing the testType (RAT/PCR)
     public void setTestType(TestType testType) throws IOException, InterruptedException{
         this.testType = testType;
         covidTest=new CovidTest(testType,patientId,bookingId);
     }
+
+    public void setFacilityId(String facilityId) {
+        this.facilityId = facilityId;
+    }
+
+    public String getFacilityId() {
+        return facilityId;
+    }
     
     
+   
     
 
     

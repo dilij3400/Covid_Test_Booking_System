@@ -146,9 +146,8 @@ public class OffShoreTestingSiteDataSource implements Observable{
     }
     
     //this function is to add a new booking by providing patientId and string id and it will send a post request to web service 
-    public HttpResponse addBooking(OnSiteBooking onSiteBooking,String patientId,String id) throws IOException, InterruptedException{
+    public HttpResponse addBooking(String customerId,String facilityId,String bookingDate,String bookingTime) throws IOException, InterruptedException{
         
-      
         notifyObs();
         String bookingUrl = rootUrl + "/booking";
         
@@ -165,11 +164,11 @@ public class OffShoreTestingSiteDataSource implements Observable{
         String text = sdf.format(date);
         
         String jsonString = "{" +
-                "\"customerId\":\"" + patientId + "\","+ 
-                "\"testingSiteId\":\"" + id + "\"," + 
+                "\"customerId\":\"" + customerId + "\","+ 
+                "\"testingSiteId\":\"" + facilityId + "\"," + 
                 "\"startTime\":\"" + text + "\"," +
                 "\"notes\":\"" + "none" + "\"," + 
-                "\"additionalInfo\":" + "{\"bookingDate\":\"" + onSiteBooking.getBookingDate() + "\", \"bookingTime\":\"" + onSiteBooking.getBookingTime() +"\""+"}" + "}";
+                "\"additionalInfo\":" + "{\"bookingDate\":\"" + bookingDate + "\", \"bookingTime\":\"" + bookingTime +"\""+"}" + "}";
         //send a https request 
         HttpClient client = HttpClient.newHttpClient();
         HttpRequest request = HttpRequest
@@ -180,13 +179,18 @@ public class OffShoreTestingSiteDataSource implements Observable{
                 .build();
         
         HttpResponse response = client.send(request, HttpResponse.BodyHandlers.ofString());
+        ObjectNode jsonNode = new ObjectMapper().readValue(response.body().toString(), ObjectNode.class);
+        String bookingId=jsonNode.get("smsPin").toString().replaceAll("^\"|\"$", "");
+        OnSiteBooking onSiteBooking=new OnSiteBooking(customerId,bookingId,bookingDate,bookingTime,facilityId);
+        onSiteBooking.setPin(jsonNode.get("smsPin").toString().replaceAll("^\"|\"$", ""));
         this.updateBooking(onSiteBooking);
         return response;
         
     }
     
+    
     // This function modifies an existing booking
-    public HttpResponse modifyBooking(String customerId,String bookingId,String facilityId, String bookingDate, String bookingTime) throws IOException, InterruptedException{
+    public HttpResponse modifyBookingDateTime(String bookingId, String bookingDate, String bookingTime) throws IOException, InterruptedException{
         
         String bookingUrl = rootUrl + "/booking/" + bookingId;
         
@@ -202,11 +206,75 @@ public class OffShoreTestingSiteDataSource implements Observable{
         sdf.setTimeZone(TimeZone.getTimeZone("ACT"));
         String text = sdf.format(date);
         
-        String jsonString = "{" +
-                "\"customerId\":\"" + customerId + "\","+ 
+        String jsonString = "{" + 
+            "\"additionalInfo\":" + "{\"bookingDate\":\"" + bookingDate + "\", \"bookingTime\":\"" + bookingTime +"\""+"}" + "}";
+        
+        //send a https request
+        HttpClient client = HttpClient.newHttpClient();
+        HttpRequest request = HttpRequest
+                .newBuilder(URI.create(bookingUrl))
+                .setHeader("Authorization", myApiKey)
+                .header("Content-Type","application/json")
+                .method("PATCH",HttpRequest.BodyPublishers.ofString(jsonString))
+                .build();
+        
+        HttpResponse response = client.send(request, HttpResponse.BodyHandlers.ofString());
+        this.modifyBookingDateTimeLocally(bookingId, bookingDate, bookingTime);
+        return response;
+    }
+    
+    public HttpResponse modifyBookingFacility(String bookingId,String facilityId) throws IOException, InterruptedException{
+        
+        String bookingUrl = rootUrl + "/booking/" + bookingId;
+        
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");  
+        LocalDateTime now = LocalDateTime.now();
+        
+        // Input
+        Date date = new Date(System.currentTimeMillis());
+
+        // Conversion
+        SimpleDateFormat sdf;
+        sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSXXX");
+        sdf.setTimeZone(TimeZone.getTimeZone("ACT"));
+        String text = sdf.format(date);
+        
+        String jsonString = "{" + 
+                "\"testingSiteId\":\"" + facilityId + "\"" + "}";
+        
+        //send a https request
+        HttpClient client = HttpClient.newHttpClient();
+        HttpRequest request = HttpRequest
+                .newBuilder(URI.create(bookingUrl))
+                .setHeader("Authorization", myApiKey)
+                .header("Content-Type","application/json")
+                .method("PATCH",HttpRequest.BodyPublishers.ofString(jsonString))
+                .build();
+        
+        HttpResponse response = client.send(request, HttpResponse.BodyHandlers.ofString());
+        this.removeBooking(bookingId,facilityId);
+        return response;
+    }
+    
+    
+    public HttpResponse modifyBookingDateTimeFacility(String bookingId,String facilityId, String bookingDate, String bookingTime) throws IOException, InterruptedException{
+        
+        String bookingUrl = rootUrl + "/booking/" + bookingId;
+        
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");  
+        LocalDateTime now = LocalDateTime.now();
+        
+        // Input
+        Date date = new Date(System.currentTimeMillis());
+
+        // Conversion
+        SimpleDateFormat sdf;
+        sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSXXX");
+        sdf.setTimeZone(TimeZone.getTimeZone("ACT"));
+        String text = sdf.format(date);
+        
+        String jsonString = "{" + 
                 "\"testingSiteId\":\"" + facilityId + "\"," + 
-                "\"startTime\":\"" + text + "\"," +
-                "\"notes\":\"" + "none" + "\"," + 
                 "\"additionalInfo\":" + "{\"bookingDate\":\"" + bookingDate + "\", \"bookingTime\":\"" + bookingTime +"\""+"}" + "}";
         
         //send a https request
@@ -219,9 +287,11 @@ public class OffShoreTestingSiteDataSource implements Observable{
                 .build();
         
         HttpResponse response = client.send(request, HttpResponse.BodyHandlers.ofString());
-
+        this.modifyBookingDateTimeLocally(bookingId, bookingDate, bookingTime);
+        this.removeBooking(bookingId,facilityId);
         return response;
     }
+    
     
     //this function is to update local database 
     public void updateBooking(OnSiteBooking newBooking){
@@ -230,6 +300,44 @@ public class OffShoreTestingSiteDataSource implements Observable{
         notifyObs();
         
     }
+    
+    public void modifyBookingDateTimeLocally(String bookingId,String bookingDate, String bookingTime){
+        for (OnSiteBooking node:booking){
+            if(node.getId().equals(bookingId)){
+                node.setBookingDate(bookingDate);
+                node.setBookingTime(bookingTime);
+            }
+                             
+            }         
+        
+    }
+    
+    public OnSiteBooking removeBooking(String bookingId,String facilityId){
+        OnSiteBooking onSiteBooking=null;
+        for (int i=0;i<booking.size();i+=1){
+            if(booking.get(i).getId().equals(bookingId)){
+                booking.get(i).setFacilityId(facilityId);
+                onSiteBooking=booking.get(i);
+                booking.remove(i);
+                break;
+            }
+                             
+            }
+        notifyObs();
+        return onSiteBooking;
+    }
+    
+    public OnSiteBooking searchBooking(String bookingId){
+        OnSiteBooking onSiteBooking=null;
+        for (OnSiteBooking node:booking){
+            if(node.getId().equals(bookingId)){
+                return node;
+            }
+        }
+        return onSiteBooking;
+    }
+        
+        
 
     
     

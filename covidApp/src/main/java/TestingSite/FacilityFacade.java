@@ -16,6 +16,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
 import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
@@ -112,7 +113,14 @@ public class FacilityFacade {
             String facilityId=theModifyBookingView.getFacilityId();
             String bookingDate=theModifyBookingView.getBookingDate();
             String bookingTime=theModifyBookingView.getBookingTime();
-            String modifyResult=modifyOnSiteBooking(customerId,bookingId,facilityId,bookingDate,bookingTime);
+            String modifyResult="Incorrect booking Id, customer Id, or facility Id";
+            try {
+                modifyResult = modifyOnSiteBooking(bookingId,facilityId,bookingDate,bookingTime);
+            } catch (IOException ex) {
+                Logger.getLogger(FacilityFacade.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (InterruptedException ex) {
+                Logger.getLogger(FacilityFacade.class.getName()).log(Level.SEVERE, null, ex);
+            }
             theModifyBookingView.updateView(modifyResult);
         }
     }
@@ -142,9 +150,11 @@ public class FacilityFacade {
         // searching for a specific facility given facility id.
         OffShoreTestingSite testingSite = offShoreTestingSiteCollection.searchId(facilityId);
         // Check if facility exists
+        
         if (testingSite == null){
             bookingResult="Facility does not exist";
         }
+        
         else if (testingSite!=null){
             
                 // perform GET request of all customers.
@@ -174,16 +184,14 @@ public class FacilityFacade {
                             OffShoreTestingSiteDataSource offShoreTestingSiteDataSource = testingSiteDataSourceCollection.searchId(facilityId);
                         
                             // Make booking
-                            OnSiteBooking onSiteBooking=new OnSiteBooking(customerId,facilityId,bookingDate,bookingTime);
-                            
-                            response = offShoreTestingSiteDataSource.addBooking(onSiteBooking,customerId,facilityId);
+                           
+                            response = offShoreTestingSiteDataSource.addBooking(customerId,facilityId,bookingDate,bookingTime);
                         
                         
                             if(response.statusCode() == 201){
                                 ObjectNode jsonNode = new ObjectMapper().readValue(response.body().toString(), ObjectNode.class);
                                 bookingResult="Booking created successfully, your PIN number is : " + jsonNode.get("smsPin");
-                                onSiteBooking.setPin(jsonNode.get("smsPin").toString().replaceAll("^\"|\"$", ""));
-                                System.out.println(onSiteBooking.getPin());
+                                
                             }
                             else if (response.statusCode() == 404){
                                 bookingResult="A customer and/or testing site with the provided ID was not found.";
@@ -202,26 +210,39 @@ public class FacilityFacade {
         return bookingResult;
     }
     
-    public String modifyOnSiteBooking(String customerId,String bookingId,String facilityId, String bookingDate, String bookingTime){
+    public String modifyOnSiteBooking(String bookingId,String facilityId, String bookingDate, String bookingTime) throws IOException, InterruptedException{
         String result = "";
-        try{
-            OnSiteBooking onSiteBooking=new OnSiteBooking(customerId,facilityId,bookingDate,bookingTime);        
-            OffShoreTestingSiteDataSource offShoreTestingSiteDataSource = testingSiteDataSourceCollection.searchId(facilityId);
-            HttpResponse response = offShoreTestingSiteDataSource.modifyBooking(customerId, bookingId, facilityId, bookingDate, bookingTime);
+        HttpResponse response;
+        OnSiteBooking currentBooking= offShoreTestingSiteCollection.searchBooking(bookingId);
+        String currentBookingFacility=currentBooking.getFacilityId();
+        OffShoreTestingSiteDataSource currentOffShoreTestingSiteDataSource = testingSiteDataSourceCollection.searchId(currentBookingFacility);
+        if (facilityId == null && bookingDate !=null){
+            response=currentOffShoreTestingSiteDataSource.modifyBookingDateTime( bookingId, bookingDate, bookingTime);
+        }
+        else if (facilityId != null && bookingDate ==null){
+            OffShoreTestingSiteDataSource toModifyOffShoreTestingSiteDataSource = testingSiteDataSourceCollection.searchId(facilityId);
+            OnSiteBooking modifiedOnSiteBooking=currentOffShoreTestingSiteDataSource.removeBooking(bookingId, facilityId);
+            toModifyOffShoreTestingSiteDataSource.updateBooking(modifiedOnSiteBooking);
+            response=currentOffShoreTestingSiteDataSource.modifyBookingFacility(bookingId, facilityId);
+        }
+        else{
+            OffShoreTestingSiteDataSource toModifyOffShoreTestingSiteDataSource = testingSiteDataSourceCollection.searchId(facilityId);
+            OnSiteBooking modifiedOnSiteBooking=currentOffShoreTestingSiteDataSource.removeBooking(bookingId, facilityId);
+            toModifyOffShoreTestingSiteDataSource.updateBooking(modifiedOnSiteBooking);
+            response=currentOffShoreTestingSiteDataSource.modifyBookingDateTimeFacility(bookingId, facilityId, bookingDate, bookingTime);
+        }
             
-            if(response.statusCode() == 200){
-                result = "Booking has been successfully updated";
-            }
-            else if(response.statusCode() == 404){
-                result = "Incorrect booking Id, customer Id, or facility Id";
-            }
-            else if(response.statusCode() == 400){
-                result = "parsing error";
-            }
+        if(response.statusCode() == 200){
+           result = "Booking has been successfully updated";
         }
-        catch (Exception e){
-            Logger.getLogger(FacilityFacade.class.getName()).log(Level.SEVERE, null, e);
+        else if(response.statusCode() == 404){
+           result = "Incorrect booking Id, customer Id, or facility Id";
         }
+        else if(response.statusCode() == 400){
+           result = "parsing error";
+        }
+        
+        
         
         return result;
     }
@@ -244,5 +265,21 @@ public class FacilityFacade {
             currentUserBooking=testingSite.searchBooking(bookingId);
         }
         return currentUserBooking;
+    }
+    
+    public Boolean verifyOnSiteBookingModification(String bookingId){
+        for (OffShoreTestingSite node: offShoreTestingSiteCollection.getOffShoreTesting()){
+            OnSiteBooking currentUserBooking=node.searchBooking(bookingId);
+            if (currentUserBooking!=null){
+                if (currentUserBooking.getStatus().equals("INITIATED")){
+                    return true;
+                }
+                else{
+                    return false;
+                }
+            }
+        }
+
+        return false;
     }
 }

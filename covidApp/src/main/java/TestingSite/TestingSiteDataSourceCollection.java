@@ -89,6 +89,7 @@ public class TestingSiteDataSourceCollection {
             String bookingId=node.get("id").toString().replaceAll("^\"|\"$", "");
             String bookingPin = node.get("smsPin").toString().replaceAll("^\"|\"$", "");
             String bookingStatus = node.get("status").toString().replaceAll("^\"|\"$", "");
+            String facilityId=node.get("testingSite").get("id").toString().replaceAll("^\"|\"$", "");
             String userId=node.get("customer").get("id").toString().replaceAll("^\"|\"$", "");
             if (node.get("additionalInfo").toString().equals("{}")==false) {
                 if (node.get("additionalInfo").has("bookingDate")) {
@@ -100,7 +101,7 @@ public class TestingSiteDataSourceCollection {
                 }
             } 
             
-            OnSiteBooking newBooking= new OnSiteBooking(userId,bookingId,bookingDate,bookingTime);
+            OnSiteBooking newBooking= new OnSiteBooking(userId,bookingId,bookingDate,bookingTime,facilityId);
             newBooking.setPin(bookingPin);
             for (OffShoreTestingSiteDataSource testingSite:offShoreTestingDataSource ){
                 if (node.get("testingSite").toString().equals("null")==false){

@@ -45,6 +45,12 @@ public class OffShoreTestingSiteCollection {
         }
         
     }
+
+    public ArrayList<OffShoreTestingSite> getOffShoreTesting() {
+        return offShoreTesting;
+    }
+    
+    
     
     public OnSiteBooking searchBooking(String bookingID){
         OnSiteBooking onSiteBooking=null;
