@@ -5,6 +5,7 @@
 package TestingSite;
 
 import Application.NewJFrame;
+import Booking.CareTaker;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import Booking.OnSiteBooking;
@@ -43,6 +44,7 @@ public class OffShoreTestingSiteDataSource implements Observable{
     private boolean allowOnSiteBooking;
     private boolean allowOnSiteTesting;
     private ArrayList<OnSiteBooking> booking;
+    private CareTaker bookingCareTaker;
     private String waitingTime;
     
     

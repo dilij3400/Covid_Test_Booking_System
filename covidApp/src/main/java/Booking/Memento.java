@@ -4,18 +4,47 @@
  */
 package Booking;
 
+import java.util.Date;
+
 /**
  *
  * @author sooyewlim
  */
 public class Memento {
-    private OnSiteBooking onSiteBooking;
+    private Date bookingDate;
+    private Date modifyBookingDateTime;
+    private String facilityId;
+    private String bookingTime;
+    private String bookingId;
 
-    public Memento(OnSiteBooking onSiteBooking) {
-        this.onSiteBooking = onSiteBooking;
+    public Memento(Date bookingDate, Date modifyBookingDateTime, String facilityId, String bookingTime,String bookingId) {
+        this.bookingDate = bookingDate;
+        this.modifyBookingDateTime = modifyBookingDateTime;
+        this.facilityId = facilityId;
+        this.bookingTime = bookingTime;
+        this.bookingId=bookingId;
+    }
+
+    
+
+    public Date getBookingDate() {
+        return bookingDate;
+    }
+
+    public Date getModifyBookingDateTime() {
+        return modifyBookingDateTime;
+    }
+
+    public String getFacilityId() {
+        return facilityId;
+    }
+
+    public String getBookingTime() {
+        return bookingTime;
+    }
+
+    public String getBookingId() {
+        return bookingId;
     }
     
-    public OnSiteBooking geSavedBooking(){
-        return onSiteBooking;
-    }
 }

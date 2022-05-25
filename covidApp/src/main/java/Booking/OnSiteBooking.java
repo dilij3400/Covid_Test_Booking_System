@@ -35,7 +35,7 @@ public class OnSiteBooking implements Booking{
     private String bookingTime;
     private Date modifyBookingDateTime;
     private String facilityId;
-    private Queue<OnSiteBooking> threeLatestBooking=new LinkedList<>();
+    
     
     public OnSiteBooking(String patientId, String bookingId, String bookingDate, String bookingTime,String facilityId){
         SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd");
@@ -114,22 +114,19 @@ public class OnSiteBooking implements Booking{
     public String getFacilityId() {
         return facilityId;
     }
-    
-    
-   
-    
 
-    
-    
-
-    
-    
-    
-
-
-    
-
-    
-    
+    public void setModifyBookingDateTime(Date modifyBookingDateTime) {
+        this.modifyBookingDateTime = modifyBookingDateTime;
+    }
+    public Memento storeInMemento(){
+        return new Memento(bookingDate,modifyBookingDateTime,facilityId,bookingTime) ;
+    }
+    public void restoreFromMemento(Memento memento){
+        bookingDate=memento.getBookingDate();
+        modifyBookingDateTime=memento.getModifyBookingDateTime();
+        facilityId=memento.getFacilityId();
+        bookingTime=memento.getBookingTime();
+        
+    }
 
 }

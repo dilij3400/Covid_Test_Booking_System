@@ -11,13 +11,17 @@ import java.util.ArrayList;
  * @author sooyewlim
  */
 public class CareTaker {
-    private ArrayList<Memento> twoPreviousBooking=new ArrayList<Memento>();
+    private ArrayList<Memento> previousBooking=new ArrayList<Memento>();
     public void aaddMemento(Memento m){
-        twoPreviousBooking.add(m);
+        previousBooking.add(m);
     }
 
-    public Memento getMemento(int index) {
-        return twoPreviousBooking.get(index);
+    public ArrayList<Memento> getMemento(String bookingId) {
+        ArrayList<Memento> bookingMemento=new ArrayList<Memento>();
+        for (Memento node:previousBooking){
+            
+        }
+        return bookingMemento;
     }
     
 }

@@ -4,7 +4,9 @@
  */
 package TestingSite;
 
+import Booking.CareTaker;
 import Booking.OnSiteBooking;
+
 import java.util.ArrayList;
 
 /**
@@ -25,6 +27,7 @@ public class OffShoreTestingSite implements Observer{
     private boolean allowOnSiteTesting;
     private ArrayList<OnSiteBooking> booking;
     private String waitingTime;
+   
     private Observable testingSiteDataSource;
     
     public OffShoreTestingSite(Observable testingSiteDataSource){
