@@ -4,6 +4,8 @@
   <NonVisualComponents>
     <Component class="java.awt.List" name="list1">
     </Component>
+    <Component class="java.awt.TextArea" name="searchResult1">
+    </Component>
   </NonVisualComponents>
   <Properties>
     <Property name="defaultCloseOperation" type="int" value="2"/>
@@ -67,7 +69,7 @@
                       <Component id="searchResult" min="-2" max="-2" attributes="0"/>
                   </Group>
               </Group>
-              <EmptySpace pref="77" max="32767" attributes="0"/>
+              <EmptySpace pref="100" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>

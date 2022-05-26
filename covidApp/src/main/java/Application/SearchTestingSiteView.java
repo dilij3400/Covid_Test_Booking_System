@@ -43,6 +43,7 @@ public class SearchTestingSiteView extends javax.swing.JFrame {
     private void initComponents() {
 
         list1 = new java.awt.List();
+        searchResult1 = new java.awt.TextArea();
         suburbName = new javax.swing.JTextField();
         jButton1 = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
@@ -111,7 +112,7 @@ public class SearchTestingSiteView extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(searchResult, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(77, Short.MAX_VALUE))
+                .addContainerGap(100, Short.MAX_VALUE))
         );
 
         pack();
@@ -187,6 +188,7 @@ public class SearchTestingSiteView extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel2;
     private java.awt.List list1;
     private java.awt.TextArea searchResult;
+    private java.awt.TextArea searchResult1;
     private javax.swing.JTextField suburbName;
     private javax.swing.JComboBox<String> typeOfFacility;
     // End of variables declaration//GEN-END:variables

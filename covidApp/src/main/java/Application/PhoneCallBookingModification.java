@@ -7,6 +7,7 @@ package Application;
 import java.awt.TextField;
 import java.awt.event.ActionListener;
 import javax.swing.JComboBox;
+import javax.swing.JTextField;
 
 /**
  *
@@ -53,7 +54,7 @@ public class PhoneCallBookingModification extends javax.swing.JFrame {
         revertBookingNo = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
         revertResult = new javax.swing.JTextField();
-        jButton1 = new javax.swing.JButton();
+        revertButton = new javax.swing.JButton();
 
         jTextArea1.setColumns(20);
         jTextArea1.setRows(5);
@@ -101,7 +102,7 @@ public class PhoneCallBookingModification extends javax.swing.JFrame {
 
         jLabel2.setText("Number");
 
-        jButton1.setText("Revert");
+        revertButton.setText("Revert");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -141,7 +142,7 @@ public class PhoneCallBookingModification extends javax.swing.JFrame {
                                             .addGap(6, 6, 6)
                                             .addComponent(revertResult, javax.swing.GroupLayout.PREFERRED_SIZE, 298, javax.swing.GroupLayout.PREFERRED_SIZE)))
                                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(jButton1))
+                                    .addComponent(revertButton))
                                 .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.LEADING))))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(67, 67, 67)
@@ -191,7 +192,7 @@ public class PhoneCallBookingModification extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(revertBookingNo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jButton1)))
+                            .addComponent(revertButton)))
                     .addComponent(jLabel2))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(revertResult, javax.swing.GroupLayout.DEFAULT_SIZE, 53, Short.MAX_VALUE)
@@ -266,6 +267,10 @@ public class PhoneCallBookingModification extends javax.swing.JFrame {
         return bookingId.getText().trim();
     }
 
+    public String getRevertBookingNo() {
+        return revertBookingNo.getText().trim();
+    }
+
     public String getDate() {
         return date.getText().trim();
     }
@@ -294,6 +299,10 @@ public class PhoneCallBookingModification extends javax.swing.JFrame {
         verifyButton.addActionListener(listenForVerifyBooking);
     }
     
+    public void addRevertBookingListener(ActionListener listenForRevertBooking){
+        revertButton.addActionListener(listenForRevertBooking);
+    }
+    
     public void updateBookingResultView(String modifyResult){
         bookingVerifyResult.setText(modifyResult);
     }
@@ -311,7 +320,6 @@ public class PhoneCallBookingModification extends javax.swing.JFrame {
     private javax.swing.JTextArea bookingVerifyResult;
     private java.awt.TextField date;
     private java.awt.TextField facilityId;
-    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JScrollPane jScrollPane1;
@@ -328,6 +336,7 @@ public class PhoneCallBookingModification extends javax.swing.JFrame {
     private javax.swing.JButton modifyButton;
     private java.awt.TextField pinCode;
     private javax.swing.JTextField revertBookingNo;
+    private javax.swing.JButton revertButton;
     private javax.swing.JTextField revertResult;
     private javax.swing.JComboBox<String> time;
     private java.awt.Button verifyButton;
