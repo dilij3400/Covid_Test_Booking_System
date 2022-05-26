@@ -14,8 +14,6 @@ import TestingSite.FacilityFacade;
  */
 public class OnSiteBooking {
     public static void main(String[] args) throws Exception {
-        
-        
         FacilityFacade accessFacilityController= new FacilityFacade();
         OnSiteBookingPage theView=accessFacilityController.getTheBookView();
         theView.setVisible(true);

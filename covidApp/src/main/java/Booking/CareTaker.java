@@ -13,6 +13,7 @@ import java.util.ArrayList;
 public class CareTaker {
     private String bookingId;
     private ArrayList<Memento> previousBooking=new ArrayList<Memento>();
+    
     public void addMemento(Memento m){
         previousBooking.add(m);
         if(previousBooking.size()>2){
@@ -24,12 +25,13 @@ public class CareTaker {
         this.bookingId = bookingId;
     }
 
-    public ArrayList<Memento> getMemento(String bookingId) {
-        ArrayList<Memento> bookingMemento=new ArrayList<Memento>();
-        for (Memento node:previousBooking){
-            
-        }
-        return bookingMemento;
+    public ArrayList<Memento> getPreviousBooking() {
+        return previousBooking;
+    }
+
+    public Memento getMemento(int index) {
+        
+        return previousBooking.get(index);
     }
 
     public String getBookingId() {

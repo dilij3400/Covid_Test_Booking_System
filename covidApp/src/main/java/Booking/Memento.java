@@ -47,4 +47,8 @@ public class Memento {
         return bookingId;
     }
     
+    public String toString() {
+        return "Facility Id: "+facilityId+" Booking Date: "+bookingDate+" Modify Booking Date: "+modifyBookingDateTime;
+    }
+    
 }

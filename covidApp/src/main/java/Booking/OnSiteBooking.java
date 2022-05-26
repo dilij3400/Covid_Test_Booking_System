@@ -35,6 +35,7 @@ public class OnSiteBooking implements Booking{
     private String bookingTime;
     private Date modifyBookingDateTime;
     private String facilityId;
+    private static final String myApiKey = "nMTd7jFGPtbhJ6gpkMtRGHRQfwbj86";
     
     
     public OnSiteBooking(String patientId, String bookingId, String bookingDate, String bookingTime,String facilityId){
@@ -121,12 +122,32 @@ public class OnSiteBooking implements Booking{
     public Memento storeInMemento(){
         return new Memento(bookingDate,modifyBookingDateTime,facilityId,bookingTime,bookingId) ;
     }
-    public void restoreFromMemento(Memento memento){
+    public void restoreFromMemento(Memento memento) throws IOException, InterruptedException{
         bookingDate=memento.getBookingDate();
-        modifyBookingDateTime=memento.getModifyBookingDateTime();
+        modifyBookingDateTime=new Date();
         facilityId=memento.getFacilityId();
         bookingTime=memento.getBookingTime();
+        String bookingUrl = "https://fit3077.com/api/v2" + "/booking/" + bookingId;
+
+            String jsonString = "{"
+                    + "\"testingSiteId\":\"" + facilityId + "\","
+                    + "\"additionalInfo\":" + "{\"bookingDate\":\"" + bookingDate + "\", \"bookingTime\":\"" + bookingTime + "\"" + "}" + "}";
+
+            //send a https request
+            HttpClient client = HttpClient.newHttpClient();
+            HttpRequest request = HttpRequest
+                    .newBuilder(URI.create(bookingUrl))
+                    .setHeader("Authorization", myApiKey)
+                    .header("Content-Type", "application/json")
+                    .method("PATCH", HttpRequest.BodyPublishers.ofString(jsonString))
+                    .build();
+
+            HttpResponse response = client.send(request, HttpResponse.BodyHandlers.ofString());
         
     }
+    public String toString() {
+        return "Booking ID: "+bookingId+" Facility Id: "+facilityId+" Booking Date: "+bookingDate+" Modify Booking Date: "+modifyBookingDateTime;
+    }
 
+    
 }

@@ -64,6 +64,16 @@ public class OffShoreTestingSiteDataSource implements Observable {
         observers.remove(observerIndex);
 
     }
+    public CareTaker getCareTaker(String bookingId){
+        CareTaker careTaker=null;
+        for (CareTaker node: bookingCareTaker){
+            if (node.getBookingId().equals(bookingId)){
+                careTaker=node;
+                break;
+            }
+        }
+        return careTaker;
+    }
 
     //this method will be called when the attribute of this instance is updated
     @Override
@@ -239,7 +249,7 @@ public class OffShoreTestingSiteDataSource implements Observable {
                     .build();
             //memento of this part is done
             HttpResponse response = client.send(request, HttpResponse.BodyHandlers.ofString());
-            this.removeBooking(bookingId, facilityId);
+            //this.removeBooking(bookingId, facilityId);
             returnMessage = "booking modified succuessfully";
         } else {
             returnMessage = "booking can't be modified please change the booking date or this booking might has already tested";
@@ -267,7 +277,7 @@ public class OffShoreTestingSiteDataSource implements Observable {
 
             HttpResponse response = client.send(request, HttpResponse.BodyHandlers.ofString());
             this.modifyBookingDateTimeLocally(bookingId, bookingDate, bookingTime, false);
-            this.removeBooking(bookingId, facilityId);
+            //this.removeBooking(bookingId, facilityId);
             returnMessage = "booking modified succuessfully";
         }
         else {
@@ -353,6 +363,7 @@ public class OffShoreTestingSiteDataSource implements Observable {
         for (CareTaker node : this.bookingCareTaker) {
             if (node.getBookingId().equals(bookingId)) {
                 caretaker = node;
+                break;
             }
         }
         if (caretaker == null) {

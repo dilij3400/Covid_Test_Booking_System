@@ -86,6 +86,12 @@ public class OffShoreTestingSiteCollection {
         }
         return null;
     }
+    
+    public ArrayList<OnSiteBooking> getBookingFromFacility(String facilityId){
+        ArrayList<OnSiteBooking> onSiteBooking=null;
+        onSiteBooking=searchId(facilityId).getBooking();
+        return onSiteBooking;
+    }
 
     
      

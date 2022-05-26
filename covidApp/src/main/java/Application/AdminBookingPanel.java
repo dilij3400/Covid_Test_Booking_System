@@ -4,7 +4,9 @@
  */
 package Application;
 
+import Booking.OnSiteBooking;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 import javax.swing.JTextField;
 
 /**
@@ -125,18 +127,30 @@ public class AdminBookingPanel extends javax.swing.JFrame {
             }
         });
     }
-    public void addRefreshListener(ActionListener listenForModifyBooking){
+
+    public void addRefreshListener(ActionListener listenForModifyBooking) {
         refreshButton.addActionListener(listenForModifyBooking);
     }
 
     public String getFacilityId() {
         return facilityId.getText().trim();
     }
-    
-    public void updateRefreshResultView(String refreshBookingResult){
-        refreshResult.setText(refreshBookingResult);
+
+    public void updateRefreshResultView(ArrayList<OnSiteBooking> onSiteBookings) {
+        if (onSiteBookings.size() == 0) {
+            refreshResult.setText("No Facility");
+
+        } else {
+            String output = "";
+            int i = 1;
+            for (OnSiteBooking node : onSiteBookings) {
+                output += Integer.toString(i) + " " + node + "\n";
+                i += 1;
+            }
+            refreshResult.setText(output);
+        }
     }
-    
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextField facilityId;
