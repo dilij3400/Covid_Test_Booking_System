@@ -11,9 +11,17 @@ import java.util.ArrayList;
  * @author sooyewlim
  */
 public class CareTaker {
+    private String bookingId;
     private ArrayList<Memento> previousBooking=new ArrayList<Memento>();
-    public void aaddMemento(Memento m){
+    public void addMemento(Memento m){
         previousBooking.add(m);
+        if(previousBooking.size()>2){
+            previousBooking.remove(0);
+        }
+    }
+
+    public CareTaker(String bookingId) {
+        this.bookingId = bookingId;
     }
 
     public ArrayList<Memento> getMemento(String bookingId) {
@@ -23,5 +31,10 @@ public class CareTaker {
         }
         return bookingMemento;
     }
+
+    public String getBookingId() {
+        return bookingId;
+    }
+    
     
 }

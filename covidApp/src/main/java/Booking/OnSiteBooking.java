@@ -119,7 +119,7 @@ public class OnSiteBooking implements Booking{
         this.modifyBookingDateTime = modifyBookingDateTime;
     }
     public Memento storeInMemento(){
-        return new Memento(bookingDate,modifyBookingDateTime,facilityId,bookingTime) ;
+        return new Memento(bookingDate,modifyBookingDateTime,facilityId,bookingTime,bookingId) ;
     }
     public void restoreFromMemento(Memento memento){
         bookingDate=memento.getBookingDate();

@@ -44,8 +44,8 @@ public class OffShoreTestingSiteDataSource implements Observable{
     private boolean allowOnSiteBooking;
     private boolean allowOnSiteTesting;
     private ArrayList<OnSiteBooking> booking;
-    private CareTaker bookingCareTaker;
     private String waitingTime;
+    private ArrayList<CareTaker> bookingCareTaker;
     
     
     public OffShoreTestingSiteDataSource(){
@@ -147,6 +147,10 @@ public class OffShoreTestingSiteDataSource implements Observable{
         notifyObs();
     }
     
+    
+    //here line 151 code the logic to send a patch request to a specific booking in its additionalinfo to store 
+    //facility id , booking date , booking time 
+    
     //this function is to add a new booking by providing patientId and string id and it will send a post request to web service 
     public HttpResponse addBooking(String customerId,String facilityId,String bookingDate,String bookingTime) throws IOException, InterruptedException{
         
@@ -196,17 +200,6 @@ public class OffShoreTestingSiteDataSource implements Observable{
         
         String bookingUrl = rootUrl + "/booking/" + bookingId;
         
-        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");  
-        LocalDateTime now = LocalDateTime.now();
-        
-        // Input
-        Date date = new Date(System.currentTimeMillis());
-
-        // Conversion
-        SimpleDateFormat sdf;
-        sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSXXX");
-        sdf.setTimeZone(TimeZone.getTimeZone("ACT"));
-        String text = sdf.format(date);
         
         String jsonString = "{" + 
             "\"additionalInfo\":" + "{\"bookingDate\":\"" + bookingDate + "\", \"bookingTime\":\"" + bookingTime +"\""+"}" + "}";
@@ -221,25 +214,13 @@ public class OffShoreTestingSiteDataSource implements Observable{
                 .build();
         
         HttpResponse response = client.send(request, HttpResponse.BodyHandlers.ofString());
-        this.modifyBookingDateTimeLocally(bookingId, bookingDate, bookingTime);
+        this.modifyBookingDateTimeLocally(bookingId, bookingDate, bookingTime,true);
         return response;
     }
     
     public HttpResponse modifyBookingFacility(String bookingId,String facilityId) throws IOException, InterruptedException{
         
         String bookingUrl = rootUrl + "/booking/" + bookingId;
-        
-        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");  
-        LocalDateTime now = LocalDateTime.now();
-        
-        // Input
-        Date date = new Date(System.currentTimeMillis());
-
-        // Conversion
-        SimpleDateFormat sdf;
-        sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSXXX");
-        sdf.setTimeZone(TimeZone.getTimeZone("ACT"));
-        String text = sdf.format(date);
         
         String jsonString = "{" + 
                 "\"testingSiteId\":\"" + facilityId + "\"" + "}";
@@ -252,7 +233,7 @@ public class OffShoreTestingSiteDataSource implements Observable{
                 .header("Content-Type","application/json")
                 .method("PATCH",HttpRequest.BodyPublishers.ofString(jsonString))
                 .build();
-        
+        //memento of this part is done
         HttpResponse response = client.send(request, HttpResponse.BodyHandlers.ofString());
         this.removeBooking(bookingId,facilityId);
         return response;
@@ -263,17 +244,6 @@ public class OffShoreTestingSiteDataSource implements Observable{
         
         String bookingUrl = rootUrl + "/booking/" + bookingId;
         
-        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");  
-        LocalDateTime now = LocalDateTime.now();
-        
-        // Input
-        Date date = new Date(System.currentTimeMillis());
-
-        // Conversion
-        SimpleDateFormat sdf;
-        sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSXXX");
-        sdf.setTimeZone(TimeZone.getTimeZone("ACT"));
-        String text = sdf.format(date);
         
         String jsonString = "{" + 
                 "\"testingSiteId\":\"" + facilityId + "\"," + 
@@ -289,7 +259,7 @@ public class OffShoreTestingSiteDataSource implements Observable{
                 .build();
         
         HttpResponse response = client.send(request, HttpResponse.BodyHandlers.ofString());
-        this.modifyBookingDateTimeLocally(bookingId, bookingDate, bookingTime);
+        this.modifyBookingDateTimeLocally(bookingId, bookingDate, bookingTime,false);
         this.removeBooking(bookingId,facilityId);
         return response;
     }
@@ -303,23 +273,52 @@ public class OffShoreTestingSiteDataSource implements Observable{
         
     }
     
-    public void modifyBookingDateTimeLocally(String bookingId,String bookingDate, String bookingTime){
+    public void modifyBookingDateTimeLocally(String bookingId,String bookingDate, String bookingTime,Boolean modifyDateTimeOnly){
+        CareTaker caretaker=null;
+        for (CareTaker node:this.bookingCareTaker){
+            if (node.getBookingId().equals(bookingId)){
+                caretaker=node;
+            }
+        }
+        if (caretaker==null){
+            caretaker=new CareTaker(bookingId);
+            this.bookingCareTaker.add(caretaker);
+        }
         for (OnSiteBooking node:booking){
             if(node.getId().equals(bookingId)){
+                if (modifyDateTimeOnly==true){
+                    caretaker.addMemento(node.storeInMemento());
+                }
+                Date date = new Date();
+                node.setModifyBookingDateTime(date);
                 node.setBookingDate(bookingDate);
                 node.setBookingTime(bookingTime);
+                
                 break;
             }
                              
-            }         
+            }
         
     }
     
     public OnSiteBooking removeBooking(String bookingId,String facilityId){
         OnSiteBooking onSiteBooking=null;
+        CareTaker caretaker=null;
+        for (CareTaker node:this.bookingCareTaker){
+            if (node.getBookingId().equals(bookingId)){
+                caretaker=node;
+            }
+        }
+        if (caretaker==null){
+            caretaker=new CareTaker(bookingId);
+            this.bookingCareTaker.add(caretaker);
+        }
         for (int i=0;i<booking.size();i+=1){
             if(booking.get(i).getId().equals(bookingId)){
+                caretaker.addMemento(booking.get(i).storeInMemento());
                 booking.get(i).setFacilityId(facilityId);
+                Date date = new Date();
+                booking.get(i).setModifyBookingDateTime(date);
                 onSiteBooking=booking.get(i);
                 booking.remove(i);
                 break;
