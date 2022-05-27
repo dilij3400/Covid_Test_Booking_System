@@ -4,20 +4,22 @@
  */
 package MainClass;
 
+import Application.AdminBookingPanel;
+
 import TestingSite.FacilityFacade;
-import Application.BookingModificationPage;
+import TestingSite.OffShoreTestingSiteCollection;
 
 /**
  *
- * @author ASUS
+ * @author sooyewlim
  */
-public class OnSiteBookingModify {
+public class AdminAllBookingPanel {
     public static void main(String[] args) throws Exception {
         FacilityFacade accessFacilityController= new FacilityFacade();
-        BookingModificationPage theView = accessFacilityController.getBookingModificationPage();
+        AdminBookingPanel theView=accessFacilityController.getTheAdminBookingPanelView();
+        OffShoreTestingSiteCollection.getInstance();
         theView.setVisible(true);
         
         
     }
-    
 }

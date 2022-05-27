@@ -124,3 +124,4 @@ public class NewJFrame extends javax.swing.JFrame {
     private java.awt.TextField textField1;
     // End of variables declaration//GEN-END:variables
 }
+

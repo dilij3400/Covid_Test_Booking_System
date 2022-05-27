@@ -66,6 +66,11 @@ public class FacilityFacade {
         this.theModifyBookingView.addModifyBookingListener(new ModifyBookingListener());
         this.theModifyBookingView.addVerifyBookingListener(new VerifyBookingListener());
         this.theModifyBookingView.addRevertBookingListener(new RevertBookingListener());
+        this.theAdminBookingPanelView.addRefreshListener(new RefreshListener());
+    }
+
+    public BookingModificationPage getTheModifyBookingView() {
+        return theModifyBookingView;
     }
 
     class SearchListener implements ActionListener {
@@ -135,12 +140,13 @@ public class FacilityFacade {
 
         public void actionPerformed(ActionEvent arg0) {
             String bookingId = theModifyBookingView.getBookingId();
-
+            System.out.println("facility facade");
+            System.out.println(bookingId.length());
             Boolean verifyBooking = verifyOnSiteBookingModification(bookingId);
             if (verifyBooking == false) {
                 theModifyBookingView.updateBookingResultView("Wrong booking id or this booking has already tested");
             } else {
-                String facilityId = theModifyBookingView.getFacilityId();
+                String facilityId = searchOnSiteBooking(bookingId).getFacilityId();
                 OffShoreTestingSiteDataSource offShoreTestingSiteDataSource = testingSiteDataSourceCollection.searchId(facilityId);
                 CareTaker careTaker = offShoreTestingSiteDataSource.getCareTaker(bookingId);
                 String result = "valid booking id you can modify the date or venue for this booking \n";
@@ -179,7 +185,7 @@ public class FacilityFacade {
             else if (facilitySame==false && dateSame==true){
                 DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd"); 
                 try {
-                    modifyOnSiteBooking(bookingId, null, dateFormat.format(memento.getBookingDate()), memento.getBookingTime());
+                    modifyOnSiteBooking(bookingId, "", dateFormat.format(memento.getBookingDate()), memento.getBookingTime());
                 } catch (IOException ex) {
                     Logger.getLogger(FacilityFacade.class.getName()).log(Level.SEVERE, null, ex);
                 } catch (InterruptedException ex) {
@@ -236,6 +242,11 @@ public class FacilityFacade {
         return theModifyBookingView;
     }
 
+    public AdminBookingPanel getTheAdminBookingPanelView() {
+        return theAdminBookingPanelView;
+    }
+    
+
     //this method is to add the on site book by providing faility id and customer id and it will be pushed to the web service
     public String bookOnSiteBooking(String facilityId, String customerId, String bookingDate, String bookingTime) {
         String bookingResult = "";
@@ -280,7 +291,7 @@ public class FacilityFacade {
 
                         if (response.statusCode() == 201) {
                             ObjectNode jsonNode = new ObjectMapper().readValue(response.body().toString(), ObjectNode.class);
-                            bookingResult = "Booking created successfully, your PIN number is : " + jsonNode.get("smsPin");
+                            bookingResult = "Booking created successfully, your PIN number is : " + jsonNode.get("smsPin")+" BookingId: "+jsonNode.get("id");
 
                         } else if (response.statusCode() == 404) {
                             bookingResult = "A customer and/or testing site with the provided ID was not found.";
@@ -303,18 +314,26 @@ public class FacilityFacade {
         OnSiteBooking currentBooking = offShoreTestingSiteCollection.searchBooking(bookingId);
         String currentBookingFacility = currentBooking.getFacilityId();
         OffShoreTestingSiteDataSource currentOffShoreTestingSiteDataSource = testingSiteDataSourceCollection.searchId(currentBookingFacility);
-        if (facilityId == null && bookingDate != null) {
+        if (facilityId.length()==0 && bookingDate.length()!=0) {
             result = currentOffShoreTestingSiteDataSource.modifyBookingDateTime(bookingId, bookingDate, bookingTime);
-        } else if (facilityId != null && bookingDate == null) {
+        } else if (facilityId.length() != 0 && bookingDate.length()==0) {
+            
             OffShoreTestingSiteDataSource toModifyOffShoreTestingSiteDataSource = testingSiteDataSourceCollection.searchId(facilityId);
-            OnSiteBooking modifiedOnSiteBooking = currentOffShoreTestingSiteDataSource.removeBooking(bookingId, facilityId);
-            toModifyOffShoreTestingSiteDataSource.updateBooking(modifiedOnSiteBooking);
             result = currentOffShoreTestingSiteDataSource.modifyBookingFacility(bookingId, facilityId);
+            OnSiteBooking modifiedOnSiteBooking = currentOffShoreTestingSiteDataSource.removeBooking(bookingId, facilityId);
+
+            CareTaker moveCareTaker=currentOffShoreTestingSiteDataSource.removeCareTaker(bookingId);
+            toModifyOffShoreTestingSiteDataSource.addCareTaker(moveCareTaker);
+            toModifyOffShoreTestingSiteDataSource.updateBooking(modifiedOnSiteBooking);
+            
         } else {
             OffShoreTestingSiteDataSource toModifyOffShoreTestingSiteDataSource = testingSiteDataSourceCollection.searchId(facilityId);
-            OnSiteBooking modifiedOnSiteBooking = currentOffShoreTestingSiteDataSource.removeBooking(bookingId, facilityId);
-            toModifyOffShoreTestingSiteDataSource.updateBooking(modifiedOnSiteBooking);
             result = currentOffShoreTestingSiteDataSource.modifyBookingDateTimeFacility(bookingId, facilityId, bookingDate, bookingTime);
+            OnSiteBooking modifiedOnSiteBooking = currentOffShoreTestingSiteDataSource.removeBooking(bookingId, facilityId);
+            CareTaker moveCareTaker=currentOffShoreTestingSiteDataSource.removeCareTaker(bookingId);
+             toModifyOffShoreTestingSiteDataSource.addCareTaker(moveCareTaker);
+            toModifyOffShoreTestingSiteDataSource.updateBooking(modifiedOnSiteBooking);
+            
         }
 
         return result;
@@ -343,8 +362,8 @@ public class FacilityFacade {
     public Boolean verifyOnSiteBookingModification(String bookingIdOrPin) {
         for (OffShoreTestingSite node : offShoreTestingSiteCollection.getOffShoreTesting()) {
             OnSiteBooking currentUserBooking = node.searchBooking(bookingIdOrPin);
-            if (currentUserBooking ==null){
-                node.searchBookingPin(bookingIdOrPin);
+            if (currentUserBooking ==null && bookingIdOrPin.length()<8){
+                currentUserBooking=node.searchBookingPin(bookingIdOrPin);
             }
             if (currentUserBooking != null) {
                 if (currentUserBooking.getStatus().equals("INITIATED")) {

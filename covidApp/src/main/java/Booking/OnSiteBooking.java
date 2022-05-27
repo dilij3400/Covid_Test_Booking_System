@@ -33,7 +33,7 @@ public class OnSiteBooking implements Booking{
     private CovidTest covidTest;
     private Date bookingDate;
     private String bookingTime;
-    private Date modifyBookingDateTime;
+    private Date modifyBookingDateTime=new Date();
     private String facilityId;
     private static final String myApiKey = "nMTd7jFGPtbhJ6gpkMtRGHRQfwbj86";
     
