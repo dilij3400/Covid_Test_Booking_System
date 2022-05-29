@@ -132,98 +132,106 @@ public class LoginPage extends javax.swing.JFrame {
         // reset display message
         messageLabel.setText("");
         
-        // Performing POST request for login authentication
-        ObjectNode jsonNodeJWT;
-        
-        ObjectNode userNode;
-        
-//        String jwt;
-        
-        String jsonString = "{" +
-      "\"userName\":\"" + usernameText.getText().trim() + "\"," +
-      "\"password\":\"" + passwordText.getText().trim() + "\"" +
-      "}";
-        
-        String usersLoginUrl = usersUrl + "/login";
-        HttpClient client = HttpClient.newHttpClient();
-        HttpRequest request = HttpRequest.newBuilder(URI.create(usersLoginUrl + "?jwt=true")) 
-            .setHeader("Authorization", myApiKey)
-            .header("Content-Type","application/json") 
-            .POST(HttpRequest.BodyPublishers.ofString(jsonString))
-            .build();
-        
-        try{
-            HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
-                   
-            // Handling incorrect password or username
-            if(response.statusCode() == 403 ){
-                messageLabel.setText("Incorrect username or password");
-            }
-            else if (response.statusCode() == 200){
-                // Validating jwtToken and decoding it.
-                jsonNodeJWT = new ObjectMapper().readValue(response.body(), ObjectNode.class);
-                JwtToken token = new JwtToken(jsonNodeJWT);
-                token.setJwtString();
-                TokenStatus result = token.verifyJwt();
-                
-                if(result == TokenStatus.VALID){
-                    userNode = token.jwtDecoder();
-                    
-                    // Creating user based on user role
-                    if (userNode.get("isCustomer").asBoolean()){
-                        Customer customer = new Customer();
-                        
-                        customer.setUserID(userNode.get("sub").textValue());
-                        customer.setUserName(userNode.get("username").textValue());
-                        customer.setGivenName(userNode.get("givenName").textValue());
-                        customer.setFamilyName(userNode.get("familyName").textValue());
-                        customer.setPhoneNumber(userNode.get("phoneNumber").textValue());
-                        
-                        // directs user to customer dashboard
-                        setVisible(false);
-                        customer.display();
-                        
-                    }
-                    
-                    if(userNode.get("isHealthcareWorker").asBoolean()){
-                        AbstractUser healthCareWorker = new HealthCareWorker();
-                        
-                        healthCareWorker.setUserID(userNode.get("sub").textValue());
-                        healthCareWorker.setUserName(userNode.get("username").textValue());
-                        healthCareWorker.setGivenName(userNode.get("givenName").textValue());
-                        healthCareWorker.setFamilyName(userNode.get("familyName").textValue());
-                        healthCareWorker.setPhoneNumber(userNode.get("phoneNumber").textValue());
-                        
-                        // directs user to healthcare worker dashboard
-                        setVisible(false);
-                        healthCareWorker.display();
-                        
-                    }
-                    
-                    if(userNode.get("isReceptionist").asBoolean()){
-                        AbstractUser receptionist = new Receptionist();
-                        
-                        receptionist.setUserID(userNode.get("sub").textValue());
-                        receptionist.setUserName(userNode.get("username").textValue());
-                        receptionist.setGivenName(userNode.get("givenName").textValue());
-                        receptionist.setFamilyName(userNode.get("familyName").textValue());
-                        receptionist.setPhoneNumber(userNode.get("phoneNumber").textValue());
-                        
-                        // directs user to receptionist/admin dashboard
-                        setVisible(false);
-                        receptionist.display();
-                        
-                    }
-                
-                }
-                else if(result == TokenStatus.INVALID){
-                    messageLabel.setText("Unauthorized user, invalid or expired token");
-                }
-            }
-        } 
-        catch (Exception e){
-            Logger.getLogger(LoginPage.class.getName()).log(Level.SEVERE, null, e);
+        LoginSystem loginUser = new LoginSystem(usernameText.getText().trim(), passwordText.getText().trim());
+        String result = loginUser.verifyLogin();
+        messageLabel.setText(result);
+        if(result.equals("Success!")){
+            setVisible(false);
         }
+        
+        
+//        // Performing POST request for login authentication
+//        ObjectNode jsonNodeJWT;
+//        
+//        ObjectNode userNode;
+//        
+////        String jwt;
+//        
+//        String jsonString = "{" +
+//      "\"userName\":\"" + usernameText.getText().trim() + "\"," +
+//      "\"password\":\"" + passwordText.getText().trim() + "\"" +
+//      "}";
+//        
+//        String usersLoginUrl = usersUrl + "/login";
+//        HttpClient client = HttpClient.newHttpClient();
+//        HttpRequest request = HttpRequest.newBuilder(URI.create(usersLoginUrl + "?jwt=true")) 
+//            .setHeader("Authorization", myApiKey)
+//            .header("Content-Type","application/json") 
+//            .POST(HttpRequest.BodyPublishers.ofString(jsonString))
+//            .build();
+//        
+//        try{
+//            HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+//                   
+//            // Handling incorrect password or username
+//            if(response.statusCode() == 403 ){
+//                messageLabel.setText("Incorrect username or password");
+//            }
+//            else if (response.statusCode() == 200){
+//                // Validating jwtToken and decoding it.
+//                jsonNodeJWT = new ObjectMapper().readValue(response.body(), ObjectNode.class);
+//                JwtToken token = new JwtToken(jsonNodeJWT);
+//                token.setJwtString();
+//                TokenStatus result = token.verifyJwt();
+//                
+//                if(result == TokenStatus.VALID){
+//                    userNode = token.jwtDecoder();
+//                    
+//                    // Creating user based on user role
+//                    if (userNode.get("isCustomer").asBoolean()){
+//                        Customer customer = new Customer();
+//                        
+//                        customer.setUserID(userNode.get("sub").textValue());
+//                        customer.setUserName(userNode.get("username").textValue());
+//                        customer.setGivenName(userNode.get("givenName").textValue());
+//                        customer.setFamilyName(userNode.get("familyName").textValue());
+//                        customer.setPhoneNumber(userNode.get("phoneNumber").textValue());
+//                        
+//                        // directs user to customer dashboard
+//                        setVisible(false);
+//                        customer.display();
+//                        
+//                    }
+//                    
+//                    if(userNode.get("isHealthcareWorker").asBoolean()){
+//                        AbstractUser healthCareWorker = new HealthCareWorker();
+//                        
+//                        healthCareWorker.setUserID(userNode.get("sub").textValue());
+//                        healthCareWorker.setUserName(userNode.get("username").textValue());
+//                        healthCareWorker.setGivenName(userNode.get("givenName").textValue());
+//                        healthCareWorker.setFamilyName(userNode.get("familyName").textValue());
+//                        healthCareWorker.setPhoneNumber(userNode.get("phoneNumber").textValue());
+//                        
+//                        // directs user to healthcare worker dashboard
+//                        setVisible(false);
+//                        healthCareWorker.display();
+//                        
+//                    }
+//                    
+//                    if(userNode.get("isReceptionist").asBoolean()){
+//                        AbstractUser receptionist = new Receptionist();
+//                        
+//                        receptionist.setUserID(userNode.get("sub").textValue());
+//                        receptionist.setUserName(userNode.get("username").textValue());
+//                        receptionist.setGivenName(userNode.get("givenName").textValue());
+//                        receptionist.setFamilyName(userNode.get("familyName").textValue());
+//                        receptionist.setPhoneNumber(userNode.get("phoneNumber").textValue());
+//                        
+//                        // directs user to receptionist/admin dashboard
+//                        setVisible(false);
+//                        receptionist.display();
+//                        
+//                    }
+//                
+//                }
+//                else if(result == TokenStatus.INVALID){
+//                    messageLabel.setText("Unauthorized user, invalid or expired token");
+//                }
+//            }
+//        } 
+//        catch (Exception e){
+//            Logger.getLogger(LoginPage.class.getName()).log(Level.SEVERE, null, e);
+//        }
         
     }//GEN-LAST:event_loginActionPerformed
 
