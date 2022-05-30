@@ -7,7 +7,7 @@ package Application;
 
 import Booking.OnSiteBooking;
 import TestingSite.OffShoreTestingSite;
-import TestingSite.OffShoreTestingSiteCollection;
+import Model.OffShoreTestingSiteCollection;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import java.net.URI;

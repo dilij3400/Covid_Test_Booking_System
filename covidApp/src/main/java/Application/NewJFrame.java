@@ -5,7 +5,7 @@
 package Application;
 
 import Login.LoginPage;
-import TestingSite.OffShoreTestingSiteCollection;
+import Model.OffShoreTestingSiteCollection;
 
 /**
  *

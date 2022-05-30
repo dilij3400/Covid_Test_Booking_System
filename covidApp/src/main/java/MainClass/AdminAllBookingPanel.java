@@ -4,10 +4,10 @@
  */
 package MainClass;
 
-import Application.AdminBookingPanel;
+import View.AdminBookingPanel;
 
-import TestingSite.FacilityFacade;
-import TestingSite.OffShoreTestingSiteCollection;
+import Controller.FacilityFacade;
+import Model.OffShoreTestingSiteCollection;
 
 /**
  *

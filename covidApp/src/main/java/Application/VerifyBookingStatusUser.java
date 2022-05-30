@@ -6,7 +6,7 @@ package Application;
 
 import Booking.OnSiteBooking;
 import TestingSite.OffShoreTestingSite;
-import TestingSite.OffShoreTestingSiteCollection;
+import Model.OffShoreTestingSiteCollection;
 
 /**
  *

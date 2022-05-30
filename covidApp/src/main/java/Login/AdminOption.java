@@ -4,10 +4,10 @@
  */
 package Login;
 
-import Application.OnSiteBookingPage;
-import Application.OnSiteTestingVerificationPage;
+import View.OnSiteBookingPage;
+import View.OnSiteTestingVerificationPage;
 import Application.VerifyBookingStatus;
-import Application.VerifyQrCodePage;
+import View.VerifyQrCodePage;
 import MainClass.AdminAllBookingPanel;
 import MainClass.ModifyBooking;
 import java.util.logging.Level;

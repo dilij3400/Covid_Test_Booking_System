@@ -4,8 +4,8 @@
  */
 package MainClass;
 
-import Application.SearchTestingSiteView;
-import TestingSite.FacilityFacade;
+import View.SearchTestingSiteView;
+import Controller.FacilityFacade;
 
 /**
  *

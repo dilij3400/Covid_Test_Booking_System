@@ -4,8 +4,8 @@
  */
 package MainClass;
 
-import Application.VerifyQrCodePage;
-import Booking.BookingFacade;
+import View.VerifyQrCodePage;
+import Controller.BookingFacade;
 
 /**
  *

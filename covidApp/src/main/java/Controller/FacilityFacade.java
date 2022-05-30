@@ -2,20 +2,24 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package TestingSite;
+package Controller;
 
-import Application.AdminBookingPanel;
+import Model.OffShoreTestingSiteCollection;
+import Model.TestingSiteDataSourceCollection;
+import View.AdminBookingPanel;
 import Application.NewJFrame;
-import Application.OnSiteBookingPage;
-import Application.OnSiteTesting;
-import Application.OnSiteTestingVerificationPage;
-import Application.OnlineOnSiteTestingBooking;
-import Application.SearchTestingSiteView;
-import Application.BookingModificationPage;
-import Application.PhoneCallBookingModification;
+import View.OnSiteBookingPage;
+import View.OnSiteTesting;
+import View.OnSiteTestingVerificationPage;
+import View.OnlineOnSiteTestingBooking;
+import View.SearchTestingSiteView;
+import View.BookingModificationPage;
+import View.PhoneCallBookingModification;
 import Booking.CareTaker;
 import Booking.Memento;
 import Booking.OnSiteBooking;
+import TestingSite.OffShoreTestingSite;
+import TestingSite.OffShoreTestingSiteDataSource;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import java.awt.event.ActionEvent;

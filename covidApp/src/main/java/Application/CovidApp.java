@@ -6,7 +6,7 @@
 package Application;
 
 import Login.LoginPage;
-import TestingSite.OffShoreTestingSiteCollection;
+import Model.OffShoreTestingSiteCollection;
 
 /**
  *
@@ -17,7 +17,7 @@ public class CovidApp {
     public static void main(String[] args) {
         // Directs to login screen.
         
-        new NewJFrame().setVisible(true);
+        new LoginPage().setVisible(true);
         
         
     }

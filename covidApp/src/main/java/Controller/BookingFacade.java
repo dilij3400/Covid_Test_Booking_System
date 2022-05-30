@@ -2,10 +2,12 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package Booking;
+package Controller;
 
-import Application.OnSiteTesting;
-import Application.VerifyQrCodePage;
+import Model.HomeBookingCollection;
+import View.OnSiteTesting;
+import View.VerifyQrCodePage;
+import Booking.OnSiteBooking;
 import SupportingClass.HomeBookingRatStatus;
 import SupportingClass.TestType;
 import java.awt.event.ActionEvent;

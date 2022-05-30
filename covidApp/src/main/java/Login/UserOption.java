@@ -5,10 +5,10 @@
 package Login;
 
 import Login.Customer;
-import Application.BookingTestingOnlinePage;
-import Application.SearchTestingSiteView;
+import View.BookingTestingOnlinePage;
+import View.SearchTestingSiteView;
 import Application.VerifyBookingStatusUser;
-import Application.OnlineOnSiteTestingBooking;
+import View.OnlineOnSiteTestingBooking;
 import Application.UserActiveBooking;
 import MainClass.ModifyBooking;
 import java.io.IOException;

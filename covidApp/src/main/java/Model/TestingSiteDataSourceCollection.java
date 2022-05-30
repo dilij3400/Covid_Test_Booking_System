@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package TestingSite;
+package Model;
 
 import Application.NewJFrame;
 import Booking.CareTaker;
@@ -11,6 +11,7 @@ import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import Booking.OnSiteBooking;
+import TestingSite.OffShoreTestingSiteDataSource;
 import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;

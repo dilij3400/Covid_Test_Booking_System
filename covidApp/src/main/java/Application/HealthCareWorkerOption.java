@@ -4,8 +4,8 @@
  */
 package Application;
 
-import Application.VerifyQrCodePage;
-import Application.OnSiteTestingVerificationPage;
+import View.VerifyQrCodePage;
+import View.OnSiteTestingVerificationPage;
 
 /**
  *

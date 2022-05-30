@@ -2,12 +2,12 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
-package Application;
+package View;
 
 import Booking.OnSiteBooking;
-import TestingSite.FacilityFacade;
+import Controller.FacilityFacade;
 import TestingSite.OffShoreTestingSite;
-import TestingSite.OffShoreTestingSiteCollection;
+import Model.OffShoreTestingSiteCollection;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.logging.Level;

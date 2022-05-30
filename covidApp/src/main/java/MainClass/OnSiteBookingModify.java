@@ -4,8 +4,8 @@
  */
 package MainClass;
 
-import TestingSite.FacilityFacade;
-import Application.BookingModificationPage;
+import Controller.FacilityFacade;
+import View.BookingModificationPage;
 
 /**
  *

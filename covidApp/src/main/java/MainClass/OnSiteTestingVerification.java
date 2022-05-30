@@ -4,9 +4,9 @@
  */
 package MainClass;
 
-import Application.OnSiteBookingPage;
-import Application.OnSiteTestingVerificationPage;
-import TestingSite.FacilityFacade;
+import View.OnSiteBookingPage;
+import View.OnSiteTestingVerificationPage;
+import Controller.FacilityFacade;
 
 /**
  *

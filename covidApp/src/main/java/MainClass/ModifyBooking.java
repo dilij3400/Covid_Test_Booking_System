@@ -4,9 +4,9 @@
  */
 package MainClass;
 
-import Application.BookingModificationPage;
-import TestingSite.FacilityFacade;
-import TestingSite.OffShoreTestingSiteCollection;
+import View.BookingModificationPage;
+import Controller.FacilityFacade;
+import Model.OffShoreTestingSiteCollection;
 
 /**
  *
