@@ -79,7 +79,7 @@ public class UserOption extends javax.swing.JFrame {
             }
         });
 
-        jButton1.setText("Modify Testing");
+        jButton1.setText("Modify Booking");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1ActionPerformed(evt);
@@ -101,11 +101,12 @@ public class UserOption extends javax.swing.JFrame {
                             .addComponent(onSiteBookingButton)
                             .addComponent(searchButton))
                         .addGap(30, 30, 30)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(bookHomeTestingOnline, javax.swing.GroupLayout.DEFAULT_SIZE, 148, Short.MAX_VALUE)
-                            .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addGap(30, 30, 30)
-                        .addComponent(verifyBookingStatus)))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(bookHomeTestingOnline, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(30, 30, 30)
+                                .addComponent(verifyBookingStatus))
+                            .addComponent(jButton1))))
                 .addContainerGap(36, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -141,13 +142,7 @@ public class UserOption extends javax.swing.JFrame {
 
     private void verifyBookingStatusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_verifyBookingStatusActionPerformed
         UserActiveBooking verifyBookingStatusUser=new UserActiveBooking();
-        try {
-            verifyBookingStatusUser.setCustomer(customer);
-        } catch (IOException ex) {
-            Logger.getLogger(UserOption.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (InterruptedException ex) {
-            Logger.getLogger(UserOption.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        
         verifyBookingStatusUser.setVisible(true);
     }//GEN-LAST:event_verifyBookingStatusActionPerformed
 
