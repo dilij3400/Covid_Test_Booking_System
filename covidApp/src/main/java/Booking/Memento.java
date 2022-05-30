@@ -11,13 +11,13 @@ import java.util.Date;
  * @author sooyewlim
  */
 public class Memento {
-    private Date bookingDate;
-    private Date modifyBookingDateTime;
+    private String bookingDate;
+    private String modifyBookingDateTime;
     private String facilityId;
     private String bookingTime;
     private String bookingId;
 
-    public Memento(Date bookingDate, Date modifyBookingDateTime, String facilityId, String bookingTime,String bookingId) {
+    public Memento(String bookingDate, String bookingTime, String facilityId,String modifyBookingDateTime,String bookingId) {
         this.bookingDate = bookingDate;
         this.modifyBookingDateTime = modifyBookingDateTime;
         this.facilityId = facilityId;
@@ -27,11 +27,11 @@ public class Memento {
 
     
 
-    public Date getBookingDate() {
+    public String getBookingDate() {
         return bookingDate;
     }
 
-    public Date getModifyBookingDateTime() {
+    public String getModifyBookingDateTime() {
         return modifyBookingDateTime;
     }
 

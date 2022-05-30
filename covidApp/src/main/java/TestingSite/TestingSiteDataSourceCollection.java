@@ -33,14 +33,21 @@ public class TestingSiteDataSourceCollection {
     private static final String myApiKey = "nMTd7jFGPtbhJ6gpkMtRGHRQfwbj86";
     private final String rootUrl = "https://fit3077.com/api/v2";
     private ArrayList<OffShoreTestingSiteDataSource> offShoreTestingDataSource;
+    private CareTaker careTaker;
 
     private static TestingSiteDataSourceCollection instance;
 
     private TestingSiteDataSourceCollection() {
-
+        this.careTaker=CareTaker.getInstance();
         this.offShoreTestingDataSource = new ArrayList<OffShoreTestingSiteDataSource>();
 
     }
+
+    public CareTaker getCareTaker() {
+        return careTaker;
+    }
+    
+    
 
     //lazy singleton is applied
     public static TestingSiteDataSourceCollection getInstance() throws Exception {
@@ -99,8 +106,6 @@ public class TestingSiteDataSourceCollection {
             String userId = node.get("customer").get("id").toString().replaceAll("^\"|\"$", "");
             String facilityId = node.get("testingSite").get("id").toString().replaceAll("^\"|\"$", "");
             OffShoreTestingSiteDataSource testingSite = this.searchId(facilityId);
-            
-            CareTaker careTaker = testingSite.getCareTaker(bookingId);
             if (node.get("additionalInfo").toString().equals("{}") == false) {
                 if (node.get("additionalInfo").has("bookingDate")) {
                     bookingDate = node.get("additionalInfo").get("bookingDate").toString().replaceAll("^\"|\"$", "");
@@ -110,24 +115,19 @@ public class TestingSiteDataSourceCollection {
                     bookingTime = node.get("additionalInfo").get("bookingDate").toString().replaceAll("^\"|\"$", "");
                 }
                 if (node.get("additionalInfo").has("bookings")) {
+                    System.out.println(node.get("additionalInfo").toString());
                     for (int i = 0; i < node.get("additionalInfo").get("bookings").size(); i += 1) {
                         
                         String previousBookingDate = node.get("additionalInfo").get("bookings").get(i).get("bookingDate").toString().replaceAll("^\"|\"$", "");
                         String previousBookingTime = node.get("additionalInfo").get("bookings").get(i).get("bookingTime").toString().replaceAll("^\"|\"$", "");
                         String previousFacilityId = node.get("additionalInfo").get("bookings").get(i).get("facilityId").toString().replaceAll("^\"|\"$", "");
                         String previousModifyDate = node.get("additionalInfo").get("bookings").get(i).get("modifyDate").toString().replaceAll("^\"|\"$", "");
-                        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-                        try {
-                            Date previousBookingDatev2 = sdf.parse(previousBookingDate);
-                            Date previousModifyDatev2 = sdf.parse(previousModifyDate);
-                            Memento memento=new Memento(previousBookingDatev2,previousModifyDatev2,previousFacilityId,previousBookingTime,bookingId);
-                            careTaker.addMemento(memento);
-                        } catch (ParseException ex) {
-                            Logger.getLogger(OnSiteBooking.class.getName()).log(Level.SEVERE, null, ex);
-                        }
+                        Memento memento=new Memento(previousBookingDate,previousBookingTime,previousFacilityId,previousModifyDate,bookingId);
+                        this.careTaker.initializePreviousState(memento);
                     }
                 }
             }
+            
             OnSiteBooking newBooking = new OnSiteBooking(userId, bookingId, bookingDate, bookingTime, facilityId);
             newBooking.setPin(bookingPin);
             newBooking.setStatus(bookingStatus);

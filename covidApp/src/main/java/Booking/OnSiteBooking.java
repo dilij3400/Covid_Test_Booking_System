@@ -17,6 +17,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.LinkedList;
 import java.util.Queue;
+import java.util.TimeZone;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -53,6 +54,8 @@ public class OnSiteBooking implements Booking{
       
     }
 
+    
+    
     public String getPin() {
         return pin;
     }
@@ -116,14 +119,19 @@ public class OnSiteBooking implements Booking{
         return facilityId;
     }
 
-    public void setModifyBookingDateTime(Date modifyBookingDateTime) {
-        this.modifyBookingDateTime = modifyBookingDateTime;
+    public void setModifyBookingDateTime() {
+        // Input
+        Date date = new Date(System.currentTimeMillis());
+        this.modifyBookingDateTime = date;
     }
     public Memento storeInMemento(){
-        return new Memento(bookingDate,modifyBookingDateTime,facilityId,bookingTime,bookingId) ;
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        return new Memento(sdf.format(bookingDate),bookingTime, facilityId,sdf.format(modifyBookingDateTime),bookingId) ;
     }
-    public void restoreFromMemento(Memento memento) throws IOException, InterruptedException{
-        bookingDate=memento.getBookingDate();
+    public void restoreFromMemento(Memento memento) throws IOException, InterruptedException, ParseException{
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        
+        bookingDate=sdf.parse(memento.getBookingDate());
         modifyBookingDateTime=new Date();
         facilityId=memento.getFacilityId();
         bookingTime=memento.getBookingTime();

@@ -48,8 +48,11 @@ public class OffShoreTestingSiteDataSource implements Observable {
     private ArrayList<OnSiteBooking> booking;
     private String waitingTime;
     private ArrayList<CareTaker> bookingCareTaker = new ArrayList<CareTaker>();
+    private CareTaker careTaker;
+    
 
     public OffShoreTestingSiteDataSource() {
+        this.careTaker=CareTaker.getInstance();
         this.observers = new ArrayList<Observer>();
         this.booking = new ArrayList<OnSiteBooking>();
     }
@@ -65,39 +68,7 @@ public class OffShoreTestingSiteDataSource implements Observable {
         observers.remove(observerIndex);
 
     }
-    public CareTaker removeCareTaker(String bookingId) {
-        CareTaker careTaker = null;
-        for (int i=0;i<bookingCareTaker.size();i+=1){
-             CareTaker node=bookingCareTaker.get(i);
-            if (node.getBookingId().equals(bookingId)) {
-                bookingCareTaker.remove(i);
-                careTaker = node;
-                break;
-            }
-        }
-
-        return careTaker;
-    }
     
-    public void addCareTaker(CareTaker caretaker){
-        bookingCareTaker.add(caretaker);
-    }
-        
-
-    public CareTaker getCareTaker(String bookingId) {
-        CareTaker careTaker = null;
-        for (CareTaker node : bookingCareTaker) {
-            if (node.getBookingId().equals(bookingId)) {
-                careTaker = node;
-                break;
-            }
-        }
-        if (careTaker == null) {
-            careTaker = new CareTaker(bookingId);
-            bookingCareTaker.add(careTaker);
-        }
-        return careTaker;
-    }
 
     //this method will be called when the attribute of this instance is updated
     @Override
@@ -232,49 +203,32 @@ public class OffShoreTestingSiteDataSource implements Observable {
     // This function modifies an existing booking
     public String modifyBookingDateTime(String bookingId, String bookingDate, String bookingTime) throws IOException, InterruptedException {
         String returnMessage = "";
-        this.modifyBookingDateTimeLocally(bookingId, bookingDate, bookingTime, true);
-        if (this.checkBookingDate(bookingId, bookingDate) == true) {
-            String bookingUrl = rootUrl + "/booking/" + bookingId;
-            String jsonString = "{"
-                    + "\"additionalInfo\":" + "{\"bookingDate\":\"" + bookingDate + "\", \"bookingTime\":\"" + bookingTime + "\",";
-            String bookingJsonString = "\"bookings\":[";
-            CareTaker careTaker = this.getCareTaker(bookingId);
-            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-            for (int i = 0; i < careTaker.getPreviousBooking().size(); i += 1) {
-                
-                Memento node = careTaker.getPreviousBooking().get(i);
-                if (i != careTaker.getPreviousBooking().size() - 1) {
-                    bookingJsonString += "{\"bookingDate\":\"" + sdf.format(node.getBookingDate()) + "\", \"bookingTime\":\"" + node.getBookingTime() + "\", \"facilityId\":\"" + node.getFacilityId() + "\", \"modifyDate\":\"" + sdf.format(node.getModifyBookingDateTime())+"\"" + "},";
-                }
-                else{
-                    bookingJsonString += "{\"bookingDate\":\"" + sdf.format(node.getBookingDate()) + "\", \"bookingTime\":\"" + node.getBookingTime() + "\", \"facilityId\":\"" + node.getFacilityId() + "\", \"modifyDate\":\"" +sdf.format(node.getModifyBookingDateTime())+"\"" + "}";
-                }
-            }
-            bookingJsonString +="]";
-            jsonString+=bookingJsonString + "}"+ "}";
-            //send a https request
-            HttpClient client = HttpClient.newHttpClient();
-            HttpRequest request = HttpRequest
-                    .newBuilder(URI.create(bookingUrl))
-                    .setHeader("Authorization", myApiKey)
-                    .header("Content-Type", "application/json")
-                    .method("PATCH", HttpRequest.BodyPublishers.ofString(jsonString))
-                    .build();
-            
-            System.out.println(jsonString);
-            HttpResponse response = client.send(request, HttpResponse.BodyHandlers.ofString());
-            System.out.println(response.body());
+        OnSiteBooking bookingToModify=searchBooking(bookingId);
+        //this.modifyBookingDateTimeLocally(bookingToModify., bookingDate, bookingTime, true);
+        
+        if (this.checkBookingDate(bookingDate) == true) {
+            this.careTaker.addMemento(bookingToModify.storeInMemento(),bookingDate,bookingTime);
             returnMessage = "booking modified succuessfully";
+            bookingToModify.setModifyBookingDateTime();
+            bookingToModify.setBookingDate(bookingDate);
+            bookingToModify.setBookingTime(bookingTime);
         } else {
             returnMessage = "booking can't be modified please change the booking date or this booking might has already tested";
         }
+        
+        
         return returnMessage;
     }
 
-    public String modifyBookingFacility(String bookingId, String facilityId) throws IOException, InterruptedException {
-        String returnMessage = "";
-
-        if (true) {
+    public OnSiteBooking modifyBookingFacility(String bookingId, String facilityId) throws IOException, InterruptedException {
+      
+        OnSiteBooking bookingToMove=null;
+        OnSiteBooking bookingToModify=searchBooking(bookingId);
+        SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd");
+        String bookingDate=sdf.format(bookingToModify.getBookingDate());
+        String bookingTime=bookingToModify.getBookingTime();
+        
+        if (this.checkBookingDate(bookingDate) == true) {
             String bookingUrl = rootUrl + "/booking/" + bookingId;
 
             String jsonString = "{"
@@ -290,22 +244,25 @@ public class OffShoreTestingSiteDataSource implements Observable {
                     .build();
             //memento of this part is done
             HttpResponse response = client.send(request, HttpResponse.BodyHandlers.ofString());
-            //this.removeBooking(bookingId, facilityId);
-            returnMessage = "booking modified succuessfully";
-        } else {
-            returnMessage = "booking can't be modified please change the booking date or this booking might has already tested";
-        }
-        return returnMessage;
+            this.careTaker.addMemento(bookingToModify.storeInMemento(),bookingDate,bookingTime);
+            bookingToModify.setFacilityId(facilityId);
+            bookingToModify.setModifyBookingDateTime();
+            bookingToMove=this.removeBooking(bookingId);
+            
+        } 
+        
+        return bookingToMove;
+        
     }
 
-    public String modifyBookingDateTimeFacility(String bookingId, String facilityId, String bookingDate, String bookingTime) throws IOException, InterruptedException {
-        String returnMessage = "";
-        if (this.checkBookingDate(bookingId, bookingDate) == true) {
+    public OnSiteBooking modifyBookingDateTimeFacility(String bookingId, String facilityId, String bookingDate, String bookingTime) throws IOException, InterruptedException {
+        OnSiteBooking bookingToMove=null;
+        OnSiteBooking bookingToModify=searchBooking(bookingId);
+        if (this.checkBookingDate(bookingDate) == true) {
             String bookingUrl = rootUrl + "/booking/" + bookingId;
 
             String jsonString = "{"
-                    + "\"testingSiteId\":\"" + facilityId + "\","
-                    + "\"additionalInfo\":" + "{\"bookingDate\":\"" + bookingDate + "\", \"bookingTime\":\"" + bookingTime + "\"" + "}" + "}";
+                    + "\"testingSiteId\":\"" + facilityId + "\"" + "}";
 
             //send a https request
             HttpClient client = HttpClient.newHttpClient();
@@ -315,15 +272,17 @@ public class OffShoreTestingSiteDataSource implements Observable {
                     .header("Content-Type", "application/json")
                     .method("PATCH", HttpRequest.BodyPublishers.ofString(jsonString))
                     .build();
-
+            //memento of this part is done
             HttpResponse response = client.send(request, HttpResponse.BodyHandlers.ofString());
-            this.modifyBookingDateTimeLocally(bookingId, bookingDate, bookingTime, false);
-            //this.removeBooking(bookingId, facilityId);
-            returnMessage = "booking modified succuessfully";
-        } else {
-            returnMessage = "booking can't be modified please change the booking date or this booking might has already tested";
-        }
-        return returnMessage;
+            this.careTaker.addMemento(bookingToModify.storeInMemento(),bookingDate,bookingTime);
+            bookingToModify.setFacilityId(facilityId);
+            bookingToModify.setModifyBookingDateTime();
+            bookingToModify.setBookingDate(bookingDate);
+            bookingToModify.setBookingTime(bookingTime);
+            bookingToMove=this.removeBooking(bookingId);
+            
+        } 
+        return bookingToMove;
     }
 
     //this function is to update local database 
@@ -334,41 +293,14 @@ public class OffShoreTestingSiteDataSource implements Observable {
 
     }
 
-    public void modifyBookingDateTimeLocally(String bookingId, String bookingDate, String bookingTime, Boolean modifyDateTimeOnly) {
-        CareTaker caretaker = null;
-        for (CareTaker node : this.bookingCareTaker) {
-            if (node.getBookingId().equals(bookingId)) {
-                caretaker = node;
-            }
-        }
-        if (caretaker == null) {
-            caretaker = new CareTaker(bookingId);
-            this.bookingCareTaker.add(caretaker);
-        }
-        for (OnSiteBooking node : booking) {
-            if (node.getId().equals(bookingId)) {
-                if (modifyDateTimeOnly == true) {
-                    caretaker.addMemento(node.storeInMemento());
-                }
-                Date date = new Date();
-                System.out.println(date);
-                node.setModifyBookingDateTime(date);
-                node.setBookingDate(bookingDate);
-                node.setBookingTime(bookingTime);
+   
 
-                break;
-            }
-
-        }
-
-    }
-
-    public Boolean checkBookingDate(String bookingId, String bookingDate) {
+    public Boolean checkBookingDate(String bookingDate) {
         Boolean validBooking = true;
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         try {
             Date bookingDateToModify = sdf.parse(bookingDate);
-            OnSiteBooking onSiteBooking = this.searchBooking(bookingId);
+            
             Date currentDate = new Date();
             //if (onSiteBooking.getStatus() != "INITIATED") {
             //validBooking = false;
@@ -398,30 +330,15 @@ public class OffShoreTestingSiteDataSource implements Observable {
         return validBooking;
     }
 
-    public OnSiteBooking removeBooking(String bookingId, String facilityId) {
+    public OnSiteBooking removeBooking(String bookingId) {
         OnSiteBooking onSiteBooking = null;
-        CareTaker caretaker = null;
-        for (CareTaker node : this.bookingCareTaker) {
-            if (node.getBookingId().equals(bookingId)) {
-                caretaker = node;
-                break;
-            }
-        }
-        if (caretaker == null) {
-            caretaker = new CareTaker(bookingId);
-            this.bookingCareTaker.add(caretaker);
-        }
+        
         for (int i = 0; i < booking.size(); i += 1) {
             if (booking.get(i).getId().equals(bookingId)) {
-                caretaker.addMemento(booking.get(i).storeInMemento());
-                booking.get(i).setFacilityId(facilityId);
-                Date date = new Date();
-                booking.get(i).setModifyBookingDateTime(date);
                 onSiteBooking = booking.get(i);
                 booking.remove(i);
                 break;
             }
-
         }
         notifyObs();
         return onSiteBooking;

@@ -24,7 +24,7 @@
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" alignment="1" attributes="0">
-              <EmptySpace max="32767" attributes="0"/>
+              <EmptySpace pref="227" max="32767" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" alignment="1" attributes="0">
                       <Component id="jLabel1" min="-2" pref="229" max="-2" attributes="0"/>
@@ -33,10 +33,6 @@
                   <Group type="102" alignment="1" attributes="0">
                       <Component id="verifyButton" min="-2" max="-2" attributes="0"/>
                       <EmptySpace min="-2" pref="347" max="-2" attributes="0"/>
-                  </Group>
-                  <Group type="102" alignment="1" attributes="0">
-                      <Component id="verifyBookingResult" min="-2" pref="611" max="-2" attributes="0"/>
-                      <EmptySpace min="-2" pref="48" max="-2" attributes="0"/>
                   </Group>
                   <Group type="102" alignment="1" attributes="0">
                       <Group type="103" groupAlignment="1" attributes="0">
@@ -67,14 +63,15 @@
                                   <Component id="jLabel2" alignment="0" pref="106" max="32767" attributes="0"/>
                                   <Component id="jLabel4" alignment="0" max="32767" attributes="0"/>
                               </Group>
-                              <EmptySpace type="separate" max="-2" attributes="0"/>
-                              <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                  <Component id="bookingIdText" max="32767" attributes="0"/>
-                                  <Component id="facilityIdText" alignment="0" pref="257" max="32767" attributes="0"/>
-                                  <Component id="date" alignment="0" max="32767" attributes="0"/>
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="0" attributes="0">
+                                  <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                                      <Component id="facilityIdText" alignment="0" pref="257" max="32767" attributes="0"/>
+                                      <Component id="date" alignment="0" max="32767" attributes="0"/>
+                                  </Group>
+                                  <Component id="bookingIdText" alignment="0" min="-2" pref="257" max="-2" attributes="0"/>
                               </Group>
                           </Group>
-                          <Component id="bookingmodificationresult" alignment="0" min="-2" pref="618" max="-2" attributes="0"/>
                           <Group type="102" alignment="0" attributes="0">
                               <EmptySpace min="-2" pref="74" max="-2" attributes="0"/>
                               <Component id="label1" min="-2" max="-2" attributes="0"/>
@@ -88,12 +85,25 @@
                       <Component id="label2" min="-2" max="-2" attributes="0"/>
                   </Group>
               </Group>
-              <EmptySpace pref="20" max="32767" attributes="0"/>
+              <EmptySpace pref="235" max="32767" attributes="0"/>
           </Group>
-          <Group type="102" alignment="0" attributes="0">
-              <EmptySpace min="-2" pref="259" max="-2" attributes="0"/>
-              <Component id="revertResult" min="-2" pref="260" max="-2" attributes="0"/>
+          <Group type="102" attributes="0">
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Group type="102" alignment="0" attributes="0">
+                      <EmptySpace min="-2" pref="259" max="-2" attributes="0"/>
+                      <Component id="revertResult" min="-2" pref="260" max="-2" attributes="0"/>
+                  </Group>
+                  <Group type="102" alignment="0" attributes="0">
+                      <EmptySpace min="-2" pref="95" max="-2" attributes="0"/>
+                      <Component id="bookingmodificationresult" min="-2" pref="618" max="-2" attributes="0"/>
+                  </Group>
+              </Group>
               <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+          </Group>
+          <Group type="102" alignment="1" attributes="0">
+              <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+              <Component id="jScrollPane1" min="-2" max="-2" attributes="0"/>
+              <EmptySpace min="-2" pref="264" max="-2" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -109,9 +119,9 @@
               </Group>
               <EmptySpace max="-2" attributes="0"/>
               <Component id="verifyButton" min="-2" max="-2" attributes="0"/>
+              <EmptySpace min="-2" pref="7" max="-2" attributes="0"/>
+              <Component id="jScrollPane1" min="-2" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
-              <Component id="verifyBookingResult" min="-2" pref="82" max="-2" attributes="0"/>
-              <EmptySpace type="unrelated" max="-2" attributes="0"/>
               <Component id="jLabel5" min="-2" max="-2" attributes="0"/>
               <EmptySpace type="separate" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
@@ -121,7 +131,7 @@
                       <Component id="revertBookingNo" min="-2" max="-2" attributes="0"/>
                   </Group>
               </Group>
-              <EmptySpace pref="27" max="32767" attributes="0"/>
+              <EmptySpace max="32767" attributes="0"/>
               <Component id="revertResult" min="-2" pref="47" max="-2" attributes="0"/>
               <EmptySpace min="-2" pref="21" max="-2" attributes="0"/>
               <Component id="label2" min="-2" max="-2" attributes="0"/>
@@ -163,8 +173,11 @@
     </Component>
     <Component class="javax.swing.JTextField" name="bookingIdText">
       <Properties>
-        <Property name="text" type="java.lang.String" value="8eb36fbf-5535-43f8-83e4-d5f398297f71"/>
+        <Property name="text" type="java.lang.String" value="56e1aebc-6061-401a-b84f-b386c8d37d9b"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="bookingIdTextActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JLabel" name="jLabel3">
       <Properties>
@@ -194,9 +207,6 @@
       </AuxValues>
     </Component>
     <Component class="javax.swing.JTextField" name="facilityIdText">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="7fbd25ee-5b64-4720-b1f6-4f6d4731260e"/>
-      </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="facilityIdTextActionPerformed"/>
       </Events>
@@ -227,11 +237,6 @@
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="verifyButtonActionPerformed"/>
       </Events>
     </Component>
-    <Component class="javax.swing.JTextField" name="verifyBookingResult">
-      <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="verifyBookingResultActionPerformed"/>
-      </Events>
-    </Component>
     <Component class="javax.swing.JTextField" name="bookingmodificationresult">
     </Component>
     <Component class="javax.swing.JLabel" name="jLabel5">
@@ -258,5 +263,20 @@
     </Component>
     <Component class="java.awt.TextField" name="revertResult">
     </Component>
+    <Container class="javax.swing.JScrollPane" name="jScrollPane1">
+      <AuxValues>
+        <AuxValue name="autoScrollPane" type="java.lang.Boolean" value="true"/>
+      </AuxValues>
+
+      <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
+      <SubComponents>
+        <Component class="javax.swing.JTextArea" name="verifyBookingResult">
+          <Properties>
+            <Property name="columns" type="int" value="20"/>
+            <Property name="rows" type="int" value="5"/>
+          </Properties>
+        </Component>
+      </SubComponents>
+    </Container>
   </SubComponents>
 </Form>
