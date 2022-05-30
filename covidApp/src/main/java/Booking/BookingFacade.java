@@ -32,6 +32,10 @@ public class BookingFacade {
 
     }
 
+    public OnSiteTesting getOnSiteTesting() {
+        return onSiteTesting;
+    }
+    
     class verifyQrCodeListener implements ActionListener {
 
         public void actionPerformed(ActionEvent arg0) {

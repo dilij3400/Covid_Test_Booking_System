@@ -13,7 +13,7 @@ import TestingSite.OffShoreTestingSiteCollection;
  * @author sooyewlim
  */
 public class ModifyBooking {
-    public static void main(String[] args) throws Exception {
+    public static void main() throws Exception {
         FacilityFacade accessFacilityController= new FacilityFacade();
         BookingModificationPage theView=accessFacilityController.getTheModifyBookingView();
         OffShoreTestingSiteCollection.getInstance();

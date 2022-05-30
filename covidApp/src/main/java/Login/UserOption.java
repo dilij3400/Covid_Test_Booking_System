@@ -9,6 +9,11 @@ import Application.BookingTestingOnlinePage;
 import Application.SearchTestingSiteView;
 import Application.VerifyBookingStatusUser;
 import Application.OnlineOnSiteTestingBooking;
+import Application.UserActiveBooking;
+import MainClass.ModifyBooking;
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -40,6 +45,7 @@ public class UserOption extends javax.swing.JFrame {
         verifyBookingStatus = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         onSiteBookingButton = new javax.swing.JButton();
+        jButton1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -73,6 +79,13 @@ public class UserOption extends javax.swing.JFrame {
             }
         });
 
+        jButton1.setText("Modify Testing");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -83,12 +96,14 @@ public class UserOption extends javax.swing.JFrame {
                         .addGap(235, 235, 235)
                         .addComponent(jLabel1))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(40, 40, 40)
-                        .addComponent(searchButton)
+                        .addGap(38, 38, 38)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(onSiteBookingButton)
+                            .addComponent(searchButton))
                         .addGap(30, 30, 30)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(onSiteBookingButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(bookHomeTestingOnline, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addComponent(bookHomeTestingOnline, javax.swing.GroupLayout.DEFAULT_SIZE, 148, Short.MAX_VALUE)
+                            .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addGap(30, 30, 30)
                         .addComponent(verifyBookingStatus)))
                 .addContainerGap(36, Short.MAX_VALUE))
@@ -98,14 +113,16 @@ public class UserOption extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addGap(35, 35, 35)
                 .addComponent(jLabel1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 88, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 105, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(searchButton)
                     .addComponent(bookHomeTestingOnline)
                     .addComponent(verifyBookingStatus))
-                .addGap(36, 36, 36)
-                .addComponent(onSiteBookingButton)
-                .addGap(57, 57, 57))
+                .addGap(33, 33, 33)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(onSiteBookingButton)
+                    .addComponent(jButton1))
+                .addGap(60, 60, 60))
         );
 
         pack();
@@ -123,12 +140,28 @@ public class UserOption extends javax.swing.JFrame {
     }//GEN-LAST:event_bookHomeTestingOnlineActionPerformed
 
     private void verifyBookingStatusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_verifyBookingStatusActionPerformed
-        new VerifyBookingStatusUser().setVisible(true);
+        UserActiveBooking verifyBookingStatusUser=new UserActiveBooking();
+        try {
+            verifyBookingStatusUser.setCustomer(customer);
+        } catch (IOException ex) {
+            Logger.getLogger(UserOption.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (InterruptedException ex) {
+            Logger.getLogger(UserOption.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        verifyBookingStatusUser.setVisible(true);
     }//GEN-LAST:event_verifyBookingStatusActionPerformed
 
     private void onSiteBookingButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_onSiteBookingButtonActionPerformed
         new OnlineOnSiteTestingBooking().setVisible(true);
     }//GEN-LAST:event_onSiteBookingButtonActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        try {
+            ModifyBooking.main();
+        } catch (Exception ex) {
+            Logger.getLogger(UserOption.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     public void setCustomer(Customer customer) {
         this.customer = customer;
@@ -174,6 +207,7 @@ public class UserOption extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton bookHomeTestingOnline;
+    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JButton onSiteBookingButton;
     private javax.swing.JButton searchButton;

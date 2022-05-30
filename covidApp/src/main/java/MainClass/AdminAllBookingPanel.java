@@ -14,7 +14,7 @@ import TestingSite.OffShoreTestingSiteCollection;
  * @author sooyewlim
  */
 public class AdminAllBookingPanel {
-    public static void main(String[] args) throws Exception {
+    public static void main() throws Exception {
         FacilityFacade accessFacilityController= new FacilityFacade();
         AdminBookingPanel theView=accessFacilityController.getTheAdminBookingPanelView();
         OffShoreTestingSiteCollection.getInstance();
