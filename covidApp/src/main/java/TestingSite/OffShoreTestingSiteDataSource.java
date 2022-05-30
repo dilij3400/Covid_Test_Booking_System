@@ -247,8 +247,7 @@ public class OffShoreTestingSiteDataSource implements Observable {
             this.careTaker.addMemento(bookingToModify.storeInMemento(),bookingDate,bookingTime);
             bookingToModify.setFacilityId(facilityId);
             bookingToModify.setModifyBookingDateTime();
-            bookingToMove=this.removeBooking(bookingId);
-            
+            bookingToMove=this.removeBooking(bookingId);            
         } 
         
         return bookingToMove;

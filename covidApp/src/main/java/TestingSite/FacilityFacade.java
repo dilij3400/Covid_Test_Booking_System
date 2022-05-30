@@ -170,41 +170,16 @@ public class FacilityFacade {
             OffShoreTestingSiteDataSource offShoreTestingSiteDataSource = testingSiteDataSourceCollection.searchId(currentFacilityId);
             ArrayList<Memento> previousBooking = testingSiteDataSourceCollection.getCareTaker().getPreviousBooking(bookingId);
             Memento memento = previousBooking.get(Integer.parseInt(revertNo) - 1);
-            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-            Boolean facilitySame = memento.getFacilityId().equals(onSiteBooking.getFacilityId());
-            Boolean dateSame;
             try {
-                dateSame = (sdf.parse(memento.getBookingDate()).compareTo(onSiteBooking.getBookingDate()) == 0);
-                if (facilitySame == true && dateSame == false) {
-                    try {
-                        onSiteBooking.restoreFromMemento(memento);
-                    } catch (IOException ex) {
-                        Logger.getLogger(FacilityFacade.class.getName()).log(Level.SEVERE, null, ex);
-                    } catch (InterruptedException ex) {
-                        Logger.getLogger(FacilityFacade.class.getName()).log(Level.SEVERE, null, ex);
-                    }
-                } else if (facilitySame == false && dateSame == true) {
-                    DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-                    try {
-                        modifyOnSiteBooking(bookingId, "", dateFormat.format(memento.getBookingDate()), memento.getBookingTime());
-                    } catch (IOException ex) {
-                        Logger.getLogger(FacilityFacade.class.getName()).log(Level.SEVERE, null, ex);
-                    } catch (InterruptedException ex) {
-                        Logger.getLogger(FacilityFacade.class.getName()).log(Level.SEVERE, null, ex);
-                    }
-                } else if (facilitySame == false && dateSame == false) {
-                    DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-                    try {
-                        modifyOnSiteBooking(bookingId, memento.getFacilityId(), dateFormat.format(memento.getBookingDate()), memento.getBookingTime());
-                    } catch (IOException ex) {
-                        Logger.getLogger(FacilityFacade.class.getName()).log(Level.SEVERE, null, ex);
-                    } catch (InterruptedException ex) {
-                        Logger.getLogger(FacilityFacade.class.getName()).log(Level.SEVERE, null, ex);
-                    }
-                }
+                onSiteBooking.restoreFromMemento(memento);
+            } catch (IOException ex) {
+                Logger.getLogger(FacilityFacade.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (InterruptedException ex) {
+                Logger.getLogger(FacilityFacade.class.getName()).log(Level.SEVERE, null, ex);
             } catch (ParseException ex) {
                 Logger.getLogger(FacilityFacade.class.getName()).log(Level.SEVERE, null, ex);
             }
+            theModifyBookingView.updateRevertResultView(onSiteBooking.toString());
 
         }
     }
