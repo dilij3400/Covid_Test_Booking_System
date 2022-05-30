@@ -54,8 +54,7 @@ public class OnSiteBooking implements Booking{
       
     }
 
-    
-    
+
     public String getPin() {
         return pin;
     }
@@ -68,8 +67,24 @@ public class OnSiteBooking implements Booking{
         return status;
     }
 
-    public void setStatus(String status) {
+    public void setStatus(String status) throws IOException, InterruptedException {
         this.status = status;
+        String bookingUrl = "https://fit3077.com/api/v2" + "/booking/" + bookingId;
+
+            String jsonString = "{"
+                    + "\"status\":\"" + status + "\""+ "}";
+
+            //send a https request
+            HttpClient client = HttpClient.newHttpClient();
+            HttpRequest request = HttpRequest
+                    .newBuilder(URI.create(bookingUrl))
+                    .setHeader("Authorization", myApiKey)
+                    .header("Content-Type", "application/json")
+                    .method("PATCH", HttpRequest.BodyPublishers.ofString(jsonString))
+                    .build();
+
+            HttpResponse response = client.send(request, HttpResponse.BodyHandlers.ofString());
+        
     }
     
     public String getId() {
@@ -128,6 +143,7 @@ public class OnSiteBooking implements Booking{
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         return new Memento(sdf.format(bookingDate),bookingTime, facilityId,sdf.format(modifyBookingDateTime),bookingId) ;
     }
+    
     public void restoreFromMemento(Memento memento) throws IOException, InterruptedException, ParseException{
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         

@@ -7,6 +7,7 @@ package Application;
 
 import Booking.OnSiteBooking;
 import SupportingClass.TestType;
+import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -27,6 +28,10 @@ public class OnSiteTesting extends javax.swing.JFrame {
     public void setBooking(OnSiteBooking booking) {
         this.booking = booking;
     }
+
+    public OnSiteBooking getBooking() {
+        return booking;
+    }
     
     /** This method is called from within the constructor to
      * initialize the form.
@@ -37,23 +42,23 @@ public class OnSiteTesting extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jCheckBox1 = new javax.swing.JCheckBox();
+        fever = new javax.swing.JCheckBox();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
-        jCheckBox2 = new javax.swing.JCheckBox();
-        jCheckBox3 = new javax.swing.JCheckBox();
-        jCheckBox4 = new javax.swing.JCheckBox();
+        cough = new javax.swing.JCheckBox();
+        lossTaste = new javax.swing.JCheckBox();
+        headache = new javax.swing.JCheckBox();
         submit = new java.awt.Button();
         textArea1 = new java.awt.TextArea();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
-        jCheckBox1.addActionListener(new java.awt.event.ActionListener() {
+        fever.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jCheckBox1ActionPerformed(evt);
+                feverActionPerformed(evt);
             }
         });
 
@@ -98,10 +103,10 @@ public class OnSiteTesting extends javax.swing.JFrame {
                     .addComponent(jLabel1))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 242, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jCheckBox1, javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jCheckBox2, javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jCheckBox3, javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jCheckBox4, javax.swing.GroupLayout.Alignment.TRAILING))
+                    .addComponent(fever, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(cough, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(lossTaste, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(headache, javax.swing.GroupLayout.Alignment.TRAILING))
                 .addGap(245, 245, 245))
         );
         layout.setVerticalGroup(
@@ -111,20 +116,20 @@ public class OnSiteTesting extends javax.swing.JFrame {
                 .addComponent(jLabel2)
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jCheckBox1)
+                    .addComponent(fever)
                     .addComponent(jLabel1))
                 .addGap(29, 29, 29)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
-                    .addComponent(jCheckBox2))
+                    .addComponent(cough))
                 .addGap(43, 43, 43)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
-                    .addComponent(jCheckBox3))
+                    .addComponent(lossTaste))
                 .addGap(41, 41, 41)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel5)
-                    .addComponent(jCheckBox4))
+                    .addComponent(headache))
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addGap(27, 27, 27)
@@ -138,32 +143,40 @@ public class OnSiteTesting extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jCheckBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBox1ActionPerformed
+    private void feverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_feverActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jCheckBox1ActionPerformed
+    }//GEN-LAST:event_feverActionPerformed
 
     private void submitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_submitActionPerformed
-        if(jCheckBox1.isSelected()|| jCheckBox2.isSelected()|| jCheckBox3.isSelected()|| jCheckBox4.isSelected()){
-            textArea1.setText("He should do A PCR test");
-            try {
-                booking.setTestType(TestType.PCR);
-            } catch (IOException ex) {
-                Logger.getLogger(OnSiteTesting.class.getName()).log(Level.SEVERE, null, ex);
-            } catch (InterruptedException ex) {
-                Logger.getLogger(OnSiteTesting.class.getName()).log(Level.SEVERE, null, ex);
-            }
+   
     }//GEN-LAST:event_submitActionPerformed
-        else{
-            textArea1.setText("He should do A RAT test");
-            try {
-                booking.setTestType(TestType.RAT);
-            } catch (IOException ex) {
-                Logger.getLogger(OnSiteTesting.class.getName()).log(Level.SEVERE, null, ex);
-            } catch (InterruptedException ex) {
-                Logger.getLogger(OnSiteTesting.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        }
+        
+    
+    
+    public Boolean getIsFever(){
+        return fever.isSelected();
     }
+    
+    public Boolean getIsHeadache(){
+        return headache.isSelected();
+    }
+    
+    public Boolean getIsCough(){
+        return cough.isSelected();
+    }
+    
+    public Boolean getIsLossTaste(){
+        return lossTaste.isSelected();
+    }
+    
+    public void addSubmitListener(ActionListener listenForSubmit){
+        submit.addActionListener(listenForSubmit);
+    }
+    
+    public void updateTestResult(String testResult){
+        textArea1.setText(testResult);
+    }
+        
     /**
      * @param args the command line arguments
      */
@@ -200,15 +213,15 @@ public class OnSiteTesting extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JCheckBox jCheckBox1;
-    private javax.swing.JCheckBox jCheckBox2;
-    private javax.swing.JCheckBox jCheckBox3;
-    private javax.swing.JCheckBox jCheckBox4;
+    private javax.swing.JCheckBox cough;
+    private javax.swing.JCheckBox fever;
+    private javax.swing.JCheckBox headache;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
+    private javax.swing.JCheckBox lossTaste;
     private java.awt.Button submit;
     private java.awt.TextArea textArea1;
     // End of variables declaration//GEN-END:variables
